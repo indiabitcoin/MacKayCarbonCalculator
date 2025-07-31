@@ -6,7 +6,7 @@ class CarbonCalculator {
         this.currentSector = 'transport';
         this.leverValues = {};
         this.emissionsChart = null;
-        this.baselineEmissions = 700; // 1990 baseline in MtCO2e
+        this.baselineEmissions = this.calculateBaselineEmissions(); // 1990 baseline in MtCO2e
         this.targetYear = 2050;
         
         // Initialize lever values to level 1
@@ -35,6 +35,7 @@ class CarbonCalculator {
         this.initializeAnalytics();
         this.initializeScenarioManagement();
         this.initializeAdvancedAnimations();
+        this.initializeThemeToggle();
     }
 
     initializeLeverValues() {
@@ -101,20 +102,45 @@ class CarbonCalculator {
     }
 
     switchSector(sectorId) {
-        // Update active tab
+        // Update active tab with animation
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-sector="${sectorId}"]`).classList.add('active');
-
-        // Update active panel
-        document.querySelectorAll('.sector-panel').forEach(panel => {
-            panel.classList.remove('active');
-        });
-        const sectorElement = document.getElementById(sectorId);
-        if (sectorElement) {
-            sectorElement.classList.add('active');
+        const activeBtn = document.querySelector(`[data-sector="${sectorId}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+            // Create ripple effect on tab switch
+            this.createAdvancedRippleEffect({
+                clientX: activeBtn.offsetLeft + activeBtn.offsetWidth / 2,
+                clientY: activeBtn.offsetTop + activeBtn.offsetHeight / 2
+            }, activeBtn);
         }
+
+        // Update active panel with smooth transition
+        document.querySelectorAll('.sector-panel').forEach(panel => {
+            if (panel.classList.contains('active')) {
+                panel.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => {
+                    panel.classList.remove('active');
+                    panel.style.animation = '';
+                }, 300);
+            }
+        });
+        
+        // Show new sector with staggered animation
+        setTimeout(() => {
+            const sectorElement = document.getElementById(sectorId);
+            if (sectorElement) {
+                sectorElement.classList.add('active');
+                sectorElement.style.animation = 'fadeInUp 0.4s ease-out';
+                
+                // Add staggered animation to levers
+                const levers = sectorElement.querySelectorAll('.lever');
+                levers.forEach((lever, index) => {
+                    lever.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s both`;
+                });
+            }
+        }, 150);
 
         this.currentSector = sectorId;
     }
@@ -334,17 +360,39 @@ class CarbonCalculator {
             rotation = -90 + (reductionPercent / 100) * 180;
         }
 
+        // Enhanced smooth animation with easing
+        needle.style.transition = 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
         needle.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
 
-        // Add color change based on progress
+        // Add pulsing effect for significant changes
+        if (Math.abs(this.lastReduction - reductionPercent) > 10) {
+            needle.style.animation = 'meterPulse 0.6s ease-out';
+            setTimeout(() => {
+                needle.style.animation = '';
+            }, 600);
+        }
+        this.lastReduction = reductionPercent;
+
+        // Enhanced color transitions with glow effects
         const percentage = document.getElementById('emissionsPercentage');
-        if (percentage) {
+        const meter = document.querySelector('.co2e-meter');
+        if (percentage && meter) {
+            percentage.style.transition = 'all 0.8s ease';
+            meter.style.transition = 'box-shadow 0.8s ease';
+            
             if (reductionPercent >= 100) {
-                percentage.style.color = '#28a745'; // Green for net zero
+                percentage.style.color = '#28a745';
+                percentage.style.textShadow = '0 0 10px rgba(40, 167, 69, 0.5)';
+                meter.style.boxShadow = '0 0 20px rgba(40, 167, 69, 0.3)';
+                this.createCelebrationEffect();
             } else if (reductionPercent >= 80) {
-                percentage.style.color = '#ffc107'; // Yellow for 80% target
+                percentage.style.color = '#ffc107';
+                percentage.style.textShadow = '0 0 8px rgba(255, 193, 7, 0.4)';
+                meter.style.boxShadow = '0 0 15px rgba(255, 193, 7, 0.2)';
             } else {
-                percentage.style.color = '#dc3545'; // Red for insufficient progress
+                percentage.style.color = '#dc3545';
+                percentage.style.textShadow = '0 0 6px rgba(220, 53, 69, 0.3)';
+                meter.style.boxShadow = '0 0 10px rgba(220, 53, 69, 0.1)';
             }
         }
     }
@@ -669,7 +717,7 @@ class CarbonCalculator {
         container.innerHTML = '';
         
         if (this.scenarios.length === 0) {
-            container.innerHTML = '<p style="text-align: center; color: #6c757d; padding: 20px;">No saved scenarios found.</p>';
+            container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">No saved scenarios found.</p>';
             return;
         }
         
@@ -935,25 +983,20 @@ class CarbonCalculator {
         return (total / efficiencyLevers.length) * 25; // Scale to percentage
     }
     
+    calculateBaselineEmissions() {
+        // Calculate 1990 baseline emissions from sector data
+        return 700; // This should be calculated from actual 1990 UK emissions data
+    }
+    
     calculateTotalEmissions() {
-        // Simplified total emissions calculation
-        // Base emissions in 1990: ~600 MtCO2e
-        const baseEmissions = 600;
-        
-        // Calculate reduction factor based on all levers
-        const allLevers = Object.values(this.leverValues);
-        const averageLevel = allLevers.reduce((sum, val) => sum + val, 0) / allLevers.length;
-        
-        // Each level represents roughly 20% reduction potential
-        const reductionFactor = (averageLevel - 1) * 0.2;
-        
-        return Math.max(50, baseEmissions * (1 - reductionFactor));
+        // Calculate total emissions based on sector calculations
+        const sectorEmissions = this.calculateSectorEmissions();
+        return Object.values(sectorEmissions).reduce((sum, val) => sum + val, 0);
     }
     
     calculateReductionFrom1990() {
         const currentEmissions = this.calculateTotalEmissions();
-        const baseEmissions = 600; // 1990 baseline
-        return ((baseEmissions - currentEmissions) / baseEmissions) * 100;
+        return ((this.baselineEmissions - currentEmissions) / this.baselineEmissions) * 100;
     }
     
     calculateSectorBreakdown() {
@@ -987,13 +1030,13 @@ class CarbonCalculator {
     }
     
     updateTrendsChart() {
-        // Placeholder for trends chart update
-        console.log('Trends chart updated');
+        // Update trends chart with current data
+        // Implementation would depend on chart library integration
     }
     
     updateComparison() {
-        // Placeholder for comparison update
-        console.log('Comparison updated');
+        // Update comparison view with scenario data
+        // Implementation would depend on comparison feature requirements
     }
     
     showToast(message, type = 'info') {
@@ -1052,6 +1095,7 @@ class CarbonCalculator {
         this.initializeCounterAnimations();
         this.initializeEnergyFlowAnimations();
         this.initializeStaggerAnimations();
+        this.enhanceLeverAnimations();
         this.monitorAnimationPerformance();
     }
 
@@ -1217,7 +1261,7 @@ class CarbonCalculator {
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #3498db, transparent);
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
             animation: energyFlow 2s linear infinite;
             pointer-events: none;
             z-index: 1;
@@ -1277,6 +1321,131 @@ class CarbonCalculator {
         const colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6'];
         const index = Math.floor((value / 4) % colors.length);
         return colors[index];
+    }
+
+    // Enhanced celebration effect for significant changes
+    createCelebrationEffect(x, y, intensity = 1) {
+        const particleCount = Math.floor(15 * intensity);
+        const colors = ['#2ecc71', '#3498db', '#f39c12', '#e74c3c', '#9b59b6'];
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'celebration-particle';
+            particle.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: 6px;
+                height: 6px;
+                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10000;
+                animation: celebrationBurst 1.5s ease-out forwards;
+                transform-origin: center;
+            `;
+            
+            // Random direction and distance
+            const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
+            const distance = 50 + Math.random() * 100;
+            const endX = x + Math.cos(angle) * distance;
+            const endY = y + Math.sin(angle) * distance - Math.random() * 50;
+            
+            particle.style.setProperty('--end-x', `${endX}px`);
+            particle.style.setProperty('--end-y', `${endY}px`);
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 1500);
+        }
+    }
+
+    // Enhanced lever interaction with smooth animations
+    enhanceLeverAnimations() {
+        const levers = document.querySelectorAll('.lever');
+        
+        levers.forEach(lever => {
+            const slider = lever.querySelector('input[type="range"]');
+            const leverHandle = lever.querySelector('.lever-handle');
+            const progressRing = lever.querySelector('.progress-ring');
+            
+            if (!slider) return;
+            
+            let lastValue = slider.value;
+            
+            // Enhanced input animation
+            slider.addEventListener('input', (e) => {
+                const currentValue = parseInt(e.target.value);
+                const valueDiff = Math.abs(currentValue - lastValue);
+                
+                // Add smooth lever animation
+                lever.style.transform = 'scale(1.02)';
+                lever.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+                
+                // Create ripple effect at slider position
+                const rect = slider.getBoundingClientRect();
+                const progress = (currentValue / slider.max);
+                const x = rect.left + (rect.width * progress);
+                const y = rect.top + rect.height / 2;
+                
+                this.createAdvancedRippleEffect({
+                    clientX: x,
+                    clientY: y
+                }, slider);
+                
+                // Create particles for significant changes
+                if (valueDiff >= 1) {
+                    const intensity = Math.min(valueDiff / 2, 3);
+                    this.createAdvancedParticles(x, y, Math.floor(3 * intensity), this.getParticleColor(currentValue));
+                }
+                
+                // Celebration effect for maximum values
+                if (currentValue === parseInt(slider.max)) {
+                    this.createCelebrationEffect(x, y, 1.5);
+                }
+                
+                lastValue = currentValue;
+                
+                // Reset lever scale
+                setTimeout(() => {
+                    lever.style.transform = 'scale(1)';
+                }, 200);
+            });
+            
+            // Enhanced change animation
+            slider.addEventListener('change', (e) => {
+                const value = parseInt(e.target.value);
+                
+                // Add success animation for high values
+                if (value > slider.max * 0.8) {
+                    lever.classList.add('high-impact');
+                    setTimeout(() => {
+                        lever.classList.remove('high-impact');
+                    }, 1000);
+                }
+                
+                // Update progress ring with animation
+                if (progressRing) {
+                    this.updateProgressRing(lever, value);
+                }
+            });
+            
+            // Add hover effects for desktop
+            if (!('ontouchstart' in window)) {
+                lever.addEventListener('mouseenter', () => {
+                    lever.style.transform = 'translateY(-2px)';
+                    lever.style.transition = 'transform 0.3s ease';
+                });
+                
+                lever.addEventListener('mouseleave', () => {
+                    lever.style.transform = 'translateY(0)';
+                });
+            }
+        });
     }
 
     // Enhanced modal animations
@@ -1541,7 +1710,7 @@ class CarbonCalculator {
                     borderWidth: 2,
                     borderDash: [5, 5],
                     pointRadius: 6,
-                    pointBackgroundColor: '#28a745'
+                    pointBackgroundColor: 'var(--accent-secondary)'
                 }]
             },
             options: {
@@ -1616,6 +1785,64 @@ class CarbonCalculator {
         ];
         
         return pathway.map(val => Math.round(val));
+    }
+
+    // Theme Toggle Functionality
+    initializeThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (!themeToggle) return;
+
+        // Load saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        this.setTheme(savedTheme);
+
+        // Add click event listener
+        themeToggle.addEventListener('click', (event) => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            this.setTheme(newTheme);
+            
+            // Add ripple effect
+            this.createRippleEffect(themeToggle, event);
+        });
+    }
+
+    setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        // Update theme toggle button text and icons
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            const sunIcon = themeToggle.querySelector('.sun-icon');
+            const moonIcon = themeToggle.querySelector('.moon-icon');
+            const themeText = themeToggle.querySelector('.theme-text');
+            
+            if (theme === 'dark') {
+                if (sunIcon) sunIcon.style.opacity = '0';
+                if (moonIcon) {
+                    moonIcon.style.opacity = '1';
+                    moonIcon.style.display = 'block';
+                }
+                if (themeText) themeText.textContent = 'Light';
+            } else {
+                if (sunIcon) sunIcon.style.opacity = '1';
+                if (moonIcon) {
+                    moonIcon.style.opacity = '0';
+                    moonIcon.style.display = 'none';
+                }
+                if (themeText) themeText.textContent = 'Dark';
+            }
+        }
+        
+        // Show toast notification
+        this.showToast(`Switched to ${theme} mode`, 'info');
+    }
+
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        this.setTheme(newTheme);
     }
 }
 

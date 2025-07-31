@@ -1,3 +1,74 @@
+/* CSS Variables for Light/Dark Theme */
+:root {
+    /* Light theme (default) */
+    --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f8f9fa;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-inverse: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --shadow-heavy: rgba(0, 0, 0, 0.3);
+    --accent-primary: #007bff;
+    --accent-secondary: #28a745;
+    --accent-danger: #dc3545;
+    --accent-warning: #ffc107;
+    --lever-bg: #ffffff;
+    --lever-border: #ddd;
+    --meter-bg: #f8f9fa;
+    --modal-bg: rgba(0, 0, 0, 0.5);
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+}
+
+[data-theme="dark"] {
+    /* Dark theme - Enhanced visibility */
+    --bg-primary: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    --bg-secondary: #121212;
+    --bg-tertiary: #1e1e1e;
+    --text-primary: #f5f5f5;
+    --text-secondary: #e0e0e0;
+    --text-inverse: #121212;
+    --border-color: #555555;
+    --shadow-light: rgba(255, 255, 255, 0.1);
+    --shadow-medium: rgba(255, 255, 255, 0.15);
+    --shadow-heavy: rgba(255, 255, 255, 0.2);
+    --accent-primary: #60a5fa;
+    --accent-secondary: #34d399;
+    --accent-danger: #f87171;
+    --accent-warning: #fbbf24;
+    --lever-bg: #1e1e1e;
+    --lever-border: #666666;
+    --meter-bg: #0f0f0f;
+    --modal-bg: rgba(0, 0, 0, 0.95);
+    --input-bg: #1e1e1e;
+    --input-border: #666666;
+}
+
+/* Enhanced dark mode text contrast */
+[data-theme="dark"] {
+    /* Improve text readability */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .controls-panel,
+[data-theme="dark"] .results-panel {
+    border: 2px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .lever {
+    border: 2px solid var(--lever-border);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .metric {
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,11 +77,12 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--bg-primary);
     min-height: 100vh;
-    color: #333;
+    color: var(--text-primary);
     overflow-x: hidden; /* Prevent horizontal scrolling */
     -webkit-text-size-adjust: 100%; /* Prevent text scaling on mobile */
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -70,6 +142,50 @@ header p {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+    position: relative;
+    min-width: 100px;
+}
+
+.theme-toggle .theme-icon {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-toggle .sun-icon {
+    opacity: 1;
+}
+
+.theme-toggle .moon-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle .sun-icon {
+    opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+    opacity: 1;
+    display: block !important;
+}
+
+[data-theme="dark"] .theme-toggle .theme-text::after {
+    content: "Light";
+}
+
+.theme-toggle .theme-text::after {
+    content: "Dark";
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px) scale(1.05);
+}
+
 .feature-btn svg {
     width: 16px;
     height: 16px;
@@ -80,15 +196,17 @@ header p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    background: white;
+    background: var(--bg-secondary);
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px var(--shadow-medium);
     overflow: hidden;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .controls-panel {
     padding: 30px;
-    background: #f8f9fa;
+    background: var(--bg-tertiary);
+    transition: background 0.3s ease;
 }
 
 .sector-tabs {
@@ -101,8 +219,8 @@ header p {
 .tab-btn {
     padding: 12px 20px;
     border: none;
-    background: #e9ecef;
-    color: #495057;
+    background: var(--border-color);
+    color: var(--text-secondary);
     border-radius: 25px;
     cursor: pointer;
     font-weight: 500;
@@ -111,14 +229,15 @@ header p {
 }
 
 .tab-btn:hover {
-    background: #dee2e6;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     transform: translateY(-2px);
 }
 
 .tab-btn.active {
-    background: #007bff;
-    color: white;
-    box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    box-shadow: 0 4px 15px var(--shadow-medium);
 }
 
 .sector-panel {
@@ -132,16 +251,18 @@ header p {
 .sector-panel h3 {
     font-size: 1.5rem;
     margin-bottom: 25px;
-    color: #2c3e50;
-    border-bottom: 3px solid #007bff;
+    color: var(--text-primary);
+    border-bottom: 3px solid var(--accent-primary);
     padding-bottom: 10px;
+    transition: color 0.3s ease;
 }
 
 .lever {
     margin-bottom: 30px;
     padding: 20px;
-    background: white;
+    background: var(--lever-bg);
     border-radius: 10px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
 }
@@ -156,7 +277,8 @@ header p {
     font-weight: 600;
     font-size: 1.1rem;
     margin-bottom: 15px;
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 .ambition-levels {
@@ -168,10 +290,11 @@ header p {
     width: 100%;
     height: 8px;
     border-radius: 5px;
-    background: #ddd;
+    background: var(--lever-border);
     outline: none;
     -webkit-appearance: none;
     margin-bottom: 10px;
+    transition: background 0.3s ease;
 }
 
 .lever-slider::-webkit-slider-thumb {
@@ -180,52 +303,57 @@ header p {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #007bff;
+    background: var(--accent-primary);
     cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0,123,255,0.3);
+    box-shadow: 0 2px 10px var(--shadow-medium);
     transition: all 0.2s ease;
 }
 
 .lever-slider::-webkit-slider-thumb:hover {
-    background: #0056b3;
+    background: var(--accent-primary);
     transform: scale(1.1);
+    filter: brightness(0.9);
 }
 
 .lever-slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #007bff;
+    background: var(--accent-primary);
     cursor: pointer;
     border: none;
-    box-shadow: 0 2px 10px rgba(0,123,255,0.3);
+    box-shadow: 0 2px 10px var(--shadow-medium);
 }
 
 .level-labels {
     display: flex;
     justify-content: space-between;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-secondary);
     margin-top: 5px;
+    transition: color 0.3s ease;
 }
 
 .lever-description {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.4;
     font-style: italic;
+    transition: color 0.3s ease;
 }
 
 .results-panel {
     padding: 30px;
-    background: white;
+    background: var(--bg-secondary);
+    transition: background 0.3s ease;
 }
 
 .emissions-display h3 {
     font-size: 1.5rem;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: var(--text-primary);
     text-align: center;
+    transition: color 0.3s ease;
 }
 
 /* CO2e Meter Animation */
@@ -237,7 +365,8 @@ header p {
     background: linear-gradient(180deg, #ff4757 0%, #ffa502 50%, #2ed573 100%);
     border-radius: 150px 150px 0 0;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 20px var(--shadow-medium);
+    transition: box-shadow 0.3s ease;
 }
 
 .meter-needle {
@@ -246,10 +375,10 @@ header p {
     left: 50%;
     width: 4px;
     height: 120px;
-    background: #2c3e50;
+    background: var(--text-primary);
     transform-origin: bottom center;
     transform: translateX(-50%) rotate(-90deg);
-    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
     z-index: 2;
 }
 
@@ -260,8 +389,9 @@ header p {
     left: -6px;
     width: 16px;
     height: 16px;
-    background: #2c3e50;
+    background: var(--text-primary);
     border-radius: 50%;
+    transition: background 0.3s ease;
 }
 
 .meter-center {
@@ -270,10 +400,11 @@ header p {
     left: 50%;
     width: 20px;
     height: 20px;
-    background: #2c3e50;
+    background: var(--text-primary);
     border-radius: 50%;
     transform: translateX(-50%);
     z-index: 3;
+    transition: background 0.3s ease;
 }
 
 .meter-labels {
@@ -297,7 +428,7 @@ header p {
 .emissions-percentage {
     font-size: 3rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--text-primary);
     display: block;
     transition: all 0.8s ease;
     animation: countUp 2s ease-out;
@@ -305,8 +436,9 @@ header p {
 
 .emissions-label {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--text-secondary);
     margin-top: 10px;
+    transition: color 0.3s ease;
 }
 
 @keyframes countUp {
@@ -335,9 +467,9 @@ header p {
 .metric {
     text-align: center;
     padding: 20px;
-    background: #f8f9fa;
+    background: var(--bg-secondary);
     border-radius: 10px;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid var(--accent-primary);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -365,33 +497,36 @@ header p {
 
 .metric.net-zero.achieved {
     border-left-color: #28a745;
-    background: #d4edda;
+    background: var(--bg-tertiary);
+    transition: background 0.3s ease;
 }
 
 .metric .label {
     display: block;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 5px;
+    transition: color 0.3s ease;
 }
 
 .metric .value {
     display: block;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--text-primary);
     transition: all 0.5s ease;
 }
 
 .metric .value.updating {
     transform: scale(1.1);
-    color: #007bff;
+    color: var(--accent-primary);
 }
 
 .sector-breakdown h4 {
     font-size: 1.2rem;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 .sector-bar {
@@ -483,10 +618,11 @@ header p {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: #007bff;
+    background: var(--accent-primary);
     border-radius: 50%;
     pointer-events: none;
     animation: particleFloat 3s ease-in-out infinite;
+    transition: background 0.3s ease;
 }
 
 @keyframes particleFloat {
@@ -1211,39 +1347,43 @@ footer {
     }
     
     .ambition-levels input[type="range"]::-webkit-slider-track {
-        background: #e9ecef;
+        background: var(--bg-tertiary);
         height: 8px;
         border-radius: 4px;
+        transition: background 0.3s ease;
     }
     
     .ambition-levels input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        background: #007bff;
+        background: var(--accent-primary);
         height: 24px;
         width: 24px;
         border-radius: 50%;
-        border: 2px solid #fff;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        border: 2px solid var(--bg-secondary);
+        box-shadow: 0 2px 6px var(--shadow-medium);
         cursor: pointer;
         margin-top: -8px;
+        transition: background 0.3s ease, border-color 0.3s ease;
     }
     
     .ambition-levels input[type="range"]::-moz-range-track {
-        background: #e9ecef;
+        background: var(--bg-tertiary);
         height: 8px;
         border-radius: 4px;
         border: none;
+        transition: background 0.3s ease;
     }
     
     .ambition-levels input[type="range"]::-moz-range-thumb {
-        background: #007bff;
+        background: var(--accent-primary);
         height: 24px;
         width: 24px;
         border-radius: 50%;
-        border: 2px solid #fff;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        border: 2px solid var(--bg-secondary);
+        box-shadow: 0 2px 6px var(--shadow-medium);
         cursor: pointer;
+        transition: background 0.3s ease, border-color 0.3s ease;
     }
 }
 
@@ -1284,42 +1424,48 @@ footer {
 /* Dark mode support for mobile */
 @media (prefers-color-scheme: dark) and (max-width: 768px) {
     body {
-        background: #1a1a1a;
-        color: #ffffff;
+        background: var(--bg-primary);
+        color: var(--text-primary);
     }
     
     .controls-panel, .results-panel {
-        background: #2d2d2d;
-        border: 1px solid #404040;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 12px var(--shadow-light);
     }
     
     .lever {
-        background: #333333;
-        border: 1px solid #404040;
+        background: var(--lever-bg);
+        border: 1px solid var(--lever-border);
     }
     
     .tab-btn {
-        background: #404040;
-        color: #ffffff;
-        border: 1px solid #555555;
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
     }
     
     .tab-btn.active {
-        background: #007bff;
-        color: #ffffff;
+        background: var(--accent-primary);
+        color: var(--text-inverse);
+        box-shadow: 0 2px 8px var(--shadow-light);
     }
     
     .metric {
-        background: #333333;
-        border: 1px solid #404040;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 6px var(--shadow-light);
     }
     
     .ambition-levels input[type="range"]::-webkit-slider-track {
-        background: #555555;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
     }
     
     .ambition-levels input[type="range"]::-moz-range-track {
-        background: #555555;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
     }
 }
 
@@ -1415,8 +1561,9 @@ footer {
 
 .analytics-tabs {
     display: flex;
-    background: #e9ecef;
-    border-bottom: 1px solid #dee2e6;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .analytics-tab {
@@ -1424,7 +1571,8 @@ footer {
     padding: 12px 16px;
     border: none;
     background: transparent;
-    color: #6c757d;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1432,14 +1580,16 @@ footer {
 }
 
 .analytics-tab:hover {
-    background: #dee2e6;
-    color: #495057;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
 }
 
 .analytics-tab.active {
-    background: white;
-    color: #007bff;
-    border-bottom-color: #007bff;
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+    transition: all 0.3s ease;
 }
 
 .analytics-content {
@@ -1497,7 +1647,8 @@ footer {
 .metric-title {
     display: block;
     font-size: 0.9rem;
-    color: #6c757d;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
     margin-bottom: 5px;
 }
 
@@ -1505,7 +1656,8 @@ footer {
     display: block;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 /* Comparison Section */
@@ -1568,13 +1720,15 @@ footer {
 
 .insight-content h4 {
     margin: 0 0 8px 0;
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
     font-size: 1.1rem;
 }
 
 .insight-content p {
     margin: 0;
-    color: #6c757d;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
     line-height: 1.5;
 }
 
@@ -1633,7 +1787,8 @@ footer {
 
 .modal-header h3 {
     margin: 0;
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 .close {
@@ -1671,7 +1826,8 @@ footer {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 .form-group input[type="text"],
@@ -1711,31 +1867,40 @@ footer {
 }
 
 .btn-primary {
-    background: #007bff;
-    color: white;
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-    background: #0056b3;
+    background: var(--accent-primary);
+    filter: brightness(0.9);
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--shadow-medium);
 }
 
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: var(--text-secondary);
+    color: var(--text-inverse);
+    transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-    background: #545b62;
+    background: var(--text-secondary);
+    filter: brightness(0.9);
+    box-shadow: 0 2px 8px var(--shadow-light);
 }
 
 .btn-danger {
-    background: #dc3545;
-    color: white;
+    background: var(--accent-danger);
+    color: var(--text-inverse);
+    transition: all 0.3s ease;
 }
 
 .btn-danger:hover {
-    background: #c82333;
+    background: var(--accent-danger);
+    filter: brightness(0.9);
+    box-shadow: 0 2px 8px var(--shadow-light);
 }
 
 /* Scenarios List */
@@ -1749,26 +1914,30 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     margin-bottom: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    background: var(--bg-secondary);
 }
 
 .scenario-item:hover {
-    background: #f8f9fa;
-    border-color: #007bff;
+    background: var(--bg-tertiary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 2px 8px var(--shadow-light);
 }
 
 .scenario-item.selected {
-    background: #e3f2fd;
-    border-color: #007bff;
+    background: var(--bg-tertiary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
 }
 
 .scenario-info h4 {
     margin: 0 0 5px 0;
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 .scenario-info p {
@@ -1832,7 +2001,8 @@ footer {
 }
 
 .help-section h4 {
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
     margin-bottom: 15px;
 }
 
@@ -1948,7 +2118,8 @@ footer {
 }
 
 .toast-message {
-    color: #2c3e50;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
     font-weight: 500;
 }
 
@@ -1956,7 +2127,8 @@ footer {
     background: none;
     border: none;
     font-size: 18px;
-    color: #6c757d;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
     cursor: pointer;
     padding: 0;
     line-height: 1;
@@ -2328,6 +2500,32 @@ footer {
     }
 }
 
+@keyframes celebrationBurst {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(calc(var(--end-x) - 50%), calc(var(--end-y) - 50%)) scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(calc(var(--end-x) - 50%), calc(var(--end-y) - 50%)) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes highImpactGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(46, 204, 113, 0.3);
+        border-color: rgba(46, 204, 113, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(46, 204, 113, 0.8), 0 0 30px rgba(46, 204, 113, 0.4);
+        border-color: rgba(46, 204, 113, 1);
+    }
+}
+
 /* Enhanced Lever Animations */
 .lever {
     animation: fadeInUp 0.6s ease-out;
@@ -2351,6 +2549,17 @@ footer {
 
 .lever.active {
     animation: pulse 0.6s ease-in-out;
+}
+
+.lever.high-impact {
+    animation: highImpactGlow 1s ease-in-out;
+    transform: scale(1.05);
+}
+
+.celebration-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
 }
 
 /* Enhanced Slider Animations */
@@ -2544,19 +2753,20 @@ input[type="range"]::-webkit-slider-thumb:active {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: #3498db;
+    background: var(--accent-primary);
     border-radius: 50%;
     pointer-events: none;
     animation: particleFloat 3s linear infinite;
+    transition: background 0.3s ease;
 }
 
 .particle:nth-child(2n) {
-    background: #2ecc71;
+    background: var(--accent-secondary);
     animation-duration: 2.5s;
 }
 
 .particle:nth-child(3n) {
-    background: #f39c12;
+    background: var(--accent-warning);
     animation-duration: 3.5s;
 }
 
