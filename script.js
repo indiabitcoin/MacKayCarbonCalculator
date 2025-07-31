@@ -14,6 +14,15 @@ class CarbonCalculator {
         this.initializeEventListeners();
         this.initializeChart();
         this.updateCalculations();
+        
+        // Initialize enhanced animations
+        this.enhanceTabSwitching();
+        
+        // Add initial staggered animation to levers
+        setTimeout(() => {
+            const levers = document.querySelectorAll('.lever');
+            this.addStaggeredAnimation(levers, 'bounceIn');
+        }, 500);
     }
 
     initializeLeverValues() {
@@ -50,6 +59,26 @@ class CarbonCalculator {
         document.querySelectorAll('.lever-slider').forEach(slider => {
             slider.addEventListener('input', (e) => {
                 this.updateLever(e.target.dataset.lever, parseInt(e.target.value));
+                
+                // Update progress ring
+                this.updateProgressRing(slider.closest('.lever'), parseInt(e.target.value));
+                
+                // Create ripple effect
+                this.createRippleEffect(e.target, e);
+                
+                // Generate particles
+                this.createParticles(slider.closest('.lever'));
+            });
+            
+            // Add hover effects
+            slider.addEventListener('mouseenter', (e) => {
+                const lever = e.target.closest('.lever');
+                lever.classList.add('active');
+            });
+            
+            slider.addEventListener('mouseleave', (e) => {
+                const lever = e.target.closest('.lever');
+                lever.classList.remove('active');
             });
         });
     }
@@ -183,12 +212,11 @@ class CarbonCalculator {
         const sectorEmissions = this.calculateSectorEmissions();
         const totalEmissions = Object.values(sectorEmissions).reduce((sum, val) => sum + val, 0);
         
-        // Update emissions display
-        document.getElementById('emissions2050').textContent = `${Math.round(totalEmissions)} MtCO₂e`;
-        
         // Calculate reduction percentage from 1990 baseline
         const reductionPercent = Math.round(((this.baselineEmissions - totalEmissions) / this.baselineEmissions) * 100);
-        document.getElementById('reductionPercent').textContent = `${reductionPercent}%`;
+        
+        // Animate CO2e meter and values
+        this.animateEmissionsUpdate(totalEmissions, reductionPercent);
         
         // Check net zero status
         const netZeroElement = document.getElementById('netZeroStatus');
@@ -208,6 +236,197 @@ class CarbonCalculator {
         this.updateChart(sectorEmissions, totalEmissions);
     }
 
+    animateEmissionsUpdate(totalEmissions, reductionPercent) {
+        // Add updating class for animation
+        const metrics = document.querySelectorAll('.metric');
+        metrics.forEach(metric => {
+            metric.classList.add('updating');
+            setTimeout(() => metric.classList.remove('updating'), 600);
+        });
+
+        // Animate emissions percentage
+        const percentageElement = document.getElementById('emissionsPercentage');
+        const currentPercent = parseInt(percentageElement.textContent.replace('%', '').replace('-', '')) || 0;
+        this.animateValue(percentageElement, currentPercent, Math.abs(reductionPercent), (value) => {
+            const sign = reductionPercent >= 0 ? '-' : '+';
+            return `${sign}${value}%`;
+        });
+
+        // Animate CO2e meter needle
+        this.animateMeterNeedle(reductionPercent);
+
+        // Animate other values
+        const emissions2050Element = document.getElementById('emissions2050');
+        const currentEmissions = parseInt(emissions2050Element.textContent.replace(/[^0-9]/g, '')) || 0;
+        this.animateValue(emissions2050Element, currentEmissions, Math.round(totalEmissions), (value) => `${value} MtCO₂e`);
+
+        const reductionElement = document.getElementById('reductionPercent');
+        const currentReduction = parseInt(reductionElement.textContent.replace('%', '')) || 0;
+        this.animateValue(reductionElement, currentReduction, reductionPercent, (value) => `${value}%`);
+
+        // Add value updating animation
+        [emissions2050Element, reductionElement, percentageElement].forEach(el => {
+            el.classList.add('updating');
+            setTimeout(() => el.classList.remove('updating'), 500);
+        });
+    }
+
+    animateValue(element, startValue, endValue, formatter) {
+        const duration = 800;
+        const startTime = performance.now();
+        
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function for smooth animation
+            const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+            const currentValue = Math.round(startValue + (endValue - startValue) * easeOutCubic);
+            
+            element.textContent = formatter(currentValue);
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            }
+        };
+        
+        requestAnimationFrame(animate);
+    }
+
+    animateMeterNeedle(reductionPercent) {
+        const needle = document.getElementById('meterNeedle');
+        if (!needle) return;
+
+        // Calculate needle rotation (-90deg = 1990 baseline, 0deg = -80%, 90deg = -100% net zero)
+        let rotation;
+        if (reductionPercent <= 0) {
+            rotation = -90; // At or above 1990 levels
+        } else if (reductionPercent >= 100) {
+            rotation = 90; // Net zero or beyond
+        } else {
+            // Linear interpolation between -90deg (0% reduction) and 90deg (100% reduction)
+            rotation = -90 + (reductionPercent / 100) * 180;
+        }
+
+        needle.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+
+        // Add color change based on progress
+        const percentage = document.getElementById('emissionsPercentage');
+        if (reductionPercent >= 100) {
+            percentage.style.color = '#28a745'; // Green for net zero
+        } else if (reductionPercent >= 80) {
+            percentage.style.color = '#ffc107'; // Yellow for 80% target
+        } else {
+            percentage.style.color = '#dc3545'; // Red for insufficient progress
+        }
+    }
+
+    // Advanced Animation Functions
+    updateProgressRing(lever, value) {
+        const ring = lever.querySelector('.progress-ring-circle');
+        if (!ring) return;
+        
+        const circumference = 2 * Math.PI * 15; // radius = 15
+        const progress = (value / 4) * 100; // Convert to percentage
+        const offset = circumference - (progress / 100) * circumference;
+        
+        ring.style.strokeDashoffset = offset;
+        
+        // Change color based on ambition level
+        const colors = ['#dc3545', '#fd7e14', '#ffc107', '#28a745'];
+        ring.style.stroke = colors[value - 1];
+    }
+    
+    createRippleEffect(element, event) {
+        const rect = element.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: rgba(0, 123, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: ripple 0.6s ease-out;
+        `;
+        
+        element.style.position = 'relative';
+        element.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+    }
+    
+    createParticles(container) {
+        const particleCount = 5;
+        const rect = container.getBoundingClientRect();
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const x = Math.random() * rect.width;
+            const y = rect.height;
+            
+            particle.style.cssText = `
+                left: ${x}px;
+                top: ${y}px;
+                animation-delay: ${Math.random() * 0.5}s;
+            `;
+            
+            container.style.position = 'relative';
+            container.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 3000);
+        }
+    }
+    
+    addStaggeredAnimation(elements, animationClass) {
+        elements.forEach((element, index) => {
+            element.classList.add(animationClass);
+            element.classList.add(`animate-stagger-${Math.min(index + 1, 6)}`);
+            
+            setTimeout(() => {
+                element.classList.remove(animationClass);
+                element.classList.remove(`animate-stagger-${Math.min(index + 1, 6)}`);
+            }, 1000 + (index * 100));
+        });
+    }
+    
+    showSuccessAnimation(element) {
+        element.classList.add('success-animation');
+        setTimeout(() => element.classList.remove('success-animation'), 600);
+    }
+    
+    showErrorAnimation(element) {
+        element.classList.add('error-animation');
+        setTimeout(() => element.classList.remove('error-animation'), 500);
+    }
+    
+    enhanceTabSwitching() {
+        document.querySelectorAll('.tab-btn').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                e.target.classList.add('active');
+                
+                // Add entrance animation to sector panel
+                const targetPanel = document.querySelector(`[data-sector="${e.target.dataset.sector}"]`);
+                if (targetPanel) {
+                    targetPanel.style.animation = 'slideInFromLeft 0.5s ease-out';
+                    setTimeout(() => targetPanel.style.animation = '', 500);
+                }
+            });
+        });
+    }
+
     updateSectorBreakdown(sectorEmissions) {
         const maxEmissions = Math.max(...Object.values(sectorEmissions).filter(val => val > 0));
         
@@ -219,7 +438,8 @@ class CarbonCalculator {
             'land-use': 'Agriculture'
         };
 
-        Object.entries(sectorMapping).forEach(([key, name]) => {
+        const sectorBars = [];
+        Object.entries(sectorMapping).forEach(([key, name], index) => {
             const emissions = sectorEmissions[key] || 0;
             const percentage = maxEmissions > 0 ? (Math.max(emissions, 0) / maxEmissions) * 100 : 0;
             
@@ -227,10 +447,26 @@ class CarbonCalculator {
             const valueSpan = sectorBar.parentElement.querySelector('.bar-value');
             
             if (sectorBar && valueSpan) {
-                sectorBar.style.width = `${percentage}%`;
+                // Animate bar width change with stagger
+                setTimeout(() => {
+                    sectorBar.style.width = `${percentage}%`;
+                    
+                    // Add to array for staggered animation
+                    sectorBars.push(sectorBar.closest('.sector-bar'));
+                    
+                    // Show success animation for significant reductions
+                    if (percentage < 50) {
+                        this.showSuccessAnimation(sectorBar.closest('.sector-bar'));
+                    }
+                }, index * 100);
                 valueSpan.textContent = `${Math.round(emissions)} MtCO₂e`;
             }
         });
+        
+        // Apply staggered animation to all sector bars
+        setTimeout(() => {
+            this.addStaggeredAnimation(sectorBars, 'slideInFromLeft');
+        }, Object.keys(sectorMapping).length * 100);
     }
 
     initializeChart() {

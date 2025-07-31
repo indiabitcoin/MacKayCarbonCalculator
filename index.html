@@ -38,6 +38,11 @@
                                     </div>
                                 </div>
                                 <div class="lever-description">Level 1: Current adoption rates | Level 4: 100% electric by 2050</div>
+                                <div class="progress-ring">
+                                    <svg width="40" height="40">
+                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
+                                    </svg>
+                                </div>
                             </div>
                             
                             <div class="lever">
@@ -49,6 +54,11 @@
                                     </div>
                                 </div>
                                 <div class="lever-description">Level 1: Current usage | Level 4: Major modal shift to public transport</div>
+                                <div class="progress-ring">
+                                    <svg width="40" height="40">
+                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
+                                    </svg>
+                                </div>
                             </div>
 
                             <div class="lever">
@@ -60,6 +70,11 @@
                                     </div>
                                 </div>
                                 <div class="lever-description">Level 1: Current levels | Level 4: Significant increase in walking/cycling</div>
+                                <div class="progress-ring">
+                                    <svg width="40" height="40">
+                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
+                                    </svg>
+                                </div>
                             </div>
 
                             <div class="lever">
@@ -330,6 +345,23 @@
             <div class="results-panel">
                 <div class="emissions-display">
                     <h3>UK Emissions Pathway</h3>
+                    
+                    <!-- CO2e Meter -->
+                    <div class="emissions-value">
+                        <span class="emissions-percentage" id="emissionsPercentage">-35%</span>
+                        <div class="emissions-label">Reduction from 1990 levels by 2050</div>
+                    </div>
+                    
+                    <div class="co2e-meter">
+                        <div class="meter-needle" id="meterNeedle"></div>
+                        <div class="meter-center"></div>
+                        <div class="meter-labels">
+                            <span>1990</span>
+                            <span>-80%</span>
+                            <span>Net Zero</span>
+                        </div>
+                    </div>
+                    
                     <div class="emissions-chart">
                         <canvas id="emissionsChart" width="400" height="300"></canvas>
                     </div>
