@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacKay Carbon Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MacKay Carbon Calculator</h1>
+            <p>Explore pathways to UK net zero emissions by 2050</p>
+        </header>
+
+        <div class="calculator-interface">
+            <div class="controls-panel">
+                <div class="sector-tabs">
+                    <button class="tab-btn active" data-sector="transport">Transport</button>
+                    <button class="tab-btn" data-sector="buildings">Buildings</button>
+                    <button class="tab-btn" data-sector="industry">Industry</button>
+                    <button class="tab-btn" data-sector="electricity">Electricity</button>
+                    <button class="tab-btn" data-sector="co2-removal">CO₂ Removal</button>
+                    <button class="tab-btn" data-sector="land-use">Land Use</button>
+                </div>
+
+                <div class="levers-container">
+                    <!-- Transport Sector -->
+                    <div class="sector-panel active" id="transport">
+                        <h3>Transport</h3>
+                        <div class="lever-group">
+                            <div class="lever">
+                                <label>Electric Cars & Vans</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="electric-cars">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current adoption rates | Level 4: 100% electric by 2050</div>
+                            </div>
+                            
+                            <div class="lever">
+                                <label>Public Transport</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="public-transport">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current usage | Level 4: Major modal shift to public transport</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Active Travel (Walking/Cycling)</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="active-travel">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current levels | Level 4: Significant increase in walking/cycling</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Aviation Demand</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="aviation">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Continued growth | Level 4: Reduced demand + sustainable fuels</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Freight Efficiency</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="freight">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum efficiency + electrification</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Buildings Sector -->
+                    <div class="sector-panel" id="buildings">
+                        <h3>Buildings</h3>
+                        <div class="lever-group">
+                            <div class="lever">
+                                <label>Building Temperature</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="building-temp">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current heating patterns | Level 4: Reduced indoor temperatures</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Building Insulation</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="insulation">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current standards | Level 4: All buildings highly insulated</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Heat Pump Share</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="heat-pumps">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Limited adoption | Level 4: Heat pumps in most buildings</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>District Heat Share</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="district-heat">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current levels | Level 4: Widespread district heating networks</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Lighting & Appliances</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="appliances">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum efficiency appliances</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Industry Sector -->
+                    <div class="sector-panel" id="industry">
+                        <h3>Industry</h3>
+                        <div class="lever-group">
+                            <div class="lever">
+                                <label>Industrial Energy Efficiency</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="industrial-efficiency">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum feasible efficiency</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Steel Production</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="steel">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current methods | Level 4: Hydrogen-based steel production</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Cement Production</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="cement">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current processes | Level 4: Alternative cement + CCS</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Chemical Industry</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="chemicals">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current processes | Level 4: Electrification + green hydrogen</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Electricity Sector -->
+                    <div class="sector-panel" id="electricity">
+                        <h3>Electricity Supply</h3>
+                        <div class="lever-group">
+                            <div class="lever">
+                                <label>Wind Power</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="wind">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current capacity | Level 4: Maximum feasible wind deployment</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Solar Power</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="solar">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current capacity | Level 4: Maximum feasible solar deployment</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Nuclear Power</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="nuclear">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Phase out | Level 4: New nuclear build programme</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Energy Storage</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="storage">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Limited storage | Level 4: Large-scale storage deployment</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CO2 Removal Sector -->
+                    <div class="sector-panel" id="co2-removal">
+                        <h3>CO₂ Removal & Gases</h3>
+                        <div class="lever-group">
+                            <div class="lever">
+                                <label>Direct Air Capture</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="direct-air-capture">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: No deployment | Level 4: Large-scale DAC deployment</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Carbon Capture & Storage</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="ccs">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Limited CCS | Level 4: Widespread industrial CCS</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Methane Reduction</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="methane">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current levels | Level 4: Maximum methane reduction</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Land Use Sector -->
+                    <div class="sector-panel" id="land-use">
+                        <h3>Land Use & Biofuels</h3>
+                        <div class="lever-group">
+                            <div class="lever">
+                                <label>Afforestation</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="afforestation">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current rates | Level 4: Maximum feasible tree planting</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Bioenergy Crops</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="bioenergy">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Limited bioenergy | Level 4: Large-scale sustainable bioenergy</div>
+                            </div>
+
+                            <div class="lever">
+                                <label>Agriculture Efficiency</label>
+                                <div class="ambition-levels">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="agriculture">
+                                    <div class="level-labels">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                                    </div>
+                                </div>
+                                <div class="lever-description">Level 1: Current practices | Level 4: Precision agriculture + reduced emissions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-panel">
+                <div class="emissions-display">
+                    <h3>UK Emissions Pathway</h3>
+                    <div class="emissions-chart">
+                        <canvas id="emissionsChart" width="400" height="300"></canvas>
+                    </div>
+                    <div class="emissions-summary">
+                        <div class="metric">
+                            <span class="label">2050 Emissions:</span>
+                            <span class="value" id="emissions2050">450 MtCO₂e</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Reduction from 1990:</span>
+                            <span class="value" id="reductionPercent">35%</span>
+                        </div>
+                        <div class="metric net-zero">
+                            <span class="label">Net Zero Target:</span>
+                            <span class="value" id="netZeroStatus">Not Achieved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sector-breakdown">
+                    <h4>2050 Emissions by Sector</h4>
+                    <div class="sector-bars">
+                        <div class="sector-bar">
+                            <span class="sector-name">Transport</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 25%" data-sector="transport"></div>
+                                <span class="bar-value">120 MtCO₂e</span>
+                            </div>
+                        </div>
+                        <div class="sector-bar">
+                            <span class="sector-name">Buildings</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 20%" data-sector="buildings"></div>
+                                <span class="bar-value">95 MtCO₂e</span>
+                            </div>
+                        </div>
+                        <div class="sector-bar">
+                            <span class="sector-name">Industry</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 30%" data-sector="industry"></div>
+                                <span class="bar-value">140 MtCO₂e</span>
+                            </div>
+                        </div>
+                        <div class="sector-bar">
+                            <span class="sector-name">Electricity</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 15%" data-sector="electricity"></div>
+                                <span class="bar-value">70 MtCO₂e</span>
+                            </div>
+                        </div>
+                        <div class="sector-bar">
+                            <span class="sector-name">Agriculture</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 10%" data-sector="land-use"></div>
+                                <span class="bar-value">45 MtCO₂e</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Based on the UK Government's MacKay Carbon Calculator | Explore pathways to net zero by 2050</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
