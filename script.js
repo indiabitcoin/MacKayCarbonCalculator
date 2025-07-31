@@ -682,7 +682,7 @@ class CarbonCalculator {
         document.querySelectorAll('.analytics-section').forEach(section => {
             section.classList.remove('active');
         });
-        const analyticsElement = document.getElementById(`analytics-${tabId}`);
+        const analyticsElement = document.getElementById(`${tabId}-section`);
             if (analyticsElement) {
                 analyticsElement.classList.add('active');
             }
