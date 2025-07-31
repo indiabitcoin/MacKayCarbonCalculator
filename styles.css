@@ -9,6 +9,8 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     color: #333;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    -webkit-text-size-adjust: 100%; /* Prevent text scaling on mobile */
 }
 
 .container {
@@ -763,6 +765,47 @@ footer {
         font-size: 1rem;
     }
     
+    /* Mobile Features Toolbar */
+    .features-toolbar {
+        gap: 8px;
+        margin-top: 15px;
+        justify-content: center;
+    }
+    
+    .feature-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        border-radius: 20px;
+        min-height: 44px; /* Touch-friendly */
+        gap: 6px;
+    }
+    
+    .feature-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    /* Mobile Modal Improvements */
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+        max-height: 90vh;
+        border-radius: 12px;
+    }
+    
+    .modal-header {
+        padding: 15px 20px;
+    }
+    
+    .modal-body {
+        padding: 15px 20px;
+    }
+    
+    .modal-footer {
+        padding: 15px 20px;
+    }
+    
     .controls-panel,
     .results-panel {
         padding: 20px;
@@ -895,6 +938,29 @@ footer {
         font-size: 0.9rem;
     }
     
+    /* Extra Mobile Features Toolbar */
+    .features-toolbar {
+        gap: 6px;
+        margin-top: 10px;
+        padding: 0 5px;
+    }
+    
+    .feature-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        border-radius: 18px;
+        min-height: 40px;
+        gap: 4px;
+        flex: 1;
+        max-width: 120px;
+        justify-content: center;
+    }
+    
+    .feature-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+    
     .controls-panel,
     .results-panel {
         padding: 15px;
@@ -1024,6 +1090,23 @@ footer {
         font-size: 1.6rem;
     }
     
+    /* Ultra Mobile Features Toolbar */
+    .features-toolbar {
+        gap: 4px;
+        margin-top: 8px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .feature-btn {
+        padding: 8px 12px;
+        font-size: 0.7rem;
+        border-radius: 16px;
+        min-height: 36px;
+        width: 100%;
+        max-width: 200px;
+    }
+    
     .controls-panel,
     .results-panel {
         padding: 12px;
@@ -1054,6 +1137,30 @@ footer {
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
+    /* Disable hover effects on touch devices */
+    .feature-btn:hover {
+        transform: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .tab-btn:hover {
+        transform: none;
+    }
+    
+    /* Improve touch targets */
+    .feature-btn,
+    .tab-btn,
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Better scrolling on mobile */
+    .modal-content {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
     .lever:hover {
         transform: none;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
