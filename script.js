@@ -111,7 +111,10 @@ class CarbonCalculator {
         document.querySelectorAll('.sector-panel').forEach(panel => {
             panel.classList.remove('active');
         });
-        document.getElementById(sectorId).classList.add('active');
+        const sectorElement = document.getElementById(sectorId);
+        if (sectorElement) {
+            sectorElement.classList.add('active');
+        }
 
         this.currentSector = sectorId;
     }
@@ -263,26 +266,32 @@ class CarbonCalculator {
 
         // Animate emissions percentage
         const percentageElement = document.getElementById('emissionsPercentage');
-        const currentPercent = parseInt(percentageElement.textContent.replace('%', '').replace('-', '')) || 0;
-        this.animateValue(percentageElement, currentPercent, Math.abs(reductionPercent), (value) => {
-            const sign = reductionPercent >= 0 ? '-' : '+';
-            return `${sign}${value}%`;
-        });
+        if (percentageElement) {
+            const currentPercent = parseInt(percentageElement.textContent.replace('%', '').replace('-', '')) || 0;
+            this.animateValue(percentageElement, currentPercent, Math.abs(reductionPercent), (value) => {
+                const sign = reductionPercent >= 0 ? '-' : '+';
+                return `${sign}${value}%`;
+            });
+        }
 
         // Animate CO2e meter needle
         this.animateMeterNeedle(reductionPercent);
 
         // Animate other values
         const emissions2050Element = document.getElementById('emissions2050');
-        const currentEmissions = parseInt(emissions2050Element.textContent.replace(/[^0-9]/g, '')) || 0;
-        this.animateValue(emissions2050Element, currentEmissions, Math.round(totalEmissions), (value) => `${value} MtCO₂e`);
+        if (emissions2050Element) {
+            const currentEmissions = parseInt(emissions2050Element.textContent.replace(/[^0-9]/g, '')) || 0;
+            this.animateValue(emissions2050Element, currentEmissions, Math.round(totalEmissions), (value) => `${value} MtCO₂e`);
+        }
 
         const reductionElement = document.getElementById('reductionPercent');
-        const currentReduction = parseInt(reductionElement.textContent.replace('%', '')) || 0;
-        this.animateValue(reductionElement, currentReduction, reductionPercent, (value) => `${value}%`);
+        if (reductionElement) {
+            const currentReduction = parseInt(reductionElement.textContent.replace('%', '')) || 0;
+            this.animateValue(reductionElement, currentReduction, reductionPercent, (value) => `${value}%`);
+        }
 
         // Add value updating animation
-        [emissions2050Element, reductionElement, percentageElement].forEach(el => {
+        [emissions2050Element, reductionElement, percentageElement].filter(el => el).forEach(el => {
             el.classList.add('updating');
             setTimeout(() => el.classList.remove('updating'), 500);
         });
@@ -329,12 +338,14 @@ class CarbonCalculator {
 
         // Add color change based on progress
         const percentage = document.getElementById('emissionsPercentage');
-        if (reductionPercent >= 100) {
-            percentage.style.color = '#28a745'; // Green for net zero
-        } else if (reductionPercent >= 80) {
-            percentage.style.color = '#ffc107'; // Yellow for 80% target
-        } else {
-            percentage.style.color = '#dc3545'; // Red for insufficient progress
+        if (percentage) {
+            if (reductionPercent >= 100) {
+                percentage.style.color = '#28a745'; // Green for net zero
+            } else if (reductionPercent >= 80) {
+                percentage.style.color = '#ffc107'; // Yellow for 80% target
+            } else {
+                percentage.style.color = '#dc3545'; // Red for insufficient progress
+            }
         }
     }
 
@@ -606,7 +617,10 @@ class CarbonCalculator {
         document.querySelectorAll('.help-section').forEach(section => {
             section.classList.remove('active');
         });
-        document.getElementById(sectionId).classList.add('active');
+        const sectionElement = document.getElementById(sectionId);
+        if (sectionElement) {
+            sectionElement.classList.add('active');
+        }
     }
     
     showAnalyticsTab(tabId) {
@@ -620,7 +634,10 @@ class CarbonCalculator {
         document.querySelectorAll('.analytics-section').forEach(section => {
             section.classList.remove('active');
         });
-        document.getElementById(`analytics-${tabId}`).classList.add('active');
+        const analyticsElement = document.getElementById(`analytics-${tabId}`);
+            if (analyticsElement) {
+                analyticsElement.classList.add('active');
+            }
         
         // Update analytics data for the specific tab
         this.updateAnalyticsTab(tabId);
@@ -1500,7 +1517,9 @@ class CarbonCalculator {
     }
 
     initializeChart() {
-        const ctx = document.getElementById('emissionsChart').getContext('2d');
+        const chartElement = document.getElementById('emissionsChart');
+        if (!chartElement) return;
+        const ctx = chartElement.getContext('2d');
         
         this.emissionsChart = new Chart(ctx, {
             type: 'line',
