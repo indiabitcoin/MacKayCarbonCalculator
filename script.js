@@ -28,6 +28,13 @@ class CarbonCalculator {
         
         // Initialize responsive features
         this.initializeResponsiveFeatures();
+        
+        // Initialize new features
+        this.initializeFeatures();
+        this.initializeModals();
+        this.initializeAnalytics();
+        this.initializeScenarioManagement();
+        this.initializeAdvancedAnimations();
     }
 
     initializeLeverValues() {
@@ -62,18 +69,23 @@ class CarbonCalculator {
 
         // Lever slider changes
         document.querySelectorAll('.lever-slider').forEach(slider => {
+            const lever = slider.closest('.lever');
+            
             slider.addEventListener('input', (e) => {
                 this.updateLever(e.target.dataset.lever, parseInt(e.target.value));
                 
                 // Update progress ring
-                this.updateProgressRing(slider.closest('.lever'), parseInt(e.target.value));
+                this.updateProgressRing(lever, parseInt(e.target.value));
                 
                 // Create ripple effect
                 this.createRippleEffect(e.target, e);
                 
                 // Generate particles
-                this.createParticles(slider.closest('.lever'));
+                this.createParticles(lever);
             });
+            
+            // Enhanced lever interaction with advanced animations
+            this.enhanceLeverInteraction(lever, slider);
             
             // Add hover effects
             slider.addEventListener('mouseenter', (e) => {
@@ -461,6 +473,886 @@ class CarbonCalculator {
         
         // Optimize animations based on device capabilities
         this.optimizeForDevice();
+    }
+    
+    initializeFeatures() {
+        // Feature toolbar buttons - check if elements exist first
+        const saveBtn = document.getElementById('save-scenario-btn');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => {
+                this.showModal('save-scenario-modal');
+            });
+        }
+        
+        const loadBtn = document.getElementById('load-scenario-btn');
+        if (loadBtn) {
+            loadBtn.addEventListener('click', () => {
+                this.loadSavedScenarios();
+                this.showModal('load-scenario-modal');
+            });
+        }
+        
+        const compareBtn = document.getElementById('compare-btn');
+        if (compareBtn) {
+            compareBtn.addEventListener('click', () => {
+                this.showAnalyticsTab('compare');
+            });
+        }
+        
+        const exportBtn = document.getElementById('export-btn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                this.showModal('export-modal');
+            });
+        }
+        
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                this.shareScenario();
+            });
+        }
+        
+        const helpBtn = document.getElementById('help-btn');
+        if (helpBtn) {
+            helpBtn.addEventListener('click', () => {
+                this.showModal('help-modal');
+            });
+        }
+    }
+    
+    initializeModals() {
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    this.hideModal(modal.id);
+                }
+            });
+        });
+        
+        // Close buttons
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', (e) => {
+                const modal = e.target.closest('.modal');
+                this.hideModal(modal.id);
+            });
+        });
+        
+        // Help tabs
+        document.querySelectorAll('.help-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                this.showHelpSection(e.target.dataset.section);
+            });
+        });
+        
+        // Save scenario form
+        const saveForm = document.getElementById('save-scenario-form');
+        if (saveForm) {
+            saveForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.saveScenario();
+            });
+        }
+        
+        // Export form
+        const exportForm = document.getElementById('export-form');
+        if (exportForm) {
+            exportForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.exportData();
+            });
+        }
+    }
+    
+    initializeAnalytics() {
+        // Analytics tabs
+        document.querySelectorAll('.analytics-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                this.showAnalyticsTab(e.target.dataset.tab);
+            });
+        });
+        
+        // Initialize analytics data
+        this.updateAnalytics();
+    }
+    
+    initializeScenarioManagement() {
+        this.scenarios = JSON.parse(localStorage.getItem('carbonCalculatorScenarios') || '[]');
+        this.currentScenario = {
+            name: 'Current Scenario',
+            description: '',
+            values: {},
+            timestamp: new Date().toISOString()
+        };
+    }
+    
+    showModal(modalId) {
+        this.showModalWithAnimation(modalId);
+    }
+
+    hideModal(modalId) {
+        this.hideModalWithAnimation(modalId);
+    }
+    
+    showHelpSection(sectionId) {
+        // Update tab states
+        document.querySelectorAll('.help-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+        
+        // Update section visibility
+        document.querySelectorAll('.help-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+    
+    showAnalyticsTab(tabId) {
+        // Update tab states
+        document.querySelectorAll('.analytics-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        
+        // Update section visibility
+        document.querySelectorAll('.analytics-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(`analytics-${tabId}`).classList.add('active');
+        
+        // Update analytics data for the specific tab
+        this.updateAnalyticsTab(tabId);
+    }
+    
+    saveScenario() {
+        const form = document.getElementById('save-scenario-form');
+        const formData = new FormData(form);
+        
+        const scenario = {
+            id: Date.now().toString(),
+            name: formData.get('scenario-name'),
+            description: formData.get('scenario-description'),
+            values: { ...this.leverValues },
+            timestamp: new Date().toISOString(),
+            emissions: this.calculateTotalEmissions()
+        };
+        
+        this.scenarios.push(scenario);
+        localStorage.setItem('carbonCalculatorScenarios', JSON.stringify(this.scenarios));
+        
+        this.hideModal('save-scenario-modal');
+        this.showToast('Scenario saved successfully!', 'success');
+        form.reset();
+    }
+    
+    loadSavedScenarios() {
+        const container = document.querySelector('.scenarios-list');
+        container.innerHTML = '';
+        
+        if (this.scenarios.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #6c757d; padding: 20px;">No saved scenarios found.</p>';
+            return;
+        }
+        
+        this.scenarios.forEach(scenario => {
+            const scenarioElement = document.createElement('div');
+            scenarioElement.className = 'scenario-item';
+            scenarioElement.innerHTML = `
+                <div class="scenario-info">
+                    <h4>${scenario.name}</h4>
+                    <p>${scenario.description || 'No description'}</p>
+                    <small>Saved: ${new Date(scenario.timestamp).toLocaleDateString()}</small>
+                </div>
+                <div class="scenario-actions">
+                    <button class="btn btn-primary" onclick="calculator.loadScenario('${scenario.id}')">Load</button>
+                    <button class="btn btn-danger" onclick="calculator.deleteScenario('${scenario.id}')">Delete</button>
+                </div>
+            `;
+            container.appendChild(scenarioElement);
+        });
+    }
+    
+    loadScenario(scenarioId) {
+        const scenario = this.scenarios.find(s => s.id === scenarioId);
+        if (!scenario) return;
+        
+        // Update lever values
+        this.leverValues = { ...scenario.values };
+        
+        // Update UI
+        Object.keys(scenario.values).forEach(leverId => {
+            const slider = document.querySelector(`#${leverId}`);
+            if (slider) {
+                slider.value = scenario.values[leverId];
+                this.updateLeverDisplay(leverId, scenario.values[leverId]);
+            }
+        });
+        
+        this.updateCalculations();
+        this.hideModal('load-scenario-modal');
+        this.showToast(`Scenario "${scenario.name}" loaded successfully!`, 'success');
+    }
+    
+    deleteScenario(scenarioId) {
+        if (confirm('Are you sure you want to delete this scenario?')) {
+            this.scenarios = this.scenarios.filter(s => s.id !== scenarioId);
+            localStorage.setItem('carbonCalculatorScenarios', JSON.stringify(this.scenarios));
+            this.loadSavedScenarios();
+            this.showToast('Scenario deleted successfully!', 'success');
+        }
+    }
+    
+    shareScenario() {
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams();
+        
+        Object.keys(this.leverValues).forEach(key => {
+            params.set(key, this.leverValues[key]);
+        });
+        
+        url.search = params.toString();
+        
+        if (navigator.share) {
+            navigator.share({
+                title: 'MacKay Carbon Calculator Scenario',
+                text: 'Check out my carbon reduction scenario',
+                url: url.toString()
+            });
+        } else {
+            navigator.clipboard.writeText(url.toString()).then(() => {
+                this.showToast('Scenario URL copied to clipboard!', 'success');
+            });
+        }
+    }
+    
+    exportData() {
+        const form = document.getElementById('export-form');
+        const formData = new FormData(form);
+        const format = formData.get('export-format');
+        
+        const data = {
+            scenario: {
+                name: this.currentScenario.name,
+                values: this.leverValues,
+                timestamp: new Date().toISOString()
+            },
+            results: {
+                totalEmissions: this.calculateTotalEmissions(),
+                sectorBreakdown: this.calculateSectorBreakdown(),
+                reductionFrom1990: this.calculateReductionFrom1990()
+            }
+        };
+        
+        if (formData.get('include-charts')) {
+            data.chartData = this.getChartData();
+        }
+        
+        if (formData.get('include-analytics')) {
+            data.analytics = this.getAnalyticsData();
+        }
+        
+        this.downloadData(data, format);
+        this.hideModal('export-modal');
+        this.showToast(`Data exported as ${format.toUpperCase()}!`, 'success');
+    }
+    
+    downloadData(data, format) {
+        let content, filename, mimeType;
+        
+        switch (format) {
+            case 'json':
+                content = JSON.stringify(data, null, 2);
+                filename = 'carbon-calculator-data.json';
+                mimeType = 'application/json';
+                break;
+            case 'csv':
+                content = this.convertToCSV(data);
+                filename = 'carbon-calculator-data.csv';
+                mimeType = 'text/csv';
+                break;
+            case 'pdf':
+                this.generatePDF(data);
+                return;
+        }
+        
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+    
+    convertToCSV(data) {
+        const rows = [];
+        rows.push(['Metric', 'Value']);
+        rows.push(['Total Emissions (MtCO2e)', data.results.totalEmissions]);
+        rows.push(['Reduction from 1990 (%)', data.results.reductionFrom1990]);
+        rows.push(['']);
+        rows.push(['Lever', 'Value']);
+        
+        Object.keys(data.scenario.values).forEach(key => {
+            rows.push([key, data.scenario.values[key]]);
+        });
+        
+        return rows.map(row => row.join(',')).join('\n');
+    }
+    
+    generatePDF(data) {
+        // This would require a PDF library like jsPDF
+        this.showToast('PDF export feature coming soon!', 'info');
+    }
+    
+    updateAnalytics() {
+        this.updateKeyMetrics();
+        this.updateTrendsChart();
+        this.updateInsights();
+    }
+    
+    updateAnalyticsTab(tabId) {
+        switch (tabId) {
+            case 'overview':
+                this.updateKeyMetrics();
+                break;
+            case 'trends':
+                this.updateTrendsChart();
+                break;
+            case 'compare':
+                this.updateComparison();
+                break;
+            case 'insights':
+                this.updateInsights();
+                break;
+        }
+    }
+    
+    updateKeyMetrics() {
+        const totalEmissions = this.calculateTotalEmissions();
+        const reductionFrom1990 = this.calculateReductionFrom1990();
+        const renewableShare = this.calculateRenewableShare();
+        const efficiencyScore = this.calculateEfficiencyScore();
+        
+        const targetProgressEl = document.querySelector('[data-metric="target-progress"] .metric-value');
+        if (targetProgressEl) {
+            targetProgressEl.textContent = `${Math.round(reductionFrom1990)}%`;
+        }
+        
+        const efficiencyEl = document.querySelector('[data-metric="efficiency"] .metric-value');
+        if (efficiencyEl) {
+            efficiencyEl.textContent = `${Math.round(efficiencyScore)}%`;
+        }
+        
+        const renewableEl = document.querySelector('[data-metric="renewable"] .metric-value');
+        if (renewableEl) {
+            renewableEl.textContent = `${Math.round(renewableShare)}%`;
+        }
+    }
+    
+    updateInsights() {
+        const insights = this.generateInsights();
+        const container = document.querySelector('.insights-container');
+        
+        if (container) {
+            container.innerHTML = insights.map(insight => `
+                <div class="insight-card">
+                    <div class="insight-icon">${insight.icon}</div>
+                    <div class="insight-content">
+                        <h4>${insight.title}</h4>
+                        <p>${insight.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+    
+    generateInsights() {
+        const insights = [];
+        const totalEmissions = this.calculateTotalEmissions();
+        const reductionFrom1990 = this.calculateReductionFrom1990();
+        
+        if (reductionFrom1990 < 50) {
+            insights.push({
+                icon: '⚡',
+                title: 'Increase Renewable Energy',
+                description: 'Consider increasing renewable energy adoption to achieve deeper emissions reductions.'
+            });
+        }
+        
+        if (this.leverValues['building-insulation'] < 3) {
+            insights.push({
+                icon: '🏠',
+                title: 'Improve Building Efficiency',
+                description: 'Better building insulation could significantly reduce heating and cooling emissions.'
+            });
+        }
+        
+        if (this.leverValues['electric-cars'] < 3) {
+            insights.push({
+                icon: '🚗',
+                title: 'Accelerate Transport Electrification',
+                description: 'Faster adoption of electric vehicles would help reduce transport emissions.'
+            });
+        }
+        
+        return insights;
+    }
+    
+    calculateRenewableShare() {
+        // Simplified calculation based on relevant levers
+        const renewableLevers = ['wind-onshore', 'wind-offshore', 'solar-pv', 'hydro'];
+        const total = renewableLevers.reduce((sum, lever) => {
+            return sum + (this.leverValues[lever] || 1);
+        }, 0);
+        return (total / renewableLevers.length) * 25; // Scale to percentage
+    }
+    
+    calculateEfficiencyScore() {
+        // Simplified efficiency calculation
+        const efficiencyLevers = ['building-insulation', 'heat-pumps', 'freight-efficiency'];
+        const total = efficiencyLevers.reduce((sum, lever) => {
+            return sum + (this.leverValues[lever] || 1);
+        }, 0);
+        return (total / efficiencyLevers.length) * 25; // Scale to percentage
+    }
+    
+    calculateTotalEmissions() {
+        // Simplified total emissions calculation
+        // Base emissions in 1990: ~600 MtCO2e
+        const baseEmissions = 600;
+        
+        // Calculate reduction factor based on all levers
+        const allLevers = Object.values(this.leverValues);
+        const averageLevel = allLevers.reduce((sum, val) => sum + val, 0) / allLevers.length;
+        
+        // Each level represents roughly 20% reduction potential
+        const reductionFactor = (averageLevel - 1) * 0.2;
+        
+        return Math.max(50, baseEmissions * (1 - reductionFactor));
+    }
+    
+    calculateReductionFrom1990() {
+        const currentEmissions = this.calculateTotalEmissions();
+        const baseEmissions = 600; // 1990 baseline
+        return ((baseEmissions - currentEmissions) / baseEmissions) * 100;
+    }
+    
+    calculateSectorBreakdown() {
+        // Simplified sector breakdown
+        const totalEmissions = this.calculateTotalEmissions();
+        return {
+            transport: totalEmissions * 0.3,
+            buildings: totalEmissions * 0.25,
+            industry: totalEmissions * 0.2,
+            electricity: totalEmissions * 0.15,
+            agriculture: totalEmissions * 0.1
+        };
+    }
+    
+    getChartData() {
+        // Return current chart data if available
+        return {
+            emissions: this.calculateTotalEmissions(),
+            sectorBreakdown: this.calculateSectorBreakdown()
+        };
+    }
+    
+    getAnalyticsData() {
+        // Return analytics data
+        return {
+            totalEmissions: this.calculateTotalEmissions(),
+            reductionFrom1990: this.calculateReductionFrom1990(),
+            renewableShare: this.calculateRenewableShare(),
+            efficiencyScore: this.calculateEfficiencyScore()
+        };
+    }
+    
+    updateTrendsChart() {
+        // Placeholder for trends chart update
+        console.log('Trends chart updated');
+    }
+    
+    updateComparison() {
+        // Placeholder for comparison update
+        console.log('Comparison updated');
+    }
+    
+    showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        if (!toast) {
+            console.log(`Toast: ${message}`);
+            return;
+        }
+        
+        const toastMessage = toast.querySelector('.toast-message');
+        const toastIcon = toast.querySelector('.toast-icon');
+        
+        if (toastMessage) {
+            toastMessage.textContent = message;
+        }
+        
+        const icons = {
+            success: '✅',
+            error: '❌',
+            warning: '⚠️',
+            info: 'ℹ️'
+        };
+        
+        if (toastIcon) {
+            toastIcon.textContent = icons[type] || icons.info;
+        }
+        
+        // Set type class
+        toast.className = `toast ${type} show`;
+        
+        // Auto hide after 3 seconds
+        setTimeout(() => {
+            toast.classList.add('hide');
+            setTimeout(() => {
+                toast.classList.remove('show', 'hide');
+            }, 300);
+        }, 3000);
+        
+        // Close button
+        const closeBtn = toast.querySelector('.toast-close');
+        if (closeBtn) {
+            closeBtn.onclick = () => {
+                toast.classList.add('hide');
+                setTimeout(() => {
+                    toast.classList.remove('show', 'hide');
+                }, 300);
+            };
+        }
+    }
+
+    // Advanced Animation System
+    initializeAdvancedAnimations() {
+        this.initializeParticleSystem();
+        this.initializeRippleEffects();
+        this.initializeLoadingAnimations();
+        this.initializeCounterAnimations();
+        this.initializeEnergyFlowAnimations();
+        this.initializeStaggerAnimations();
+        this.monitorAnimationPerformance();
+    }
+
+    initializeParticleSystem() {
+        this.particleContainer = document.createElement('div');
+        this.particleContainer.className = 'particle-container';
+        this.particleContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        `;
+        document.body.appendChild(this.particleContainer);
+    }
+
+    createAdvancedParticles(x, y, count = 8, color = '#3498db') {
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                width: ${Math.random() * 6 + 2}px;
+                height: ${Math.random() * 6 + 2}px;
+                background: ${color};
+                border-radius: 50%;
+                pointer-events: none;
+                animation: particleFloat ${Math.random() * 2 + 2}s linear forwards;
+                transform: translate(-50%, -50%);
+            `;
+            
+            this.particleContainer.appendChild(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 4000);
+        }
+    }
+
+    initializeRippleEffects() {
+        const rippleElements = document.querySelectorAll('.tab-btn, .feature-btn, .btn');
+        
+        rippleElements.forEach(element => {
+            element.addEventListener('click', (e) => {
+                this.createAdvancedRippleEffect(e, element);
+            });
+        });
+    }
+
+    createAdvancedRippleEffect(event, element) {
+        const rect = element.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+            position: absolute;
+            left: ${x}px;
+            top: ${y}px;
+            width: ${size}px;
+            height: ${size}px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        `;
+        
+        element.style.position = 'relative';
+        element.style.overflow = 'hidden';
+        element.appendChild(ripple);
+        
+        setTimeout(() => {
+            if (ripple.parentNode) {
+                ripple.parentNode.removeChild(ripple);
+            }
+        }, 600);
+    }
+
+    initializeLoadingAnimations() {
+        this.loadingStates = new Set();
+    }
+
+    showLoadingAnimation(element) {
+        if (!element) return;
+        
+        element.classList.add('loading');
+        this.loadingStates.add(element);
+    }
+
+    hideLoadingAnimation(element) {
+        if (!element) return;
+        
+        element.classList.remove('loading');
+        this.loadingStates.delete(element);
+    }
+
+    initializeCounterAnimations() {
+        this.observeCounterElements();
+    }
+
+    observeCounterElements() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const counterElements = document.querySelectorAll('.metric-value, .emissions-value');
+        counterElements.forEach(el => observer.observe(el));
+    }
+
+    animateCounter(element) {
+        const target = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
+        const duration = 1000;
+        const steps = 60;
+        const increment = target / steps;
+        let current = 0;
+        let step = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            step++;
+            
+            if (step >= steps) {
+                current = target;
+                clearInterval(timer);
+            }
+            
+            const suffix = element.textContent.replace(/[\d.-]/g, '');
+            element.textContent = Math.round(current * 10) / 10 + suffix;
+        }, duration / steps);
+    }
+
+    initializeEnergyFlowAnimations() {
+        const energyElements = document.querySelectorAll('.progress-ring, .lever');
+        
+        energyElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                this.addEnergyFlow(element);
+            });
+        });
+    }
+
+    addEnergyFlow(element) {
+        if (element.querySelector('.energy-flow-line')) return;
+        
+        const flowLine = document.createElement('div');
+        flowLine.className = 'energy-flow-line';
+        flowLine.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+            animation: energyFlow 2s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        `;
+        
+        element.style.position = 'relative';
+        element.appendChild(flowLine);
+        
+        setTimeout(() => {
+            if (flowLine.parentNode) {
+                flowLine.parentNode.removeChild(flowLine);
+            }
+        }, 6000);
+    }
+
+    initializeStaggerAnimations() {
+        const staggerContainers = document.querySelectorAll('.levers-container, .key-metrics, .insights-grid');
+        
+        staggerContainers.forEach(container => {
+            container.classList.add('stagger-animation');
+        });
+    }
+
+    // Enhanced lever interaction with animations
+    enhanceLeverInteraction(lever, slider) {
+        slider.addEventListener('input', (e) => {
+            // Add active animation
+            lever.classList.add('active');
+            
+            // Create particles on significant changes
+            const rect = slider.getBoundingClientRect();
+            const x = rect.left + (rect.width * (e.target.value / e.target.max));
+            const y = rect.top + rect.height / 2;
+            
+            if (Math.random() > 0.7) { // 30% chance for particles
+                this.createAdvancedParticles(x, y, 3, this.getParticleColor(e.target.value));
+            }
+            
+            // Remove active class after animation
+            setTimeout(() => {
+                lever.classList.remove('active');
+            }, 600);
+        });
+        
+        slider.addEventListener('change', (e) => {
+            // Create celebration particles for high values
+            if (e.target.value > e.target.max * 0.8) {
+                const rect = slider.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+                this.createAdvancedParticles(x, y, 12, '#2ecc71');
+            }
+        });
+    }
+
+    getParticleColor(value) {
+        const colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6'];
+        const index = Math.floor((value / 4) % colors.length);
+        return colors[index];
+    }
+
+    // Enhanced modal animations
+    showModalWithAnimation(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        modal.style.display = 'flex';
+        modal.classList.add('show');
+        
+        const modalContent = modal.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.style.animation = 'modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+        
+        document.body.style.overflow = 'hidden';
+    }
+
+    hideModalWithAnimation(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        const modalContent = modal.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.style.animation = 'modalSlideOut 0.3s ease-in';
+        }
+        
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    // Enhanced tab switching with animations
+    switchTabWithAnimation(tabId) {
+        const allTabs = document.querySelectorAll('.tab-content');
+        const targetTab = document.getElementById(tabId);
+        const allButtons = document.querySelectorAll('.tab-btn');
+        const activeButton = document.querySelector(`[onclick*="${tabId}"]`);
+        
+        // Hide all tabs with fade out
+        allTabs.forEach(tab => {
+            if (tab.style.display !== 'none') {
+                tab.style.animation = 'fadeOut 0.2s ease-out';
+                setTimeout(() => {
+                    tab.style.display = 'none';
+                }, 200);
+            }
+        });
+        
+        // Remove active class from all buttons
+        allButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Show target tab with fade in
+        setTimeout(() => {
+            if (targetTab) {
+                targetTab.style.display = 'block';
+                targetTab.style.animation = 'fadeInUp 0.4s ease-out';
+            }
+            
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }, 200);
+    }
+
+    // Performance monitoring for animations
+    monitorAnimationPerformance() {
+        let frameCount = 0;
+        let lastTime = performance.now();
+        
+        const checkPerformance = (currentTime) => {
+            frameCount++;
+            
+            if (currentTime - lastTime >= 1000) {
+                const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                
+                // Reduce animations if performance is poor
+                if (fps < 30) {
+                    document.body.classList.add('reduced-animations');
+                } else if (fps > 50) {
+                    document.body.classList.remove('reduced-animations');
+                }
+                
+                frameCount = 0;
+                lastTime = currentTime;
+            }
+            
+            requestAnimationFrame(checkPerformance);
+        };
+        
+        requestAnimationFrame(checkPerformance);
     }
     
     addTouchInteractions() {

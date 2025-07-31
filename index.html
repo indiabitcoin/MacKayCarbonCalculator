@@ -11,6 +11,46 @@
         <header>
             <h1>MacKay Carbon Calculator</h1>
             <p>Explore pathways to UK net zero emissions by 2050</p>
+            
+            <!-- Enhanced Features Toolbar -->
+            <div class="features-toolbar">
+                <button class="feature-btn" id="saveScenarioBtn" title="Save Current Scenario">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                    </svg>
+                    Save Scenario
+                </button>
+                <button class="feature-btn" id="loadScenarioBtn" title="Load Saved Scenario">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    Load Scenario
+                </button>
+                <button class="feature-btn" id="compareBtn" title="Compare Scenarios">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9,5V9H21V7.5L16,12L21,16.5V15H9V19H7V5H9M5,19A2,2 0 0,1 3,17V7A2,2 0 0,1 5,5A2,2 0 0,1 7,7V17A2,2 0 0,1 5,19Z"/>
+                    </svg>
+                    Compare
+                </button>
+                <button class="feature-btn" id="exportBtn" title="Export Data">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    Export
+                </button>
+                <button class="feature-btn" id="shareBtn" title="Share Scenario">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z"/>
+                    </svg>
+                    Share
+                </button>
+                <button class="feature-btn" id="helpBtn" title="Help & Tutorial">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C7.59,4 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"/>
+                    </svg>
+                    Help
+                </button>
+            </div>
         </header>
 
         <div class="calculator-interface">
@@ -378,6 +418,99 @@
                             <span class="label">Net Zero Target:</span>
                             <span class="value" id="netZeroStatus">Not Achieved</span>
                         </div>
+                        <div class="metric">
+                            <span class="label">Carbon Budget:</span>
+                            <span class="value" id="carbonBudget">Within Limits</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Feasibility Score:</span>
+                            <span class="value" id="feasibilityScore">75%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Analytics Panel -->
+                    <div class="analytics-panel">
+                        <div class="analytics-tabs">
+                            <button class="analytics-tab active" data-tab="overview">Overview</button>
+                            <button class="analytics-tab" data-tab="trends">Trends</button>
+                            <button class="analytics-tab" data-tab="comparison">Compare</button>
+                            <button class="analytics-tab" data-tab="insights">Insights</button>
+                        </div>
+                        
+                        <div class="analytics-content">
+                            <div class="analytics-section active" id="overview-section">
+                                <div class="key-metrics">
+                                    <div class="metric-card">
+                                        <div class="metric-icon">🎯</div>
+                                        <div class="metric-info">
+                                            <span class="metric-title">Target Progress</span>
+                                            <span class="metric-value" id="targetProgress">65%</span>
+                                        </div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-icon">⚡</div>
+                                        <div class="metric-info">
+                                            <span class="metric-title">Energy Efficiency</span>
+                                            <span class="metric-value" id="energyEfficiency">Good</span>
+                                        </div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-icon">🌱</div>
+                                        <div class="metric-info">
+                                            <span class="metric-title">Renewable Share</span>
+                                            <span class="metric-value" id="renewableShare">78%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="analytics-section" id="trends-section">
+                                <canvas id="trendsChart" width="400" height="200"></canvas>
+                            </div>
+                            
+                            <div class="analytics-section" id="comparison-section">
+                                <div class="comparison-container">
+                                    <div class="scenario-selector">
+                                        <select id="compareScenario1">
+                                            <option value="current">Current Scenario</option>
+                                        </select>
+                                        <span class="vs-label">vs</span>
+                                        <select id="compareScenario2">
+                                            <option value="baseline">Baseline (No Action)</option>
+                                            <option value="government">Government Plan</option>
+                                            <option value="ambitious">Ambitious Scenario</option>
+                                        </select>
+                                    </div>
+                                    <canvas id="comparisonChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="analytics-section" id="insights-section">
+                                <div class="insights-container">
+                                    <div class="insight-card">
+                                        <div class="insight-icon">💡</div>
+                                        <div class="insight-content">
+                                            <h4>Key Recommendation</h4>
+                                            <p id="keyRecommendation">Focus on transport electrification for maximum impact</p>
+                                        </div>
+                                    </div>
+                                    <div class="insight-card">
+                                        <div class="insight-icon">⚠️</div>
+                                        <div class="insight-content">
+                                            <h4>Challenge Alert</h4>
+                                            <p id="challengeAlert">Current aviation targets may be difficult to achieve</p>
+                                        </div>
+                                    </div>
+                                    <div class="insight-card">
+                                        <div class="insight-icon">🚀</div>
+                                        <div class="insight-content">
+                                            <h4>Quick Win</h4>
+                                            <p id="quickWin">Increase building insulation for immediate gains</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -427,6 +560,196 @@
         <footer>
             <p>Based on the UK Government's MacKay Carbon Calculator | Explore pathways to net zero by 2050</p>
         </footer>
+    </div>
+
+    <!-- Modal Dialogs -->
+    <!-- Save Scenario Modal -->
+    <div id="saveScenarioModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Save Scenario</h3>
+                <span class="close" data-modal="saveScenarioModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="scenarioName">Scenario Name:</label>
+                    <input type="text" id="scenarioName" placeholder="Enter scenario name...">
+                </div>
+                <div class="form-group">
+                    <label for="scenarioDescription">Description (optional):</label>
+                    <textarea id="scenarioDescription" placeholder="Describe your scenario..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="setAsDefault"> Set as default scenario
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal="saveScenarioModal">Cancel</button>
+                <button class="btn btn-primary" id="confirmSaveScenario">Save Scenario</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Scenario Modal -->
+    <div id="loadScenarioModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Load Scenario</h3>
+                <span class="close" data-modal="loadScenarioModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="scenarios-list" id="scenariosList">
+                    <!-- Scenarios will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal="loadScenarioModal">Cancel</button>
+                <button class="btn btn-danger" id="clearAllScenarios">Clear All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Help & Tutorial</h3>
+                <span class="close" data-modal="helpModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="help-tabs">
+                    <button class="help-tab active" data-help="getting-started">Getting Started</button>
+                    <button class="help-tab" data-help="sectors">Sectors Guide</button>
+                    <button class="help-tab" data-help="features">Features</button>
+                    <button class="help-tab" data-help="methodology">Methodology</button>
+                </div>
+                
+                <div class="help-content">
+                    <div class="help-section active" id="getting-started">
+                        <h4>Getting Started</h4>
+                        <p>Welcome to the MacKay Carbon Calculator! This tool helps you explore different pathways to achieve UK net zero emissions by 2050.</p>
+                        <ul>
+                            <li><strong>Adjust Levers:</strong> Use the sliders to set ambition levels for different sectors</li>
+                            <li><strong>View Results:</strong> See real-time updates to emissions projections</li>
+                            <li><strong>Save Scenarios:</strong> Save your configurations for later comparison</li>
+                            <li><strong>Compare Options:</strong> Use the analytics panel to compare different approaches</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="help-section" id="sectors">
+                        <h4>Sectors Guide</h4>
+                        <div class="sector-help">
+                            <h5>🚗 Transport</h5>
+                            <p>Covers road transport, aviation, shipping, and freight. Key levers include electric vehicle adoption and modal shift.</p>
+                            
+                            <h5>🏠 Buildings</h5>
+                            <p>Residential and commercial building energy use. Focus on insulation, heat pumps, and temperature settings.</p>
+                            
+                            <h5>🏭 Industry</h5>
+                            <p>Manufacturing and industrial processes. Includes efficiency improvements and fuel switching.</p>
+                            
+                            <h5>⚡ Electricity</h5>
+                            <p>Power generation mix. Covers renewable energy deployment and storage solutions.</p>
+                            
+                            <h5>🌱 CO₂ Removal</h5>
+                            <p>Carbon capture and removal technologies including direct air capture and CCS.</p>
+                            
+                            <h5>🌾 Land Use</h5>
+                            <p>Agriculture, forestry, and land management practices affecting carbon storage.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="help-section" id="features">
+                        <h4>Advanced Features</h4>
+                        <ul>
+                            <li><strong>Scenario Management:</strong> Save, load, and organize different policy scenarios</li>
+                            <li><strong>Analytics Dashboard:</strong> View trends, comparisons, and insights</li>
+                            <li><strong>Data Export:</strong> Export results to CSV or JSON format</li>
+                            <li><strong>Sharing:</strong> Generate shareable links for your scenarios</li>
+                            <li><strong>Performance Metrics:</strong> Track feasibility and implementation challenges</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="help-section" id="methodology">
+                        <h4>Methodology</h4>
+                        <p>This calculator is based on the UK Government's MacKay Carbon Calculator methodology, developed by the late Professor David MacKay.</p>
+                        <p>The model uses simplified but scientifically grounded assumptions about:</p>
+                        <ul>
+                            <li>Technology deployment rates and costs</li>
+                            <li>Behavioral change potential</li>
+                            <li>Resource constraints and trade-offs</li>
+                            <li>Policy implementation timelines</li>
+                        </ul>
+                        <p>Results should be interpreted as indicative pathways rather than precise predictions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-modal="helpModal">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Export Data</h3>
+                <span class="close" data-modal="exportModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="export-options">
+                    <div class="export-option">
+                        <input type="radio" id="exportCSV" name="exportFormat" value="csv" checked>
+                        <label for="exportCSV">
+                            <strong>CSV Format</strong>
+                            <span>Spreadsheet-compatible format for analysis</span>
+                        </label>
+                    </div>
+                    <div class="export-option">
+                        <input type="radio" id="exportJSON" name="exportFormat" value="json">
+                        <label for="exportJSON">
+                            <strong>JSON Format</strong>
+                            <span>Machine-readable format for developers</span>
+                        </label>
+                    </div>
+                    <div class="export-option">
+                        <input type="radio" id="exportPDF" name="exportFormat" value="pdf">
+                        <label for="exportPDF">
+                            <strong>PDF Report</strong>
+                            <span>Formatted report with charts and analysis</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="export-content">
+                    <label>
+                        <input type="checkbox" id="includeCharts" checked> Include charts and visualizations
+                    </label>
+                    <label>
+                        <input type="checkbox" id="includeMetadata" checked> Include scenario metadata
+                    </label>
+                    <label>
+                        <input type="checkbox" id="includeTimestamp" checked> Include timestamp
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal="exportModal">Cancel</button>
+                <button class="btn btn-primary" id="confirmExport">Export Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <span class="toast-icon"></span>
+            <span class="toast-message"></span>
+        </div>
+        <button class="toast-close">&times;</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
