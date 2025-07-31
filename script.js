@@ -1378,14 +1378,14 @@ class CarbonCalculator {
             slider.addEventListener('touchstart', (e) => {
                 const lever = e.target.closest('.lever');
                 lever.classList.add('touching');
-            });
+            }, { passive: true });
             
             slider.addEventListener('touchend', (e) => {
                 const lever = e.target.closest('.lever');
                 setTimeout(() => {
                     lever.classList.remove('touching');
                 }, 150);
-            });
+            }, { passive: true });
         });
         
         // Add touch feedback for tabs
