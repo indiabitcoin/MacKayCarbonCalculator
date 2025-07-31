@@ -18,11 +18,16 @@ class CarbonCalculator {
         // Initialize enhanced animations
         this.enhanceTabSwitching();
         
-        // Add initial staggered animation to levers
+        // Add initial staggered animation to levers (reduced on mobile)
         setTimeout(() => {
             const levers = document.querySelectorAll('.lever');
-            this.addStaggeredAnimation(levers, 'bounceIn');
+            if (window.innerWidth > 768) {
+                this.addStaggeredAnimation(levers, 'bounceIn');
+            }
         }, 500);
+        
+        // Initialize responsive features
+        this.initializeResponsiveFeatures();
     }
 
     initializeLeverValues() {
@@ -417,14 +422,147 @@ class CarbonCalculator {
                 // Add active class to clicked tab
                 e.target.classList.add('active');
                 
-                // Add entrance animation to sector panel
-                const targetPanel = document.querySelector(`[data-sector="${e.target.dataset.sector}"]`);
-                if (targetPanel) {
-                    targetPanel.style.animation = 'slideInFromLeft 0.5s ease-out';
-                    setTimeout(() => targetPanel.style.animation = '', 500);
+                // Add entrance animation to sector panel (only on larger screens)
+                if (window.innerWidth > 768) {
+                    const targetPanel = document.querySelector(`[data-sector="${e.target.dataset.sector}"]`);
+                    if (targetPanel) {
+                        targetPanel.style.animation = 'slideInFromLeft 0.5s ease-out';
+                        setTimeout(() => targetPanel.style.animation = '', 500);
+                    }
                 }
             });
         });
+    }
+    
+    initializeResponsiveFeatures() {
+        // Detect if device supports touch
+        this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        // Add touch-specific event listeners
+        if (this.isTouchDevice) {
+            this.addTouchInteractions();
+        }
+        
+        // Handle orientation changes
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.handleOrientationChange();
+            }, 100);
+        });
+        
+        // Handle window resize for responsive updates
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.handleResize();
+            }, 250);
+        });
+        
+        // Optimize animations based on device capabilities
+        this.optimizeForDevice();
+    }
+    
+    addTouchInteractions() {
+        // Add touch feedback for sliders
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('touchstart', (e) => {
+                const lever = e.target.closest('.lever');
+                lever.classList.add('touching');
+            });
+            
+            slider.addEventListener('touchend', (e) => {
+                const lever = e.target.closest('.lever');
+                setTimeout(() => {
+                    lever.classList.remove('touching');
+                }, 150);
+            });
+        });
+        
+        // Add touch feedback for tabs
+        document.querySelectorAll('.tab-btn').forEach(tab => {
+            tab.addEventListener('touchstart', () => {
+                tab.classList.add('touching');
+            });
+            
+            tab.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    tab.classList.remove('touching');
+                }, 150);
+            });
+        });
+    }
+    
+    handleOrientationChange() {
+        // Recalculate layout after orientation change
+        this.updateCalculations();
+        
+        // Adjust CO2e meter size for landscape mode
+        const meter = document.querySelector('.co2e-meter');
+        if (meter && window.innerWidth <= 768) {
+            if (window.orientation === 90 || window.orientation === -90) {
+                meter.style.width = '140px';
+                meter.style.height = '140px';
+            } else {
+                meter.style.width = '180px';
+                meter.style.height = '180px';
+            }
+        }
+    }
+    
+    handleResize() {
+        // Update chart and meter sizes
+        const meter = document.querySelector('.co2e-meter');
+        if (meter) {
+            if (window.innerWidth <= 360) {
+                meter.style.width = '120px';
+                meter.style.height = '120px';
+            } else if (window.innerWidth <= 480) {
+                meter.style.width = '150px';
+                meter.style.height = '150px';
+            } else if (window.innerWidth <= 768) {
+                meter.style.width = '180px';
+                meter.style.height = '180px';
+            }
+        }
+        
+        // Recalculate emissions display
+        this.updateCalculations();
+    }
+    
+    optimizeForDevice() {
+        // Reduce animations on low-end devices
+        const isLowEndDevice = navigator.hardwareConcurrency <= 2 || 
+                              navigator.deviceMemory <= 2 || 
+                              window.innerWidth <= 480;
+        
+        if (isLowEndDevice) {
+            document.body.classList.add('reduced-motion');
+            
+            // Disable particle effects
+            this.createParticles = () => {};
+            
+            // Simplify animations
+            const style = document.createElement('style');
+            style.textContent = `
+                .reduced-motion * {
+                    animation-duration: 0.3s !important;
+                    transition-duration: 0.3s !important;
+                }
+                .reduced-motion .particle {
+                    display: none !important;
+                }
+                .reduced-motion .lever.active {
+                    animation: none !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Prefers reduced motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.body.classList.add('reduced-motion');
+        }
     }
 
     updateSectorBreakdown(sectorEmissions) {

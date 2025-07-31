@@ -651,48 +651,569 @@ footer {
     font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* Enhanced Responsive Design */
+
+/* Large tablets and small desktops */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        padding: 20px;
+    }
+    
+    .calculator-interface {
+        gap: 20px;
+    }
+    
+    .lever-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablets */
 @media (max-width: 1024px) {
     .calculator-interface {
         grid-template-columns: 1fr;
+        gap: 30px;
     }
     
     .sector-tabs {
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
     }
     
     .tab-btn {
-        font-size: 0.8rem;
-        padding: 10px 15px;
+        font-size: 0.85rem;
+        padding: 12px 18px;
+        min-height: 44px; /* Touch-friendly */
+    }
+    
+    .controls-panel {
+        order: 2;
+    }
+    
+    .results-panel {
+        order: 1;
+    }
+    
+    .co2e-meter {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
     }
 }
 
+/* Small tablets and large phones */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
     }
     
+    header {
+        text-align: center;
+        padding: 20px 0;
+    }
+    
     header h1 {
         font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    header p {
+        font-size: 1rem;
     }
     
     .controls-panel,
     .results-panel {
         padding: 20px;
+        border-radius: 12px;
+    }
+    
+    .sector-tabs {
+        gap: 6px;
+        margin-bottom: 20px;
+    }
+    
+    .tab-btn {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .lever {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .lever label {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+    
+    .ambition-levels input[type="range"] {
+        height: 8px;
+        margin: 15px 0;
+    }
+    
+    .ambition-levels input[type="range"]::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .level-labels {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+    
+    .lever-description {
+        font-size: 0.85rem;
+        line-height: 1.4;
     }
     
     .emissions-summary {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .metric {
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .metric .value {
+        font-size: 2rem;
+    }
+    
+    .metric .label {
+        font-size: 0.9rem;
+    }
+    
+    .sector-breakdown h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
     }
     
     .sector-bar {
         flex-direction: column;
         align-items: flex-start;
-        gap: 5px;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .sector-name {
+        min-width: auto;
+        font-size: 0.9rem;
+        font-weight: 600;
     }
     
     .bar-container {
         width: 100%;
+    }
+    
+    .bar {
+        height: 16px;
+    }
+    
+    .co2e-meter {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .emissions-value {
+        font-size: 2.5rem;
+    }
+    
+    .emissions-percentage {
+        font-size: 1.2rem;
+    }
+    
+    .progress-ring {
+        width: 35px;
+        height: 35px;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .progress-ring svg {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    header p {
+        font-size: 0.9rem;
+    }
+    
+    .controls-panel,
+    .results-panel {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .sector-tabs {
+        gap: 4px;
+        margin-bottom: 15px;
+    }
+    
+    .tab-btn {
+        font-size: 0.75rem;
+        padding: 8px 10px;
+        border-radius: 6px;
+    }
+    
+    .lever {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .lever label {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+    }
+    
+    .ambition-levels input[type="range"] {
+        height: 6px;
+        margin: 12px 0;
+    }
+    
+    .ambition-levels input[type="range"]::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .level-labels {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+    }
+    
+    .lever-description {
+        font-size: 0.8rem;
+        line-height: 1.3;
+    }
+    
+    .metric {
+        padding: 15px;
+    }
+    
+    .metric .value {
+        font-size: 1.8rem;
+    }
+    
+    .metric .label {
+        font-size: 0.8rem;
+    }
+    
+    .sector-bar {
+        margin-bottom: 15px;
+        gap: 6px;
+    }
+    
+    .sector-name {
+        font-size: 0.85rem;
+    }
+    
+    .bar {
+        height: 14px;
+    }
+    
+    .co2e-meter {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .emissions-value {
+        font-size: 2rem;
+    }
+    
+    .emissions-percentage {
+        font-size: 1rem;
+    }
+    
+    .emissions-label {
+        font-size: 0.8rem;
+    }
+    
+    .progress-ring {
+        width: 30px;
+        height: 30px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .progress-ring svg {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .progress-ring-circle {
+        stroke-width: 2;
+    }
+    
+    /* Reduce animations on mobile for performance */
+    .particle {
+        display: none;
+    }
+    
+    .lever.active {
+        animation: none;
+    }
+    
+    .co2e-meter::before {
+        animation: none;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+    .container {
+        padding: 8px;
+    }
+    
+    header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .controls-panel,
+    .results-panel {
+        padding: 12px;
+    }
+    
+    .tab-btn {
+        font-size: 0.7rem;
+        padding: 6px 8px;
+    }
+    
+    .lever {
+        padding: 12px;
+    }
+    
+    .co2e-meter {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .emissions-value {
+        font-size: 1.6rem;
+    }
+    
+    .emissions-percentage {
+        font-size: 0.9rem;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .lever:hover {
+        transform: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .metric:hover {
+        transform: none;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    
+    .tab-btn:hover {
+        background: rgba(0,123,255,0.1);
+        transform: none;
+    }
+    
+    /* Increase touch targets */
+    .ambition-levels input[type="range"] {
+        min-height: 44px;
+        padding: 10px 0;
+    }
+    
+    .tab-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Touch feedback styles */
+.lever.touching {
+    background: rgba(0,123,255,0.05);
+    transform: scale(0.98);
+    transition: all 0.15s ease;
+}
+
+.tab-btn.touching {
+    background: rgba(0,123,255,0.2);
+    transform: scale(0.95);
+    transition: all 0.15s ease;
+}
+
+/* Improved slider styles for mobile */
+@media (max-width: 768px) {
+    .ambition-levels input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+    }
+    
+    .ambition-levels input[type="range"]::-webkit-slider-track {
+        background: #e9ecef;
+        height: 8px;
+        border-radius: 4px;
+    }
+    
+    .ambition-levels input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        background: #007bff;
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+        margin-top: -8px;
+    }
+    
+    .ambition-levels input[type="range"]::-moz-range-track {
+        background: #e9ecef;
+        height: 8px;
+        border-radius: 4px;
+        border: none;
+    }
+    
+    .ambition-levels input[type="range"]::-moz-range-thumb {
+        background: #007bff;
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+    }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .lever, .metric, .tab-btn {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        will-change: transform;
+    }
+    
+    .bar {
+        will-change: width;
+    }
+    
+    .meter-needle {
+        will-change: transform;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .particle {
+        display: none !important;
+    }
+}
+
+/* Dark mode support for mobile */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+    body {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .controls-panel, .results-panel {
+        background: #2d2d2d;
+        border: 1px solid #404040;
+    }
+    
+    .lever {
+        background: #333333;
+        border: 1px solid #404040;
+    }
+    
+    .tab-btn {
+        background: #404040;
+        color: #ffffff;
+        border: 1px solid #555555;
+    }
+    
+    .tab-btn.active {
+        background: #007bff;
+        color: #ffffff;
+    }
+    
+    .metric {
+        background: #333333;
+        border: 1px solid #404040;
+    }
+    
+    .ambition-levels input[type="range"]::-webkit-slider-track {
+        background: #555555;
+    }
+    
+    .ambition-levels input[type="range"]::-moz-range-track {
+        background: #555555;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .meter-needle {
+        filter: drop-shadow(0 0 3px rgba(44,62,80,0.3));
+    }
+    
+    .progress-ring-circle {
+        stroke-width: 2.5;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .calculator-interface {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .controls-panel {
+        order: 1;
+    }
+    
+    .results-panel {
+        order: 2;
+    }
+    
+    .co2e-meter {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .sector-tabs {
+        margin-bottom: 15px;
+    }
+    
+    .lever {
+        padding: 15px;
+        margin-bottom: 15px;
     }
 }
 
