@@ -2,7 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="MacKay Carbon Calculator - Interactive tool for exploring UK net zero pathways">
+    <meta name="keywords" content="carbon calculator, climate change, net zero, UK emissions, MacKay">
+    <meta name="author" content="MacKay Carbon Calculator">
+    <meta name="theme-color" content="#27ae60">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Carbon Calculator">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#27ae60">
+    <meta name="msapplication-config" content="none">
     <title>MacKay Carbon Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -748,6 +758,39 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-modal="exportModal">Cancel</button>
                 <button class="btn btn-primary" id="confirmExport">Export Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cost Analysis Modal -->
+    <div id="costAnalysisModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cost-Benefit Analysis</h3>
+                <span class="close" data-modal="costAnalysisModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="cost-analysis">
+                    <p>Detailed cost-benefit analysis of your current scenario configuration.</p>
+                    <div class="cost-metrics">
+                        <div class="cost-metric">
+                            <span class="metric-label">Implementation Cost:</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="metric-label">Carbon Savings:</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="metric-label">Return on Investment:</span>
+                            <span class="metric-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal="costAnalysisModal">Close</button>
+                <button class="btn btn-primary" id="exportCostAnalysis">Export Analysis</button>
             </div>
         </div>
     </div>

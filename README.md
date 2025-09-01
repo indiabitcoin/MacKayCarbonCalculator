@@ -1,115 +1,215 @@
-# MacKay Carbon Calculator
+# MacKay Carbon Calculator - Enhanced Web Application
 
-A web-based implementation of the UK Government's MacKay Carbon Calculator, designed to help users explore pathways to achieve net zero emissions by 2050.
+A sophisticated, interactive web application for exploring pathways to UK net zero emissions by 2050, based on the UK Government's MacKay Carbon Calculator methodology.
 
-## Overview
+## 🌟 Key Features
 
-This carbon calculator is based on the official UK Government MacKay Carbon Calculator and allows users to:
+### Core Functionality
+- **Interactive Sector Controls**: Adjust ambition levels across 6 key sectors
+- **Real-time Emissions Calculation**: Live updates as you modify settings
+- **Visual CO₂e Meter**: Animated gauge showing reduction progress
+- **Sector Breakdown**: Detailed emissions analysis by sector
+- **Chart Visualization**: Interactive emissions pathway charts
 
-- Explore different decarbonisation scenarios across 6 key sectors
-- Adjust 23 different "levers" with 4 levels of ambition each
-- Visualize the impact of choices on UK emissions pathways
-- See real-time calculations of emissions reductions
-- Track progress toward the net zero 2050 target
+### 🚀 Advanced Features
 
-## Features
+#### 🤖 AI-Powered Insights
+- **Smart Recommendations**: AI analyzes your scenario and provides actionable insights
+- **Cost-Benefit Analysis**: Automatic calculation of implementation costs vs. carbon savings
+- **Optimization Suggestions**: AI suggests lever adjustments for better outcomes
+- **Priority Alerts**: Highlights critical areas needing attention
 
-### Sectors Covered
+#### 👥 Real-time Collaboration
+- **Live Collaboration Mode**: Work with others in real-time
+- **Shared Scenarios**: Multiple users can modify the same scenario simultaneously
+- **Collaboration Indicators**: Visual feedback showing active collaboration
+- **Change Notifications**: Real-time updates when others make changes
 
-1. **Transport** - Electric vehicles, public transport, active travel, aviation, freight
-2. **Buildings** - Temperature control, insulation, heat pumps, district heating, appliances
-3. **Industry** - Energy efficiency, steel production, cement, chemicals
-4. **Electricity Supply** - Wind, solar, nuclear power, energy storage
-5. **CO₂ Removal & Gases** - Direct air capture, carbon capture & storage, methane reduction
-6. **Land Use & Biofuels** - Afforestation, bioenergy crops, agriculture efficiency
+#### 📊 Advanced Visualizations
+- **Sankey Energy Flow Diagrams**: Visualize energy flows between sectors
+- **Performance Heatmaps**: Compare sector performance across multiple metrics
+- **Interactive Charts**: Enhanced Chart.js integration with custom animations
+- **Timeline Analysis**: Historical and projected emissions pathways
 
-### Interactive Elements
+#### ♿ Accessibility Features
+- **Keyboard Navigation**: Full keyboard accessibility support
+- **Screen Reader Support**: ARIA labels and descriptions
+- **High Contrast Mode**: Enhanced visibility for users with visual impairments
+- **Font Size Controls**: Adjustable text size for better readability
+- **Reduced Motion Support**: Respects user's motion preferences
 
-- **Ambition Levels**: Each lever has 4 levels from minimal effort (1) to maximum effort (4)
-- **Real-time Calculations**: Emissions update instantly as you adjust levers
-- **Visual Feedback**: Charts and graphs show emissions pathways and sector breakdowns
-- **Net Zero Tracking**: Clear indication of whether your pathway achieves net zero by 2050
+#### 🎨 Enhanced User Experience
+- **Dark/Light Theme Toggle**: Seamless theme switching
+- **Responsive Design**: Optimized for all device sizes
+- **Advanced Animations**: Smooth, performance-optimized animations
+- **Toast Notifications**: User-friendly feedback system
+- **Modal Dialogs**: Clean, accessible modal interfaces
 
-## Technical Implementation
+#### 📈 Performance Monitoring
+- **Real-time FPS Monitoring**: Track application performance
+- **Memory Usage Tracking**: Monitor resource consumption
+- **Interaction Timing**: Measure user interaction responsiveness
+- **Performance Optimization**: Automatic adjustments for low-end devices
 
-### Technologies Used
+## 🏗️ Technical Architecture
 
-- **HTML5** - Semantic structure and accessibility
-- **CSS3** - Modern responsive design with animations
-- **JavaScript (ES6+)** - Interactive calculations and chart rendering
-- **Chart.js** - Data visualization for emissions pathways
+### Frontend Technologies
+- **Vanilla JavaScript**: No framework dependencies
+- **CSS3 with Custom Properties**: Advanced styling with CSS variables
+- **HTML5**: Semantic markup with accessibility features
+- **Chart.js**: Interactive data visualization
+- **Canvas API**: Custom graphics and animations
 
 ### Key Components
 
-1. **CarbonCalculator Class** - Main application logic
-2. **Sector-based Interface** - Tabbed navigation between different sectors
-3. **Lever Controls** - Range sliders for setting ambition levels
-4. **Results Panel** - Real-time emissions display and visualizations
+#### CarbonCalculator Class
+The main application class that handles:
+- Lever value management
+- Emissions calculations
+- UI updates and animations
+- Feature initialization
+- Performance monitoring
 
-## Usage Instructions
+#### Sector Management
+- Transport, Buildings, Industry, Electricity, CO₂ Removal, Land Use
+- Individual lever controls with 4 ambition levels
+- Real-time calculation updates
+- Sector-specific visualizations
 
-1. **Open the Calculator**: Open `index.html` in a modern web browser
-2. **Select a Sector**: Click on sector tabs (Transport, Buildings, etc.)
-3. **Adjust Levers**: Use sliders to set ambition levels (1-4) for each decarbonisation lever
-4. **View Results**: Monitor the emissions pathway chart and sector breakdown
-5. **Achieve Net Zero**: Experiment with different combinations to reach net zero by 2050
+#### Data Visualization
+- Interactive charts with Chart.js
+- Custom CO₂e meter with animated needle
+- Sector breakdown bars
+- Performance heatmaps
+- Energy flow diagrams
 
-## Calculation Methodology
+## 🎯 Usage Guide
 
-The calculator uses simplified but scientifically-based calculations derived from the official MacKay Carbon Calculator:
+### Getting Started
+1. Open `index.html` in a modern web browser
+2. Familiarize yourself with the 6 sector tabs
+3. Adjust lever settings using the sliders
+4. Watch real-time updates to emissions calculations
+5. Explore the AI insights and recommendations
 
-- **Baseline Emissions**: Based on 1990 UK emissions (~700 MtCO₂e)
-- **Sector Reductions**: Each lever contributes specific percentage reductions
-- **Pathway Generation**: Realistic trajectories from current levels to 2050 targets
-- **Net Zero Calculation**: Accounts for both emissions reductions and negative emissions
+### Collaboration Mode
+1. Click the "Collaborate" button in the toolbar
+2. Share the generated URL with collaborators
+3. See real-time updates as others make changes
+4. Use the collaboration indicator to track active sessions
 
-### Emission Factors by Sector
+### AI Insights
+1. Review the AI insights panel for recommendations
+2. Click action buttons to automatically adjust levers
+3. View cost-benefit analysis for your scenario
+4. Export detailed reports for further analysis
 
-- **Transport**: 180 MtCO₂e baseline, up to 135% total reduction possible
-- **Buildings**: 120 MtCO₂e baseline, up to 138% total reduction possible
-- **Industry**: 160 MtCO₂e baseline, up to 117% total reduction possible
-- **Electricity**: 150 MtCO₂e baseline, up to 158% total reduction possible
-- **CO₂ Removal**: Can provide up to 129 MtCO₂e negative emissions
-- **Land Use**: 50 MtCO₂e baseline, can become carbon negative
+### Accessibility Features
+1. Use Tab key for keyboard navigation
+2. Toggle high contrast mode for better visibility
+3. Adjust font size using A+ and A- buttons
+4. Screen readers will announce lever changes and results
 
-## Browser Compatibility
+## 📱 Responsive Design
 
-- Chrome 60+
-- Firefox 55+
-- Safari 12+
-- Edge 79+
+The application is fully responsive and optimized for:
+- **Desktop**: Full feature set with advanced visualizations
+- **Tablet**: Touch-optimized controls with simplified layouts
+- **Mobile**: Streamlined interface with essential features
+- **Landscape/Portrait**: Automatic orientation adjustments
 
-## Educational Use
+## 🎨 Customization
 
-This calculator is designed for:
+### Themes
+The application supports both light and dark themes with:
+- CSS custom properties for easy theming
+- Automatic theme persistence
+- Smooth transitions between themes
 
-- **Students** - Understanding climate policy and energy systems
-- **Educators** - Teaching about decarbonisation pathways
-- **Policy Makers** - Exploring different scenario outcomes
-- **General Public** - Engaging with net zero challenges
+### Animations
+- Performance-optimized animations
+- Respects `prefers-reduced-motion` user preference
+- Hardware acceleration for smooth performance
+- Automatic animation reduction on low-end devices
 
-## Limitations
+## 🔧 Development
 
-This is a simplified educational model. For detailed policy analysis, refer to the official UK Government MacKay Carbon Calculator and supporting Excel models.
+### File Structure
+```
+CarbonCalculator/
+├── index.html          # Main HTML structure
+├── script.js           # Core JavaScript functionality
+├── styles.css          # Comprehensive styling
+└── README.md           # This documentation
+```
 
-## Data Sources
+### Key Functions
 
-Based on:
-- UK Government MacKay Carbon Calculator (2020)
-- Department for Energy Security and Net Zero (DESNZ)
-- Climate Change Committee analysis
-- Expert stakeholder consultations
+#### Emissions Calculations
+```javascript
+calculateSectorEmissions()     // Calculate emissions by sector
+calculateTotalEmissions()      // Sum all sector emissions
+calculateReductionFrom1990()   // Calculate reduction percentage
+```
 
-## License
+#### AI Insights
+```javascript
+generateAIInsights()           // Generate AI recommendations
+analyzeCostBenefit()          // Calculate cost-benefit analysis
+estimateImplementationCost()  // Estimate implementation costs
+```
 
-This educational tool is provided for learning purposes. The original MacKay Carbon Calculator is developed by the UK Government Department for Energy Security and Net Zero.
+#### Collaboration
+```javascript
+toggleCollaboration()          // Enable/disable collaboration
+shareLeverChanges()           // Share changes with collaborators
+handleCollaborationUpdate()   // Process incoming updates
+```
 
-## Acknowledgments
+### Performance Considerations
+- **Lazy Loading**: Features load on demand
+- **Debounced Updates**: Prevents excessive recalculations
+- **Memory Management**: Automatic cleanup of unused resources
+- **Animation Optimization**: Reduced animations on low-end devices
 
-- Named in honor of the late Sir David MacKay
-- Based on UK Government MacKay Carbon Calculator
-- Inspired by "Sustainable Energy - Without the Hot Air"
+## 🌍 Environmental Impact
+
+This calculator helps users understand:
+- **Emissions Pathways**: How different policies affect UK emissions
+- **Sector Interactions**: How changes in one sector affect others
+- **Net Zero Feasibility**: What's needed to achieve 2050 targets
+- **Cost Implications**: Financial considerations of different approaches
+
+## 🔮 Future Enhancements
+
+Planned features include:
+- **Multi-country Support**: Extend beyond UK to other nations
+- **Advanced Modeling**: More sophisticated emissions calculations
+- **Data Export**: Enhanced export capabilities
+- **API Integration**: Real-time data from external sources
+- **Machine Learning**: Improved AI insights and predictions
+
+## 📄 License
+
+This project is based on the UK Government's MacKay Carbon Calculator methodology and is intended for educational and research purposes.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please consider:
+- Accessibility improvements
+- Performance optimizations
+- New visualization features
+- Documentation enhancements
+- Bug reports and fixes
+
+## 📞 Support
+
+For questions or support:
+- Review the help modal within the application
+- Check the console for debugging information
+- Ensure you're using a modern web browser
+- Verify JavaScript is enabled
 
 ---
 
-*Explore pathways to net zero and help shape the UK's clean energy future!*
+**Built with ❤️ for a sustainable future**

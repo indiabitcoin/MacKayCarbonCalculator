@@ -8,6 +8,11 @@ class CarbonCalculator {
         this.emissionsChart = null;
         this.baselineEmissions = this.calculateBaselineEmissions(); // 1990 baseline in MtCO2e
         this.targetYear = 2050;
+        this.scenarios = [];
+        this.currentScenario = null;
+        this.collaborationMode = false;
+        this.aiInsights = [];
+        this.userPreferences = this.loadUserPreferences();
         
         // Initialize lever values to level 1
         this.initializeLeverValues();
@@ -36,6 +41,12 @@ class CarbonCalculator {
         this.initializeScenarioManagement();
         this.initializeAdvancedAnimations();
         this.initializeThemeToggle();
+        this.initializeCollaboration();
+        this.initializeAIInsights();
+        this.initializeAdvancedVisualizations();
+        this.initializeAccessibility();
+        this.initializePerformanceMonitoring();
+        this.initializeMobileOptimizations();
     }
 
     initializeLeverValues() {
@@ -1843,6 +1854,1246 @@ class CarbonCalculator {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         this.setTheme(newTheme);
+    }
+
+    // New Advanced Features
+
+    initializeCollaboration() {
+        this.collaborationSocket = null;
+        this.collaborators = new Map();
+        this.collaborationId = this.generateCollaborationId();
+        
+        // Initialize WebSocket for real-time collaboration
+        this.initializeWebSocket();
+        
+        // Add collaboration UI
+        this.addCollaborationUI();
+    }
+
+    initializeWebSocket() {
+        // Simulate WebSocket connection for demo purposes
+        // In production, this would connect to a real WebSocket server
+        console.log('Initializing collaboration features...');
+        
+        // Simulate real-time updates
+        setInterval(() => {
+            if (this.collaborationMode) {
+                this.simulateCollaborationUpdate();
+            }
+        }, 5000);
+    }
+
+    addCollaborationUI() {
+        const toolbar = document.querySelector('.features-toolbar');
+        if (!toolbar) return;
+
+        const collaborationBtn = document.createElement('button');
+        collaborationBtn.className = 'feature-btn collaboration-btn';
+        collaborationBtn.id = 'collaborationBtn';
+        collaborationBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.13,14.5 12,14.5C15.87,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/>
+            </svg>
+            <span>Collaborate</span>
+        `;
+        collaborationBtn.title = 'Start Real-time Collaboration';
+        
+        collaborationBtn.addEventListener('click', () => {
+            this.toggleCollaboration();
+        });
+
+        toolbar.appendChild(collaborationBtn);
+    }
+
+    toggleCollaboration() {
+        this.collaborationMode = !this.collaborationMode;
+        const btn = document.getElementById('collaborationBtn');
+        
+        if (this.collaborationMode) {
+            btn.classList.add('active');
+            btn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.13,14.5 12,14.5C15.87,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/>
+                </svg>
+                <span>Collaborating</span>
+            `;
+            this.showToast('Collaboration mode enabled! Share the link with others.', 'success');
+            this.startCollaboration();
+        } else {
+            btn.classList.remove('active');
+            btn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,5.5A3.5,3.5 0 0,1 15.5,9A3.5,3.5 0 0,1 12,12.5A3.5,3.5 0 0,1 8.5,9A3.5,3.5 0 0,1 12,5.5M5,8C5.56,8 6.08,8.15 6.53,8.42C6.38,9.85 6.8,11.27 7.66,12.38C7.16,13.34 6.16,14 5,14A3,3 0 0,1 2,11A3,3 0 0,1 5,8M19,8A3,3 0 0,1 22,11A3,3 0 0,1 19,14C17.84,14 16.84,13.34 16.34,12.38C17.2,11.27 17.62,9.85 17.47,8.42C17.92,8.15 18.44,8 19,8M5.5,18.25C5.5,16.18 8.13,14.5 12,14.5C15.87,14.5 18.5,16.18 18.5,18.25V20H5.5V18.25M0,20V18.5C0,17.11 1.89,15.94 4.45,15.6C3.86,16.28 3.5,17.22 3.5,18.25V20H0M24,20H20.5V18.25C20.5,17.22 20.14,16.28 19.55,15.6C22.11,15.94 24,17.11 24,18.5V20Z"/>
+                </svg>
+                <span>Collaborate</span>
+            `;
+            this.showToast('Collaboration mode disabled.', 'info');
+            this.stopCollaboration();
+        }
+    }
+
+    startCollaboration() {
+        // Update URL with collaboration ID
+        const url = new URL(window.location.href);
+        url.searchParams.set('collaborate', this.collaborationId);
+        window.history.replaceState({}, '', url);
+        
+        // Add collaboration indicator
+        this.addCollaborationIndicator();
+        
+        // Start sharing lever changes
+        this.shareLeverChanges();
+    }
+
+    stopCollaboration() {
+        // Remove collaboration ID from URL
+        const url = new URL(window.location.href);
+        url.searchParams.delete('collaborate');
+        window.history.replaceState({}, '', url);
+        
+        // Remove collaboration indicator
+        this.removeCollaborationIndicator();
+    }
+
+    addCollaborationIndicator() {
+        const indicator = document.createElement('div');
+        indicator.id = 'collaborationIndicator';
+        indicator.className = 'collaboration-indicator';
+        indicator.innerHTML = `
+            <div class="indicator-dot"></div>
+            <span>Live Collaboration Active</span>
+        `;
+        
+        document.body.appendChild(indicator);
+    }
+
+    removeCollaborationIndicator() {
+        const indicator = document.getElementById('collaborationIndicator');
+        if (indicator) {
+            indicator.remove();
+        }
+    }
+
+    shareLeverChanges() {
+        // Simulate sharing lever changes with other collaborators
+        const changeData = {
+            type: 'lever_change',
+            leverValues: this.leverValues,
+            timestamp: Date.now(),
+            userId: this.userPreferences.userId || 'anonymous'
+        };
+        
+        // In a real implementation, this would be sent via WebSocket
+        console.log('Sharing lever changes:', changeData);
+    }
+
+    simulateCollaborationUpdate() {
+        // Simulate receiving updates from other collaborators
+        const mockUpdate = {
+            type: 'lever_change',
+            leverValues: this.generateMockLeverValues(),
+            timestamp: Date.now(),
+            userId: 'collaborator-' + Math.floor(Math.random() * 1000)
+        };
+        
+        this.handleCollaborationUpdate(mockUpdate);
+    }
+
+    handleCollaborationUpdate(update) {
+        // Handle incoming collaboration updates
+        if (update.type === 'lever_change') {
+            this.showCollaborationNotification(update);
+        }
+    }
+
+    showCollaborationNotification(update) {
+        const notification = document.createElement('div');
+        notification.className = 'collaboration-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <div class="notification-icon">👥</div>
+                <div class="notification-text">
+                    <strong>${update.userId}</strong> updated the scenario
+                </div>
+                <button class="notification-close">&times;</button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 5000);
+        
+        // Close button
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', () => {
+            notification.remove();
+        });
+    }
+
+    generateCollaborationId() {
+        return 'collab-' + Math.random().toString(36).substr(2, 9);
+    }
+
+    generateMockLeverValues() {
+        const mockValues = {};
+        Object.keys(this.leverValues).forEach(key => {
+            mockValues[key] = Math.floor(Math.random() * 4) + 1;
+        });
+        return mockValues;
+    }
+
+    // AI Insights System
+    initializeAIInsights() {
+        this.aiInsights = [];
+        this.insightUpdateInterval = null;
+        
+        // Start AI insights generation
+        this.startAIInsights();
+        
+        // Add AI insights UI
+        this.addAIInsightsUI();
+    }
+
+    startAIInsights() {
+        // Generate initial insights
+        this.generateAIInsights();
+        
+        // Update insights periodically
+        this.insightUpdateInterval = setInterval(() => {
+            this.generateAIInsights();
+        }, 30000); // Every 30 seconds
+    }
+
+    generateAIInsights() {
+        const insights = [];
+        const totalEmissions = this.calculateTotalEmissions();
+        const reductionPercent = this.calculateReductionFrom1990();
+        
+        // Analyze current scenario and generate insights
+        if (reductionPercent < 50) {
+            insights.push({
+                type: 'warning',
+                title: 'Low Reduction Target',
+                message: 'Current settings achieve less than 50% reduction. Consider increasing renewable energy and transport electrification.',
+                priority: 'high',
+                action: 'increase_renewables'
+            });
+        }
+        
+        if (this.leverValues['electric-cars'] < 3) {
+            insights.push({
+                type: 'recommendation',
+                title: 'Transport Electrification',
+                message: 'Electric vehicle adoption is below optimal levels. Increasing to level 3+ could reduce transport emissions by 30-45%.',
+                priority: 'medium',
+                action: 'increase_electric_cars'
+            });
+        }
+        
+        if (this.leverValues['wind'] < 3 || this.leverValues['solar'] < 3) {
+            insights.push({
+                type: 'opportunity',
+                title: 'Renewable Energy Potential',
+                message: 'Wind and solar deployment could be increased. Level 4 deployment could reduce electricity emissions by up to 60%.',
+                priority: 'medium',
+                action: 'increase_renewables'
+            });
+        }
+        
+        if (totalEmissions <= 0) {
+            insights.push({
+                type: 'success',
+                title: 'Net Zero Achieved!',
+                message: 'Congratulations! Your scenario achieves net zero emissions. Consider sharing this successful configuration.',
+                priority: 'high',
+                action: 'share_scenario'
+            });
+        }
+        
+        // Add cost-benefit analysis
+        const costAnalysis = this.analyzeCostBenefit();
+        if (costAnalysis) {
+            insights.push(costAnalysis);
+        }
+        
+        this.aiInsights = insights;
+        this.updateAIInsightsUI();
+    }
+
+    analyzeCostBenefit() {
+        const totalEmissions = this.calculateTotalEmissions();
+        const reductionPercent = this.calculateReductionFrom1990();
+        
+        // Simple cost-benefit analysis
+        const estimatedCost = this.estimateImplementationCost();
+        const estimatedSavings = this.estimateCarbonSavings();
+        
+        if (estimatedSavings > estimatedCost * 2) {
+            return {
+                type: 'opportunity',
+                title: 'High Return Investment',
+                message: `Estimated carbon savings (£${estimatedSavings.toFixed(0)}M) significantly outweigh implementation costs (£${estimatedCost.toFixed(0)}M).`,
+                priority: 'high',
+                action: 'view_cost_analysis'
+            };
+        }
+        
+        return null;
+    }
+
+    estimateImplementationCost() {
+        // Simplified cost estimation based on lever settings
+        let totalCost = 0;
+        
+        Object.entries(this.leverValues).forEach(([lever, value]) => {
+            const baseCost = this.getLeverBaseCost(lever);
+            totalCost += baseCost * value;
+        });
+        
+        return totalCost;
+    }
+
+    estimateCarbonSavings() {
+        const reductionPercent = this.calculateReductionFrom1990();
+        const baselineEmissions = this.baselineEmissions;
+        
+        // Estimate savings based on carbon price (£50/tonne CO2e)
+        const carbonPrice = 50;
+        const emissionsReduced = (reductionPercent / 100) * baselineEmissions;
+        
+        return emissionsReduced * carbonPrice;
+    }
+
+    getLeverBaseCost(lever) {
+        const costMap = {
+            'electric-cars': 5000,
+            'wind': 2000,
+            'solar': 1500,
+            'heat-pumps': 3000,
+            'insulation': 1000,
+            'nuclear': 8000,
+            'ccs': 6000,
+            'direct-air-capture': 10000
+        };
+        
+        return costMap[lever] || 1000;
+    }
+
+    addAIInsightsUI() {
+        const resultsPanel = document.querySelector('.results-panel');
+        if (!resultsPanel) return;
+        
+        const insightsSection = document.createElement('div');
+        insightsSection.className = 'ai-insights-section';
+        insightsSection.innerHTML = `
+            <h4>🤖 AI Insights</h4>
+            <div class="insights-container" id="aiInsightsContainer">
+                <div class="loading-insights">Analyzing your scenario...</div>
+            </div>
+        `;
+        
+        resultsPanel.appendChild(insightsSection);
+    }
+
+    updateAIInsightsUI() {
+        const container = document.getElementById('aiInsightsContainer');
+        if (!container) return;
+        
+        if (this.aiInsights.length === 0) {
+            container.innerHTML = '<div class="no-insights">No insights available at this time.</div>';
+            return;
+        }
+        
+        const insightsHTML = this.aiInsights.map(insight => `
+            <div class="ai-insight-card ${insight.type} ${insight.priority}">
+                <div class="insight-header">
+                    <span class="insight-type">${this.getInsightIcon(insight.type)}</span>
+                    <span class="insight-title">${insight.title}</span>
+                    <span class="insight-priority">${insight.priority}</span>
+                </div>
+                <div class="insight-message">${insight.message}</div>
+                <div class="insight-actions">
+                    <button class="insight-action-btn" data-action="${insight.action}">
+                        ${this.getActionText(insight.action)}
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        
+        container.innerHTML = insightsHTML;
+        
+        // Add event listeners to action buttons
+        container.querySelectorAll('.insight-action-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.handleInsightAction(e.target.dataset.action);
+            });
+        });
+    }
+
+    getInsightIcon(type) {
+        const icons = {
+            'warning': '⚠️',
+            'recommendation': '💡',
+            'opportunity': '🚀',
+            'success': '✅'
+        };
+        return icons[type] || 'ℹ️';
+    }
+
+    getActionText(action) {
+        const actions = {
+            'increase_renewables': 'Increase Renewables',
+            'increase_electric_cars': 'Boost EV Adoption',
+            'share_scenario': 'Share Scenario',
+            'view_cost_analysis': 'View Analysis'
+        };
+        return actions[action] || 'Learn More';
+    }
+
+    handleInsightAction(action) {
+        switch (action) {
+            case 'increase_renewables':
+                this.autoAdjustRenewables();
+                break;
+            case 'increase_electric_cars':
+                this.autoAdjustElectricCars();
+                break;
+            case 'share_scenario':
+                this.shareScenario();
+                break;
+            case 'view_cost_analysis':
+                this.showCostAnalysis();
+                break;
+        }
+    }
+
+    autoAdjustRenewables() {
+        const windSlider = document.querySelector('[data-lever="wind"]');
+        const solarSlider = document.querySelector('[data-lever="solar"]');
+        
+        if (windSlider && windSlider.value < 4) {
+            windSlider.value = 4;
+            windSlider.dispatchEvent(new Event('input'));
+        }
+        
+        if (solarSlider && solarSlider.value < 4) {
+            solarSlider.value = 4;
+            solarSlider.dispatchEvent(new Event('input'));
+        }
+        
+        this.showToast('Renewable energy levels increased automatically!', 'success');
+    }
+
+    autoAdjustElectricCars() {
+        const electricCarsSlider = document.querySelector('[data-lever="electric-cars"]');
+        
+        if (electricCarsSlider && electricCarsSlider.value < 4) {
+            electricCarsSlider.value = 4;
+            electricCarsSlider.dispatchEvent(new Event('input'));
+        }
+        
+        this.showToast('Electric vehicle adoption increased automatically!', 'success');
+    }
+
+    showCostAnalysis() {
+        const cost = this.estimateImplementationCost();
+        const savings = this.estimateCarbonSavings();
+        const roi = ((savings - cost) / cost * 100).toFixed(1);
+        
+        this.showModal('costAnalysisModal');
+        
+        // Update cost analysis modal content
+        const modal = document.getElementById('costAnalysisModal');
+        if (modal) {
+            const content = modal.querySelector('.modal-body');
+            content.innerHTML = `
+                <div class="cost-analysis">
+                    <h4>Cost-Benefit Analysis</h4>
+                    <div class="cost-metrics">
+                        <div class="cost-metric">
+                            <span class="metric-label">Implementation Cost:</span>
+                            <span class="metric-value">£${cost.toFixed(0)}M</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="metric-label">Carbon Savings:</span>
+                            <span class="metric-value">£${savings.toFixed(0)}M</span>
+                        </div>
+                        <div class="cost-metric">
+                            <span class="metric-label">Return on Investment:</span>
+                            <span class="metric-value ${roi > 0 ? 'positive' : 'negative'}">${roi}%</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // Advanced Visualizations
+    initializeAdvancedVisualizations() {
+        this.initializeSankeyDiagram();
+        this.initializeHeatmap();
+        this.initializeTimelineChart();
+    }
+
+    initializeSankeyDiagram() {
+        // Add Sankey diagram for energy flow visualization
+        const sankeyContainer = document.createElement('div');
+        sankeyContainer.id = 'sankeyDiagram';
+        sankeyContainer.className = 'advanced-visualization';
+        sankeyContainer.innerHTML = `
+            <h4>Energy Flow Visualization</h4>
+            <canvas id="sankeyCanvas" width="600" height="400"></canvas>
+        `;
+        
+        const resultsPanel = document.querySelector('.results-panel');
+        if (resultsPanel) {
+            resultsPanel.appendChild(sankeyContainer);
+        }
+        
+        this.updateSankeyDiagram();
+    }
+
+    updateSankeyDiagram() {
+        const canvas = document.getElementById('sankeyCanvas');
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Simplified Sankey diagram
+        this.drawSankeyDiagram(ctx, canvas.width, canvas.height);
+    }
+
+    drawSankeyDiagram(ctx, width, height) {
+        // Draw energy flow from sources to sectors
+        const flows = this.calculateEnergyFlows();
+        
+        ctx.strokeStyle = '#3498db';
+        ctx.lineWidth = 2;
+        
+        flows.forEach((flow, index) => {
+            const x1 = 50 + (index * 100);
+            const y1 = 50;
+            const x2 = width - 50;
+            const y2 = 100 + (index * 50);
+            
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            
+            // Add flow label
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '12px Arial';
+            ctx.fillText(`${flow.source} → ${flow.target}`, x1, y1 - 10);
+        });
+    }
+
+    calculateEnergyFlows() {
+        return [
+            { source: 'Renewables', target: 'Electricity', value: this.leverValues['wind'] + this.leverValues['solar'] },
+            { source: 'Nuclear', target: 'Electricity', value: this.leverValues['nuclear'] },
+            { source: 'Electricity', target: 'Transport', value: this.leverValues['electric-cars'] },
+            { source: 'Electricity', target: 'Buildings', value: this.leverValues['heat-pumps'] }
+        ];
+    }
+
+    initializeHeatmap() {
+        // Add heatmap for sector comparison
+        const heatmapContainer = document.createElement('div');
+        heatmapContainer.id = 'heatmapVisualization';
+        heatmapContainer.className = 'advanced-visualization';
+        heatmapContainer.innerHTML = `
+            <h4>Sector Performance Heatmap</h4>
+            <div id="heatmapGrid"></div>
+        `;
+        
+        const resultsPanel = document.querySelector('.results-panel');
+        if (resultsPanel) {
+            resultsPanel.appendChild(heatmapContainer);
+        }
+        
+        this.updateHeatmap();
+    }
+
+    updateHeatmap() {
+        const grid = document.getElementById('heatmapGrid');
+        if (!grid) return;
+        
+        const sectors = ['Transport', 'Buildings', 'Industry', 'Electricity', 'Land Use'];
+        const metrics = ['Efficiency', 'Reduction', 'Feasibility', 'Cost'];
+        
+        let gridHTML = '<div class="heatmap-header"></div>';
+        
+        // Create header row
+        gridHTML += '<div class="heatmap-row header">';
+        gridHTML += '<div class="heatmap-cell header">Sector</div>';
+        metrics.forEach(metric => {
+            gridHTML += `<div class="heatmap-cell header">${metric}</div>`;
+        });
+        gridHTML += '</div>';
+        
+        // Create data rows
+        sectors.forEach(sector => {
+            gridHTML += '<div class="heatmap-row">';
+            gridHTML += `<div class="heatmap-cell sector">${sector}</div>`;
+            
+            metrics.forEach(metric => {
+                const value = this.calculateHeatmapValue(sector, metric);
+                const intensity = Math.min(value / 100, 1);
+                const color = this.getHeatmapColor(intensity);
+                
+                gridHTML += `<div class="heatmap-cell" style="background-color: ${color}">${value}%</div>`;
+            });
+            
+            gridHTML += '</div>';
+        });
+        
+        grid.innerHTML = gridHTML;
+    }
+
+    calculateHeatmapValue(sector, metric) {
+        // Simplified calculation for demo
+        const baseValues = {
+            'Transport': { 'Efficiency': 75, 'Reduction': 60, 'Feasibility': 80, 'Cost': 70 },
+            'Buildings': { 'Efficiency': 85, 'Reduction': 70, 'Feasibility': 90, 'Cost': 60 },
+            'Industry': { 'Efficiency': 65, 'Reduction': 50, 'Feasibility': 70, 'Cost': 80 },
+            'Electricity': { 'Efficiency': 90, 'Reduction': 85, 'Feasibility': 95, 'Cost': 75 },
+            'Land Use': { 'Efficiency': 70, 'Reduction': 40, 'Feasibility': 85, 'Cost': 50 }
+        };
+        
+        return baseValues[sector]?.[metric] || 50;
+    }
+
+    getHeatmapColor(intensity) {
+        const red = Math.round(255 * (1 - intensity));
+        const green = Math.round(255 * intensity);
+        const blue = 0;
+        return `rgb(${red}, ${green}, ${blue})`;
+    }
+
+    // Accessibility Features
+    initializeAccessibility() {
+        this.addKeyboardNavigation();
+        this.addScreenReaderSupport();
+        this.addHighContrastMode();
+        this.addFontSizeControls();
+    }
+
+    addKeyboardNavigation() {
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'Tab':
+                    this.handleTabNavigation(e);
+                    break;
+                case 'Enter':
+                case ' ':
+                    this.handleActivation(e);
+                    break;
+                case 'Escape':
+                    this.handleEscape(e);
+                    break;
+            }
+        });
+    }
+
+    handleTabNavigation(e) {
+        // Ensure proper tab order and focus management
+        const focusableElements = document.querySelectorAll(
+            'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        if (e.shiftKey) {
+            // Shift+Tab - move backwards
+            if (document.activeElement === focusableElements[0]) {
+                e.preventDefault();
+                focusableElements[focusableElements.length - 1].focus();
+            }
+        } else {
+            // Tab - move forwards
+            if (document.activeElement === focusableElements[focusableElements.length - 1]) {
+                e.preventDefault();
+                focusableElements[0].focus();
+            }
+        }
+    }
+
+    handleActivation(e) {
+        if (e.target.classList.contains('lever-slider')) {
+            e.preventDefault();
+            // Handle slider activation
+        }
+    }
+
+    handleEscape(e) {
+        // Close any open modals
+        const openModal = document.querySelector('.modal.show');
+        if (openModal) {
+            this.hideModal(openModal.id);
+        }
+    }
+
+    addScreenReaderSupport() {
+        // Add ARIA labels and descriptions
+        document.querySelectorAll('.lever-slider').forEach(slider => {
+            const lever = slider.closest('.lever');
+            const label = lever.querySelector('label');
+            
+            slider.setAttribute('aria-label', `${label.textContent} level selector`);
+            slider.setAttribute('aria-describedby', `${slider.id}-description`);
+            
+            // Add description element
+            const description = document.createElement('div');
+            description.id = `${slider.id}-description`;
+            description.className = 'sr-only';
+            description.textContent = `Adjust ${label.textContent} from level 1 (minimum) to level 4 (maximum)`;
+            
+            lever.appendChild(description);
+        });
+    }
+
+    addHighContrastMode() {
+        const highContrastBtn = document.createElement('button');
+        highContrastBtn.className = 'feature-btn accessibility-btn';
+        highContrastBtn.id = 'highContrastBtn';
+        highContrastBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+            </svg>
+            <span>High Contrast</span>
+        `;
+        
+        highContrastBtn.addEventListener('click', () => {
+            document.body.classList.toggle('high-contrast');
+            this.showToast(
+                document.body.classList.contains('high-contrast') 
+                    ? 'High contrast mode enabled' 
+                    : 'High contrast mode disabled', 
+                'info'
+            );
+        });
+        
+        const toolbar = document.querySelector('.features-toolbar');
+        if (toolbar) {
+            toolbar.appendChild(highContrastBtn);
+        }
+    }
+
+    addFontSizeControls() {
+        const fontSizeContainer = document.createElement('div');
+        fontSizeContainer.className = 'font-size-controls';
+        fontSizeContainer.innerHTML = `
+            <button class="font-size-btn" id="decreaseFont" aria-label="Decrease font size">A-</button>
+            <button class="font-size-btn" id="increaseFont" aria-label="Increase font size">A+</button>
+        `;
+        
+        document.querySelector('header').appendChild(fontSizeContainer);
+        
+        document.getElementById('decreaseFont').addEventListener('click', () => {
+            this.changeFontSize(-1);
+        });
+        
+        document.getElementById('increaseFont').addEventListener('click', () => {
+            this.changeFontSize(1);
+        });
+    }
+
+    changeFontSize(delta) {
+        const currentSize = parseInt(getComputedStyle(document.body).fontSize);
+        const newSize = Math.max(12, Math.min(24, currentSize + delta));
+        
+        document.body.style.fontSize = `${newSize}px`;
+        localStorage.setItem('fontSize', newSize);
+        
+        this.showToast(`Font size ${delta > 0 ? 'increased' : 'decreased'}`, 'info');
+    }
+
+    // Performance Monitoring
+    initializePerformanceMonitoring() {
+        this.performanceMetrics = {
+            fps: 0,
+            memoryUsage: 0,
+            loadTime: 0,
+            interactionTime: 0
+        };
+        
+        this.startPerformanceMonitoring();
+        this.addPerformanceUI();
+    }
+
+    startPerformanceMonitoring() {
+        // Monitor FPS
+        let frameCount = 0;
+        let lastTime = performance.now();
+        
+        const measureFPS = (currentTime) => {
+            frameCount++;
+            
+            if (currentTime - lastTime >= 1000) {
+                this.performanceMetrics.fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                frameCount = 0;
+                lastTime = currentTime;
+                this.updatePerformanceUI();
+            }
+            
+            requestAnimationFrame(measureFPS);
+        };
+        
+        requestAnimationFrame(measureFPS);
+        
+        // Monitor memory usage (if available)
+        if ('memory' in performance) {
+            setInterval(() => {
+                this.performanceMetrics.memoryUsage = performance.memory.usedJSHeapSize / 1024 / 1024; // MB
+            }, 5000);
+        }
+        
+        // Monitor interaction time
+        this.measureInteractionTime();
+    }
+
+    measureInteractionTime() {
+        let startTime = performance.now();
+        
+        document.addEventListener('click', () => {
+            const endTime = performance.now();
+            this.performanceMetrics.interactionTime = endTime - startTime;
+            startTime = endTime;
+        });
+    }
+
+    addPerformanceUI() {
+        const performancePanel = document.createElement('div');
+        performancePanel.id = 'performancePanel';
+        performancePanel.className = 'performance-panel';
+        performancePanel.innerHTML = `
+            <div class="performance-metric">
+                <span class="metric-label">FPS:</span>
+                <span class="metric-value" id="fpsValue">--</span>
+            </div>
+            <div class="performance-metric">
+                <span class="metric-label">Memory:</span>
+                <span class="metric-value" id="memoryValue">--</span>
+            </div>
+        `;
+        
+        // Only show in development mode
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            document.body.appendChild(performancePanel);
+        }
+    }
+
+    updatePerformanceUI() {
+        const fpsElement = document.getElementById('fpsValue');
+        const memoryElement = document.getElementById('memoryValue');
+        
+        if (fpsElement) {
+            fpsElement.textContent = this.performanceMetrics.fps;
+            fpsElement.className = `metric-value ${this.performanceMetrics.fps < 30 ? 'warning' : ''}`;
+        }
+        
+        if (memoryElement) {
+            memoryElement.textContent = `${this.performanceMetrics.memoryUsage.toFixed(1)} MB`;
+        }
+    }
+
+    // User Preferences Management
+    loadUserPreferences() {
+        const saved = localStorage.getItem('userPreferences');
+        return saved ? JSON.parse(saved) : {
+            userId: 'user-' + Math.random().toString(36).substr(2, 9),
+            theme: 'light',
+            fontSize: 16,
+            animations: true,
+            accessibility: {
+                highContrast: false,
+                reducedMotion: false
+            }
+        };
+    }
+
+    saveUserPreferences() {
+        localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
+    }
+
+    // Enhanced Error Handling
+    handleError(error, context = 'general') {
+        console.error(`Error in ${context}:`, error);
+        
+        // Show user-friendly error message
+        this.showToast(`An error occurred: ${error.message}`, 'error');
+        
+        // Log to analytics (if available)
+        if (window.gtag) {
+            window.gtag('event', 'error', {
+                error_message: error.message,
+                error_context: context
+            });
+        }
+    }
+
+    // Enhanced Mobile Responsiveness
+    initializeMobileOptimizations() {
+        this.isMobile = window.innerWidth <= 768;
+        this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        // Add mobile-specific event listeners
+        this.addMobileEventListeners();
+        
+        // Initialize mobile-specific features
+        this.initializeMobileFeatures();
+        
+        // Handle orientation changes
+        this.handleOrientationChange();
+        
+        // Handle viewport changes
+        this.handleViewportChanges();
+    }
+
+    addMobileEventListeners() {
+        // Enhanced touch interactions for sliders
+        document.querySelectorAll('.lever-slider').forEach(slider => {
+            slider.addEventListener('touchstart', (e) => {
+                this.handleTouchStart(e, slider);
+            }, { passive: false });
+            
+            slider.addEventListener('touchmove', (e) => {
+                this.handleTouchMove(e, slider);
+            }, { passive: false });
+            
+            slider.addEventListener('touchend', (e) => {
+                this.handleTouchEnd(e, slider);
+            }, { passive: false });
+        });
+        
+        // Mobile-friendly tab switching
+        document.querySelectorAll('.tab-btn').forEach(tab => {
+            tab.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.switchSector(tab.dataset.sector);
+            });
+        });
+        
+        // Mobile modal handling
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('touchstart', (e) => {
+                if (e.target === modal) {
+                    this.hideModal(modal.id);
+                }
+            });
+        });
+        
+        // Swipe gestures for mobile
+        this.initializeSwipeGestures();
+    }
+
+    handleTouchStart(e, slider) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = slider.getBoundingClientRect();
+        const percentage = (touch.clientX - rect.left) / rect.width;
+        const value = Math.round(percentage * (slider.max - slider.min) + slider.min);
+        
+        slider.value = Math.max(slider.min, Math.min(slider.max, value));
+        this.updateLever(slider.dataset.lever, parseInt(slider.value));
+        
+        // Add visual feedback
+        slider.classList.add('touching');
+    }
+
+    handleTouchMove(e, slider) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = slider.getBoundingClientRect();
+        const percentage = (touch.clientX - rect.left) / rect.width;
+        const value = Math.round(percentage * (slider.max - slider.min) + slider.min);
+        
+        slider.value = Math.max(slider.min, Math.min(slider.max, value));
+        this.updateLever(slider.dataset.lever, parseInt(slider.value));
+    }
+
+    handleTouchEnd(e, slider) {
+        slider.classList.remove('touching');
+        this.updateLever(slider.dataset.lever, parseInt(slider.value));
+    }
+
+    initializeSwipeGestures() {
+        let startX = 0;
+        let startY = 0;
+        let isSwiping = false;
+        
+        document.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isSwiping = false;
+        });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (!startX || !startY) return;
+            
+            const deltaX = e.touches[0].clientX - startX;
+            const deltaY = e.touches[0].clientY - startY;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                isSwiping = true;
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            if (!isSwiping) return;
+            
+            const deltaX = e.changedTouches[0].clientX - startX;
+            
+            if (Math.abs(deltaX) > 100) {
+                // Swipe detected - could be used for navigation
+                if (deltaX > 0) {
+                    // Swipe right - could go to previous sector
+                    this.handleSwipeRight();
+                } else {
+                    // Swipe left - could go to next sector
+                    this.handleSwipeLeft();
+                }
+            }
+            
+            startX = 0;
+            startY = 0;
+            isSwiping = false;
+        });
+    }
+
+    handleSwipeLeft() {
+        const sectors = ['transport', 'buildings', 'industry', 'electricity', 'co2-removal', 'land-use'];
+        const currentIndex = sectors.indexOf(this.currentSector);
+        const nextIndex = (currentIndex + 1) % sectors.length;
+        this.switchSector(sectors[nextIndex]);
+    }
+
+    handleSwipeRight() {
+        const sectors = ['transport', 'buildings', 'industry', 'electricity', 'co2-removal', 'land-use'];
+        const currentIndex = sectors.indexOf(this.currentSector);
+        const prevIndex = currentIndex === 0 ? sectors.length - 1 : currentIndex - 1;
+        this.switchSector(sectors[prevIndex]);
+    }
+
+    initializeMobileFeatures() {
+        // Add mobile-specific UI elements
+        this.addMobileNavigation();
+        this.addMobileQuickActions();
+        this.optimizeForMobile();
+    }
+
+    addMobileNavigation() {
+        // Add mobile navigation dots
+        const mobileNav = document.createElement('div');
+        mobileNav.className = 'mobile-nav-dots';
+        mobileNav.innerHTML = `
+            <div class="nav-dot active" data-sector="transport"></div>
+            <div class="nav-dot" data-sector="buildings"></div>
+            <div class="nav-dot" data-sector="industry"></div>
+            <div class="nav-dot" data-sector="electricity"></div>
+            <div class="nav-dot" data-sector="co2-removal"></div>
+            <div class="nav-dot" data-sector="land-use"></div>
+        `;
+        
+        const controlsPanel = document.querySelector('.controls-panel');
+        if (controlsPanel) {
+            controlsPanel.appendChild(mobileNav);
+        }
+        
+        // Add event listeners for navigation dots
+        mobileNav.querySelectorAll('.nav-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                this.switchSector(dot.dataset.sector);
+            });
+        });
+    }
+
+    addMobileQuickActions() {
+        // Add quick action buttons for mobile
+        const quickActions = document.createElement('div');
+        quickActions.className = 'mobile-quick-actions';
+        quickActions.innerHTML = `
+            <button class="quick-action-btn" id="resetAllBtn" title="Reset All">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M11,7V12.5L16.25,15.15L17,13.92L12.5,11.7V7H11Z"/>
+                </svg>
+                Reset
+            </button>
+            <button class="quick-action-btn" id="maxAllBtn" title="Set All to Maximum">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+                </svg>
+                Max
+            </button>
+            <button class="quick-action-btn" id="shareMobileBtn" title="Share Scenario">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z"/>
+                </svg>
+                Share
+            </button>
+        `;
+        
+        const resultsPanel = document.querySelector('.results-panel');
+        if (resultsPanel) {
+            resultsPanel.appendChild(quickActions);
+        }
+        
+        // Add event listeners for quick actions
+        document.getElementById('resetAllBtn')?.addEventListener('click', () => {
+            this.resetAllLevers();
+            this.showToast('All levers reset to minimum', 'info');
+        });
+        
+        document.getElementById('maxAllBtn')?.addEventListener('click', () => {
+            this.setAllLeversToMax();
+            this.showToast('All levers set to maximum', 'info');
+        });
+        
+        document.getElementById('shareMobileBtn')?.addEventListener('click', () => {
+            this.shareScenario();
+        });
+    }
+
+    resetAllLevers() {
+        document.querySelectorAll('.lever-slider').forEach(slider => {
+            slider.value = 1;
+            this.updateLever(slider.dataset.lever, 1);
+        });
+    }
+
+    setAllLeversToMax() {
+        document.querySelectorAll('.lever-slider').forEach(slider => {
+            slider.value = 4;
+            this.updateLever(slider.dataset.lever, 4);
+        });
+    }
+
+    optimizeForMobile() {
+        // Reduce animations on mobile for better performance
+        if (this.isMobile) {
+            document.body.classList.add('mobile-optimized');
+        }
+        
+        // Adjust chart sizes for mobile
+        this.adjustChartsForMobile();
+        
+        // Optimize images and icons for mobile
+        this.optimizeImagesForMobile();
+    }
+
+    adjustChartsForMobile() {
+        const charts = document.querySelectorAll('canvas');
+        charts.forEach(chart => {
+            if (this.isMobile) {
+                chart.style.maxHeight = '200px';
+            }
+        });
+    }
+
+    optimizeImagesForMobile() {
+        // Optimize SVG icons for mobile
+        const svgs = document.querySelectorAll('svg');
+        svgs.forEach(svg => {
+            if (this.isMobile) {
+                svg.style.maxWidth = '20px';
+                svg.style.maxHeight = '20px';
+            }
+        });
+    }
+
+    handleOrientationChange() {
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.isMobile = window.innerWidth <= 768;
+                this.optimizeForMobile();
+                this.updateMobileNavigation();
+            }, 100);
+        });
+    }
+
+    handleViewportChanges() {
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.isMobile = window.innerWidth <= 768;
+                this.optimizeForMobile();
+                this.updateMobileNavigation();
+            }, 250);
+        });
+    }
+
+    updateMobileNavigation() {
+        const navDots = document.querySelectorAll('.nav-dot');
+        navDots.forEach(dot => {
+            dot.classList.remove('active');
+            if (dot.dataset.sector === this.currentSector) {
+                dot.classList.add('active');
+            }
+        });
+    }
+
+    // Enhanced mobile-friendly modal handling
+    showModalWithMobileOptimization(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        if (this.isMobile) {
+            // Mobile-specific modal behavior
+            modal.style.display = 'flex';
+            modal.classList.add('show', 'mobile-modal');
+            
+            // Prevent body scroll on mobile
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        } else {
+            this.showModalWithAnimation(modalId);
+        }
+    }
+
+    hideModalWithMobileOptimization(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        if (this.isMobile) {
+            modal.classList.remove('show', 'mobile-modal');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                // Restore body scroll
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+                document.body.style.width = '';
+            }, 300);
+        } else {
+            this.hideModalWithAnimation(modalId);
+        }
+    }
+
+    // Mobile-friendly sharing
+    shareScenarioMobile() {
+        if (navigator.share) {
+            const shareData = {
+                title: 'MacKay Carbon Calculator Scenario',
+                text: 'Check out my carbon reduction scenario',
+                url: window.location.href
+            };
+            
+            navigator.share(shareData).then(() => {
+                this.showToast('Scenario shared successfully!', 'success');
+            }).catch((error) => {
+                console.log('Error sharing:', error);
+                this.shareScenario(); // Fallback to clipboard
+            });
+        } else {
+            this.shareScenario(); // Fallback to clipboard
+        }
     }
 }
 
