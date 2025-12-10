@@ -49,6 +49,9 @@ class CarbonCalculator {
         this.initializeAccessibility();
         this.initializePerformanceMonitoring();
         this.initializeMobileOptimizations();
+
+        // Initial entrance animations
+        this.applyInitialAnimations();
     }
     
     // Enhanced Particle System
@@ -457,6 +460,10 @@ class CarbonCalculator {
                 
                 // Generate particles
                 this.createParticles(lever);
+
+                // Brief glow pulse
+                lever.classList.add('pulse-glow');
+                setTimeout(() => lever.classList.remove('pulse-glow'), 300);
             });
             
             // Enhanced lever interaction with advanced animations
@@ -475,6 +482,13 @@ class CarbonCalculator {
         });
     }
 
+    applyInitialAnimations() {
+        const panels = document.querySelectorAll('.controls-panel, .results-panel');
+        panels.forEach((panel, idx) => {
+            setTimeout(() => panel.classList.add('animate-in'), idx * 80);
+        });
+    }
+
     switchResultsTab(tabId) {
         // Update active tab button
         document.querySelectorAll('.results-tab-btn').forEach(btn => {
@@ -488,10 +502,15 @@ class CarbonCalculator {
         // Update active content
         document.querySelectorAll('.results-tab-content').forEach(content => {
             content.classList.remove('active');
+            content.classList.remove('animate-in');
         });
         const activeContent = document.getElementById(`${tabId}-tab`);
         if (activeContent) {
             activeContent.classList.add('active');
+            // trigger enter animation
+            requestAnimationFrame(() => {
+                activeContent.classList.add('animate-in');
+            });
         }
     }
 

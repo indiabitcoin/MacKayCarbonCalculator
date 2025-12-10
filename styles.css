@@ -6129,6 +6129,82 @@ select:focus-visible {
     }
 }
 
+/* Enhanced motion and micro-interactions */
+.results-panel.animate-in,
+.controls-panel.animate-in,
+.results-tab-content.animate-in {
+    animation: slideUpFade 0.45s ease;
+}
+
+.lever.pulse-glow {
+    box-shadow: 0 14px 32px rgba(102, 126, 234, 0.35), 0 0 0 3px rgba(102, 126, 234, 0.18);
+    animation: pulseGlow 0.8s ease;
+}
+
+.results-tab-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.results-tab-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.results-tab-btn:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.feature-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+}
+
+.feature-btn:active {
+    transform: translateY(1px) scale(0.97);
+}
+
+/* Card hover polish */
+.metric-card,
+.insight-card,
+.impact-item {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.metric-card:hover,
+.insight-card:hover,
+.impact-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Idle icon float to add life */
+.metric-icon,
+.impact-icon,
+.badge-icon {
+    animation: floatyPulse 6s ease-in-out infinite;
+}
+
+@keyframes floatyPulse {
+    0% { transform: translateY(0) scale(1); filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12)); }
+    50% { transform: translateY(-6px) scale(1.03); filter: drop-shadow(0 6px 10px rgba(0,0,0,0.18)); }
+    100% { transform: translateY(0) scale(1); filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12)); }
+}
+
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(16px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.35); }
+    50% { box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.12); }
+    100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+}
+
 /* Touch-friendly improvements */
 @media (hover: none) and (pointer: coarse) {
     /* Increase touch targets */
@@ -6161,6 +6237,87 @@ select:focus-visible {
 .sector-tabs {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+}
+
+/* Animated traffic overlay (cars, bus, train, plane) */
+.traffic-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.traffic {
+    position: absolute;
+    font-size: 1.6rem;
+    opacity: 0.9;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.2));
+}
+
+.traffic.vehicle {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.traffic.car-1 {
+    bottom: 6%;
+    animation-name: drive-east;
+    animation-duration: 22s;
+    animation-delay: 0s;
+}
+
+.traffic.car-2 {
+    bottom: 9%;
+    animation-name: drive-west;
+    animation-duration: 20s;
+    animation-delay: 5s;
+}
+
+.traffic.bus {
+    bottom: 4%;
+    font-size: 1.8rem;
+    animation-name: drive-east;
+    animation-duration: 28s;
+    animation-delay: 10s;
+}
+
+.traffic.train {
+    bottom: 2%;
+    font-size: 2rem;
+    animation-name: drive-east;
+    animation-duration: 18s;
+    animation-delay: 3s;
+}
+
+.traffic.plane {
+    top: 8%;
+    right: -10%;
+    font-size: 1.7rem;
+    animation: fly-diagonal 26s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes drive-east {
+    0% { transform: translateX(-20vw) translateZ(0); opacity: 0; }
+    8% { opacity: 0.85; }
+    92% { opacity: 0.85; }
+    100% { transform: translateX(120vw) translateZ(0); opacity: 0; }
+}
+
+@keyframes drive-west {
+    0% { transform: translateX(120vw) translateZ(0); opacity: 0; }
+    8% { opacity: 0.85; }
+    92% { opacity: 0.85; }
+    100% { transform: translateX(-20vw) translateZ(0); opacity: 0; }
+}
+
+@keyframes fly-diagonal {
+    0% { transform: translate(5vw, 0) rotate(2deg); opacity: 0; }
+    5% { opacity: 0.8; }
+    50% { transform: translate(-40vw, 12vh) rotate(0deg); opacity: 0.85; }
+    95% { opacity: 0.8; }
+    100% { transform: translate(-120vw, 18vh) rotate(-3deg); opacity: 0; }
 }
 
 /* iOS safe area support */
