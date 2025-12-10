@@ -6,21 +6,28 @@
     <meta name="description" content="MacKay Carbon Calculator - Interactive tool for exploring UK net zero pathways">
     <meta name="keywords" content="carbon calculator, climate change, net zero, UK emissions, MacKay">
     <meta name="author" content="MacKay Carbon Calculator">
-    <meta name="theme-color" content="#27ae60">
+    <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Carbon Calculator">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="msapplication-TileColor" content="#27ae60">
+    <meta name="msapplication-TileColor" content="#667eea">
     <meta name="msapplication-config" content="none">
-    <title>MacKay Carbon Calculator</title>
+    <title>MacKay Carbon Calculator - Interactive Net Zero Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Particles Container for Visual Effects -->
+    <div class="particles-container" id="particlesContainer"></div>
+    
     <div class="container">
         <header>
-            <h1>MacKay Carbon Calculator</h1>
-            <p>Explore pathways to UK net zero emissions by 2050</p>
+            <h1 class="neon-glow">MacKay Carbon Calculator</h1>
+            <p style="font-size: 1.3rem; font-weight: 500; margin-bottom: 15px;">🌍 Explore pathways to UK net zero emissions by 2050 🌱</p>
+            <p style="font-size: 0.95rem; opacity: 0.85; max-width: 600px; margin: 0 auto;">Interactive climate action simulator with real-time feedback</p>
             
             <!-- Enhanced Features Toolbar -->
             <div class="features-toolbar">
@@ -402,29 +409,39 @@
             </div>
 
             <div class="results-panel">
-                <div class="emissions-display">
-                    <h3>UK Emissions Pathway</h3>
-                    
-                    <!-- CO2e Meter -->
-                    <div class="emissions-value">
-                        <span class="emissions-percentage" id="emissionsPercentage">--</span>
-                        <div class="emissions-label">Reduction from 1990 levels by 2050</div>
-                    </div>
-                    
-                    <div class="co2e-meter">
-                        <div class="meter-needle" id="meterNeedle"></div>
-                        <div class="meter-center"></div>
-                        <div class="meter-labels">
-                            <span>1990</span>
-                            <span>-80%</span>
-                            <span>Net Zero</span>
+                <!-- Tabs Navigation -->
+                <div class="results-tabs">
+                    <button class="results-tab-btn active" data-tab="overview">📊 Overview</button>
+                    <button class="results-tab-btn" data-tab="impact">🌍 Impact</button>
+                    <button class="results-tab-btn" data-tab="insights">💡 Insights</button>
+                    <button class="results-tab-btn" data-tab="analytics">📈 Analytics</button>
+                </div>
+
+                <!-- Overview Tab -->
+                <div class="results-tab-content active" id="overview-tab">
+                    <div class="emissions-display">
+                        <h3>UK Emissions Pathway</h3>
+                        
+                        <!-- CO2e Meter -->
+                        <div class="emissions-value">
+                            <span class="emissions-percentage" id="emissionsPercentage">--</span>
+                            <div class="emissions-label">Reduction from 1990 levels by 2050</div>
                         </div>
-                    </div>
-                    
-                    <div class="emissions-chart">
-                        <canvas id="emissionsChart" width="400" height="300"></canvas>
-                    </div>
-                    <div class="emissions-summary">
+                        
+                        <div class="co2e-meter">
+                            <div class="meter-needle" id="meterNeedle"></div>
+                            <div class="meter-center"></div>
+                            <div class="meter-labels">
+                                <span>1990</span>
+                                <span>-80%</span>
+                                <span>Net Zero</span>
+                            </div>
+                        </div>
+                        
+                        <div class="emissions-chart">
+                            <canvas id="emissionsChart" width="400" height="300"></canvas>
+                        </div>
+                        <div class="emissions-summary">
                         <div class="metric">
                             <span class="label">2050 Emissions:</span>
                             <span class="value" id="emissions2050">-- MtCO₂e</span>
@@ -446,7 +463,42 @@
                             <span class="value" id="feasibilityScore">--%</span>
                         </div>
                     </div>
-                    
+                </div>
+
+                <!-- Impact Tab -->
+                <div class="results-tab-content" id="impact-tab">
+                    <!-- Comparison, Achievements, and Impact viz will be added here by JavaScript -->
+                </div>
+
+                <!-- Insights Tab -->
+                <div class="results-tab-content" id="insights-tab">
+                    <div class="insights-container">
+                        <div class="insight-card">
+                            <div class="insight-icon">💡</div>
+                            <div class="insight-content">
+                                <h4>Key Recommendation</h4>
+                                <p id="keyRecommendation">Focus on transport electrification for maximum impact</p>
+                            </div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">⚠️</div>
+                            <div class="insight-content">
+                                <h4>Challenge Alert</h4>
+                                <p id="challengeAlert">Current aviation targets may be difficult to achieve</p>
+                            </div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">🚀</div>
+                            <div class="insight-content">
+                                <h4>Quick Win</h4>
+                                <p id="quickWin">Increase building insulation for immediate gains</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div class="results-tab-content" id="analytics-tab">
                     <!-- Enhanced Analytics Panel -->
                     <div class="analytics-panel">
                         <div class="analytics-tabs">
@@ -510,71 +562,56 @@
                                         <div class="insight-icon">💡</div>
                                         <div class="insight-content">
                                             <h4>Key Recommendation</h4>
-                                            <p id="keyRecommendation">Focus on transport electrification for maximum impact</p>
-                                        </div>
-                                    </div>
-                                    <div class="insight-card">
-                                        <div class="insight-icon">⚠️</div>
-                                        <div class="insight-content">
-                                            <h4>Challenge Alert</h4>
-                                            <p id="challengeAlert">Current aviation targets may be difficult to achieve</p>
-                                        </div>
-                                    </div>
-                                    <div class="insight-card">
-                                        <div class="insight-icon">🚀</div>
-                                        <div class="insight-content">
-                                            <h4>Quick Win</h4>
-                                            <p id="quickWin">Increase building insulation for immediate gains</p>
+                                            <p>Adjust your levers to discover insights</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="sector-breakdown">
-                    <h4>2050 Emissions by Sector</h4>
-                    <div class="sector-bars">
-                        <div class="sector-bar">
-                            <span class="sector-name">Transport</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 0%" data-sector="transport"></div>
-                                <span class="bar-value">-- MtCO₂e</span>
+                    <div class="sector-breakdown">
+                        <h4>2050 Emissions by Sector</h4>
+                        <div class="sector-bars">
+                            <div class="sector-bar">
+                                <span class="sector-name">Transport</span>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 0%" data-sector="transport"></div>
+                                    <span class="bar-value">-- MtCO₂e</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="sector-bar">
-                            <span class="sector-name">Buildings</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 0%" data-sector="buildings"></div>
-                                <span class="bar-value">-- MtCO₂e</span>
+                            <div class="sector-bar">
+                                <span class="sector-name">Buildings</span>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 0%" data-sector="buildings"></div>
+                                    <span class="bar-value">-- MtCO₂e</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="sector-bar">
-                            <span class="sector-name">Industry</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 0%" data-sector="industry"></div>
-                                <span class="bar-value">-- MtCO₂e</span>
+                            <div class="sector-bar">
+                                <span class="sector-name">Industry</span>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 0%" data-sector="industry"></div>
+                                    <span class="bar-value">-- MtCO₂e</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="sector-bar">
-                            <span class="sector-name">Electricity</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 0%" data-sector="electricity"></div>
-                                <span class="bar-value">-- MtCO₂e</span>
+                            <div class="sector-bar">
+                                <span class="sector-name">Electricity</span>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 0%" data-sector="electricity"></div>
+                                    <span class="bar-value">-- MtCO₂e</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="sector-bar">
-                            <span class="sector-name">Agriculture</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 0%" data-sector="land-use"></div>
-                                <span class="bar-value">-- MtCO₂e</span>
+                            <div class="sector-bar">
+                                <span class="sector-name">Agriculture</span>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: 0%" data-sector="land-use"></div>
+                                    <span class="bar-value">-- MtCO₂e</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <footer>
             <p>Based on the UK Government's MacKay Carbon Calculator | Explore pathways to net zero by 2050</p>

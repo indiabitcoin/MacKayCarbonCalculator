@@ -22,6 +22,8 @@ class CarbonCalculator {
         
         // Initialize enhanced animations
         this.enhanceTabSwitching();
+        this.initializeParticleSystem();
+        this.initializeAdvancedInteractions();
         
         // Add initial staggered animation to levers (reduced on mobile)
         setTimeout(() => {
@@ -48,6 +50,360 @@ class CarbonCalculator {
         this.initializePerformanceMonitoring();
         this.initializeMobileOptimizations();
     }
+    
+    // Enhanced Particle System
+    initializeParticleSystem() {
+        const container = document.getElementById('particlesContainer');
+        if (!container) return;
+        
+        // Subtle background particles
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                this.createBackgroundParticle(container);
+            }
+        }, 2000);
+    }
+    
+    createBackgroundParticle(container) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.width = (Math.random() * 4 + 2) + 'px';
+        particle.style.height = particle.style.width;
+        
+        container.appendChild(particle);
+        
+        setTimeout(() => particle.remove(), 2000);
+    }
+    
+    // Enhanced Slider Interactions with Particles
+    initializeAdvancedInteractions() {
+        document.querySelectorAll('.lever-slider').forEach(slider => {
+            slider.addEventListener('input', (e) => {
+                this.createSliderParticles(e.target);
+                this.addSliderGlow(e.target);
+            });
+            
+            slider.addEventListener('mousedown', (e) => {
+                e.target.style.cursor = 'grabbing';
+            });
+            
+            slider.addEventListener('mouseup', (e) => {
+                e.target.style.cursor = 'grab';
+                this.createSuccessRipple(e.target);
+            });
+        });
+        
+        // Enhanced tab interactions
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.createTabSwitchEffect(e.target);
+            });
+        });
+        
+        // Enhanced feature button interactions
+        document.querySelectorAll('.feature-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.createButtonRipple(e);
+            });
+        });
+    }
+    
+    createSliderParticles(slider) {
+        const lever = slider.closest('.lever');
+        const rect = slider.getBoundingClientRect();
+        const container = document.getElementById('particlesContainer');
+        
+        for (let i = 0; i < 5; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = rect.left + (rect.width * (slider.value / slider.max)) + 'px';
+            particle.style.top = rect.top + 'px';
+            particle.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+            
+            container.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 2000);
+        }
+    }
+    
+    addSliderGlow(slider) {
+        const lever = slider.closest('.lever');
+        lever.style.boxShadow = '0 12px 32px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)';
+        
+        setTimeout(() => {
+            lever.style.boxShadow = '';
+        }, 300);
+    }
+    
+    createSuccessRipple(element) {
+        const lever = element.closest('.lever');
+        lever.style.animation = 'pulse 0.6s ease-out';
+        
+        setTimeout(() => {
+            lever.style.animation = '';
+        }, 600);
+    }
+    
+    createTabSwitchEffect(tab) {
+        // Add particle burst
+        const rect = tab.getBoundingClientRect();
+        const container = document.getElementById('particlesContainer');
+        
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = rect.left + rect.width / 2 + 'px';
+            particle.style.top = rect.top + rect.height / 2 + 'px';
+            
+            const angle = (Math.PI * 2 * i) / 8;
+            const velocity = 50;
+            particle.style.setProperty('--tx', Math.cos(angle) * velocity + 'px');
+            particle.style.setProperty('--ty', Math.sin(angle) * velocity + 'px');
+            
+            container.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 1000);
+        }
+    }
+    
+    createButtonRipple(e) {
+        const button = e.currentTarget;
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        button.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+    }
+    
+    // Advanced Features: Real-time Comparison Visualization
+    updateComparisonVisualization() {
+        const currentEmissions = this.calculateTotalEmissions();
+        const baseline = this.baselineEmissions;
+        const target = baseline * 0.05; // Net zero target (95% reduction)
+        
+        // Create or update comparison panel
+        let comparisonPanel = document.querySelector('.progress-comparison');
+        if (!comparisonPanel) {
+            comparisonPanel = this.createComparisonPanel();
+        }
+        
+        // Update comparison bars with animation
+        this.animateComparisonBar('baseline-bar', 100, `${baseline.toFixed(0)} MtCO₂e`);
+        this.animateComparisonBar('current-bar', (currentEmissions / baseline) * 100, `${currentEmissions.toFixed(0)} MtCO₂e`);
+        this.animateComparisonBar('target-bar', (target / baseline) * 100, `${target.toFixed(0)} MtCO₂e`);
+        this.animateComparisonBar('global-avg-bar', 30, '~120 MtCO₂e');
+    }
+    
+    createComparisonPanel() {
+        const impactTab = document.getElementById('impact-tab');
+        if (!impactTab) {
+            console.warn('Impact tab not found, appending to results panel');
+            const resultsPanel = document.querySelector('.results-panel');
+            const panel = document.createElement('div');
+            panel.className = 'progress-comparison';
+            panel.innerHTML = this.getComparisonHTML();
+            resultsPanel.appendChild(panel);
+            return panel;
+        }
+        
+        const panel = document.createElement('div');
+        panel.className = 'progress-comparison';
+        panel.innerHTML = this.getComparisonHTML();
+        impactTab.appendChild(panel);
+        return panel;
+    }
+    
+    getComparisonHTML() {
+        return `
+            <h4>📊 Comparison with Targets</h4>
+            <div class="comparison-bar">
+                <span class="comparison-label">1990 Baseline</span>
+                <div class="comparison-track">
+                    <div class="comparison-fill" id="baseline-bar" style="width: 0%"></div>
+                </div>
+                <span class="comparison-value" id="baseline-value">0</span>
+            </div>
+            <div class="comparison-bar">
+                <span class="comparison-label">Your Scenario</span>
+                <div class="comparison-track">
+                    <div class="comparison-fill" id="current-bar" style="width: 0%; background: linear-gradient(90deg, #11998e, #38ef7d)"></div>
+                </div>
+                <span class="comparison-value" id="current-value">0</span>
+            </div>
+            <div class="comparison-bar">
+                <span class="comparison-label">2050 Target</span>
+                <div class="comparison-track">
+                    <div class="comparison-fill" id="target-bar" style="width: 0%; background: linear-gradient(90deg, #2ed573, #20bf6b)"></div>
+                </div>
+                <span class="comparison-value" id="target-value">0</span>
+            </div>
+            <div class="comparison-bar">
+                <span class="comparison-label">Global Average</span>
+                <div class="comparison-track">
+                    <div class="comparison-fill" id="global-avg-bar" style="width: 0%; background: linear-gradient(90deg, #ffa502, #feca57)"></div>
+                </div>
+                <span class="comparison-value" id="global-avg-value">0</span>
+            </div>
+        `;
+    }
+    
+    animateComparisonBar(barId, percentage, value) {
+        const bar = document.getElementById(barId);
+        const valueElement = document.getElementById(barId.replace('-bar', '-value'));
+        
+        if (bar && valueElement) {
+            setTimeout(() => {
+                bar.style.width = percentage + '%';
+                valueElement.textContent = value;
+            }, 100);
+        }
+    }
+    
+    // Achievement Badge System
+    initializeAchievements() {
+        const badges = [
+            { id: 'first-step', icon: '🌱', title: 'First Step', condition: () => true },
+            { id: 'reducer', icon: '♻️', title: 'Reducer', condition: () => this.calculateReduction() > 20 },
+            { id: 'green-hero', icon: '🦸', title: 'Green Hero', condition: () => this.calculateReduction() > 50 },
+            { id: 'climate-warrior', icon: '⚔️', title: 'Climate Warrior', condition: () => this.calculateReduction() > 70 },
+            { id: 'net-zero', icon: '🎯', title: 'Net Zero', condition: () => this.calculateReduction() > 95 },
+            { id: 'max-effort', icon: '💯', title: 'Max Effort', condition: () => Object.values(this.leverValues).every(v => v === 4) }
+        ];
+        
+        let achievementsPanel = document.querySelector('.achievements-panel');
+        if (!achievementsPanel) {
+            achievementsPanel = this.createAchievementsPanel(badges);
+        }
+        
+        this.updateAchievements(badges);
+    }
+    
+    createAchievementsPanel(badges) {
+        const impactTab = document.getElementById('impact-tab');
+        const panel = document.createElement('div');
+        panel.className = 'achievements-panel';
+        panel.innerHTML = `
+            <h4>🏆 Achievements</h4>
+            <div class="badges-grid">
+                ${badges.map(badge => `
+                    <div class="badge locked" id="badge-${badge.id}" title="${badge.title}">
+                        <div class="badge-icon">${badge.icon}</div>
+                        <div class="badge-title">${badge.title}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        if (impactTab) {
+            impactTab.appendChild(panel);
+        } else {
+            const resultsPanel = document.querySelector('.results-panel');
+            resultsPanel.appendChild(panel);
+        }
+        return panel;
+    }
+    
+    updateAchievements(badges) {
+        badges.forEach(badge => {
+            const element = document.getElementById(`badge-${badge.id}`);
+            if (element && badge.condition()) {
+                if (element.classList.contains('locked')) {
+                    element.classList.remove('locked');
+                    element.classList.add('unlocked');
+                    this.showAchievementNotification(badge);
+                }
+            }
+        });
+    }
+    
+    showAchievementNotification(badge) {
+        const notification = document.createElement('div');
+        notification.className = 'achievement-notification';
+        notification.innerHTML = `
+            <div class="achievement-content">
+                <span class="achievement-icon">${badge.icon}</span>
+                <div class="achievement-text">
+                    <strong>Achievement Unlocked!</strong>
+                    <p>${badge.title}</p>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.classList.add('show'), 100);
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 500);
+        }, 3000);
+    }
+    
+    calculateReduction() {
+        const current = this.calculateTotalEmissions();
+        const baseline = this.baselineEmissions;
+        return ((baseline - current) / baseline) * 100;
+    }
+    
+    // Live Impact Visualization
+    createLiveImpactViz() {
+        const impactTab = document.getElementById('impact-tab');
+        const currentEmissions = this.calculateTotalEmissions();
+        const reduction = this.calculateReduction();
+        
+        // Calculate equivalent impacts
+        const treesEquivalent = Math.floor(reduction * 50); // Rough estimate
+        const carsOffRoad = Math.floor(reduction * 10);
+        const homesEnergy = Math.floor(reduction * 5);
+        
+        let vizPanel = document.querySelector('.live-impact-viz');
+        if (!vizPanel) {
+            vizPanel = document.createElement('div');
+            vizPanel.className = 'live-impact-viz';
+            if (impactTab) {
+                impactTab.appendChild(vizPanel);
+            } else {
+                const resultsPanel = document.querySelector('.results-panel');
+                resultsPanel.appendChild(vizPanel);
+            }
+        }
+        
+        vizPanel.innerHTML = `
+            <h4>🌍 Your Impact Equals...</h4>
+            <div class="impact-items">
+                <div class="impact-item">
+                    <div class="impact-icon">🌳</div>
+                    <div class="impact-value">${treesEquivalent}</div>
+                    <div class="impact-label">Trees Planted</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-icon">🚗</div>
+                    <div class="impact-value">${carsOffRoad}</div>
+                    <div class="impact-label">Cars Off Road</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-icon">🏠</div>
+                    <div class="impact-value">${homesEnergy}</div>
+                    <div class="impact-label">Homes Powered</div>
+                </div>
+                <div class="impact-item">
+                    <div class="impact-icon">⚡</div>
+                    <div class="impact-value">${reduction.toFixed(0)}%</div>
+                    <div class="impact-label">Total Reduction</div>
+                </div>
+            </div>
+        `;
+    }
 
     initializeLeverValues() {
         // Initialize all levers to level 1 (minimal effort)
@@ -72,6 +428,13 @@ class CarbonCalculator {
     }
 
     initializeEventListeners() {
+        // Results tabs switching
+        document.querySelectorAll('.results-tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.switchResultsTab(e.target.dataset.tab);
+            });
+        });
+
         // Sector tab switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -110,6 +473,26 @@ class CarbonCalculator {
                 lever.classList.remove('active');
             });
         });
+    }
+
+    switchResultsTab(tabId) {
+        // Update active tab button
+        document.querySelectorAll('.results-tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        const activeBtn = document.querySelector(`.results-tab-btn[data-tab="${tabId}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
+
+        // Update active content
+        document.querySelectorAll('.results-tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        const activeContent = document.getElementById(`${tabId}-tab`);
+        if (activeContent) {
+            activeContent.classList.add('active');
+        }
     }
 
     switchSector(sectorId) {
@@ -291,6 +674,16 @@ class CarbonCalculator {
         
         // Update chart
         this.updateChart(sectorEmissions, totalEmissions);
+        
+        // NEW ADVANCED FEATURES
+        // Update comparison visualization
+        this.updateComparisonVisualization();
+        
+        // Update achievements
+        this.initializeAchievements();
+        
+        // Update live impact visualization
+        this.createLiveImpactViz();
     }
 
     animateEmissionsUpdate(totalEmissions, reductionPercent) {
@@ -547,46 +940,47 @@ class CarbonCalculator {
     
     initializeFeatures() {
         // Feature toolbar buttons - check if elements exist first
-        const saveBtn = document.getElementById('save-scenario-btn');
+        const saveBtn = document.getElementById('saveScenarioBtn');
         if (saveBtn) {
             saveBtn.addEventListener('click', () => {
-                this.showModal('save-scenario-modal');
+                this.showModal('saveScenarioModal');
             });
         }
         
-        const loadBtn = document.getElementById('load-scenario-btn');
+        const loadBtn = document.getElementById('loadScenarioBtn');
         if (loadBtn) {
             loadBtn.addEventListener('click', () => {
                 this.loadSavedScenarios();
-                this.showModal('load-scenario-modal');
+                this.showModal('loadScenarioModal');
             });
         }
         
-        const compareBtn = document.getElementById('compare-btn');
+        const compareBtn = document.getElementById('compareBtn');
         if (compareBtn) {
             compareBtn.addEventListener('click', () => {
-                this.showAnalyticsTab('compare');
+                this.switchResultsTab('analytics');
+                setTimeout(() => this.showAnalyticsTab('comparison'), 100);
             });
         }
         
-        const exportBtn = document.getElementById('export-btn');
+        const exportBtn = document.getElementById('exportBtn');
         if (exportBtn) {
             exportBtn.addEventListener('click', () => {
-                this.showModal('export-modal');
+                this.showModal('exportModal');
             });
         }
         
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
                 this.shareScenario();
             });
         }
         
-        const helpBtn = document.getElementById('help-btn');
+        const helpBtn = document.getElementById('helpBtn');
         if (helpBtn) {
             helpBtn.addEventListener('click', () => {
-                this.showModal('help-modal');
+                this.showModal('helpModal');
             });
         }
     }
@@ -604,33 +998,68 @@ class CarbonCalculator {
         // Close buttons
         document.querySelectorAll('.close').forEach(closeBtn => {
             closeBtn.addEventListener('click', (e) => {
-                const modal = e.target.closest('.modal');
-                this.hideModal(modal.id);
+                const modalId = e.target.getAttribute('data-modal');
+                if (modalId) {
+                    this.hideModal(modalId);
+                } else {
+                    const modal = e.target.closest('.modal');
+                    if (modal) {
+                        this.hideModal(modal.id);
+                    }
+                }
             });
+        });
+        
+        // Cancel buttons with data-modal attribute
+        document.querySelectorAll('[data-modal]').forEach(btn => {
+            if (btn.classList.contains('btn-secondary') || btn.classList.contains('btn')) {
+                btn.addEventListener('click', (e) => {
+                    const modalId = e.target.getAttribute('data-modal');
+                    if (modalId) {
+                        this.hideModal(modalId);
+                    }
+                });
+            }
         });
         
         // Help tabs
         document.querySelectorAll('.help-tab').forEach(tab => {
             tab.addEventListener('click', (e) => {
-                this.showHelpSection(e.target.dataset.section);
+                const sectionId = e.target.getAttribute('data-help');
+                if (sectionId) {
+                    this.showHelpSection(sectionId);
+                }
             });
         });
         
-        // Save scenario form
-        const saveForm = document.getElementById('save-scenario-form');
-        if (saveForm) {
-            saveForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+        // Save scenario button
+        const confirmSaveBtn = document.getElementById('confirmSaveScenario');
+        if (confirmSaveBtn) {
+            confirmSaveBtn.addEventListener('click', () => {
                 this.saveScenario();
+                this.hideModal('saveScenarioModal');
             });
         }
         
-        // Export form
-        const exportForm = document.getElementById('export-form');
-        if (exportForm) {
-            exportForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+        // Export confirm button
+        const confirmExportBtn = document.getElementById('confirmExport');
+        if (confirmExportBtn) {
+            confirmExportBtn.addEventListener('click', () => {
                 this.exportData();
+                this.hideModal('exportModal');
+            });
+        }
+        
+        // Clear all scenarios button
+        const clearAllBtn = document.getElementById('clearAllScenarios');
+        if (clearAllBtn) {
+            clearAllBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to delete all saved scenarios? This cannot be undone.')) {
+                    this.scenarios = [];
+                    localStorage.removeItem('carbonCalculatorScenarios');
+                    this.loadSavedScenarios();
+                    this.showToast('All scenarios cleared', 'success');
+                }
             });
         }
     }
@@ -665,12 +1094,31 @@ class CarbonCalculator {
         this.hideModalWithAnimation(modalId);
     }
     
+    hideModalWithAnimation(modalId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        
+        const modalContent = modal.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.style.animation = 'modalSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+        
+        setTimeout(() => {
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }, 300);
+    }
+    
     showHelpSection(sectionId) {
         // Update tab states
         document.querySelectorAll('.help-tab').forEach(tab => {
             tab.classList.remove('active');
         });
-        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+        const activeTab = document.querySelector(`[data-help="${sectionId}"]`);
+        if (activeTab) {
+            activeTab.classList.add('active');
+        }
         
         // Update section visibility
         document.querySelectorAll('.help-section').forEach(section => {
@@ -687,7 +1135,10 @@ class CarbonCalculator {
         document.querySelectorAll('.analytics-tab').forEach(tab => {
             tab.classList.remove('active');
         });
-        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        const activeTab = document.querySelector(`.analytics-tab[data-tab="${tabId}"]`);
+        if (activeTab) {
+            activeTab.classList.add('active');
+        }
         
         // Update section visibility
         document.querySelectorAll('.analytics-section').forEach(section => {
@@ -703,28 +1154,43 @@ class CarbonCalculator {
     }
     
     saveScenario() {
-        const form = document.getElementById('save-scenario-form');
-        const formData = new FormData(form);
+        const nameInput = document.getElementById('scenarioName');
+        const descInput = document.getElementById('scenarioDescription');
+        const defaultCheckbox = document.getElementById('setAsDefault');
+        
+        if (!nameInput || !nameInput.value.trim()) {
+            this.showToast('Please enter a scenario name', 'error');
+            return;
+        }
         
         const scenario = {
             id: Date.now().toString(),
-            name: formData.get('scenario-name'),
-            description: formData.get('scenario-description'),
+            name: nameInput.value.trim(),
+            description: descInput ? descInput.value.trim() : '',
             values: { ...this.leverValues },
             timestamp: new Date().toISOString(),
-            emissions: this.calculateTotalEmissions()
+            emissions: this.calculateTotalEmissions(),
+            isDefault: defaultCheckbox ? defaultCheckbox.checked : false
         };
         
         this.scenarios.push(scenario);
         localStorage.setItem('carbonCalculatorScenarios', JSON.stringify(this.scenarios));
         
-        this.hideModal('save-scenario-modal');
         this.showToast('Scenario saved successfully!', 'success');
-        form.reset();
+        
+        // Clear form
+        if (nameInput) nameInput.value = '';
+        if (descInput) descInput.value = '';
+        if (defaultCheckbox) defaultCheckbox.checked = false;
     }
     
     loadSavedScenarios() {
-        const container = document.querySelector('.scenarios-list');
+        const container = document.getElementById('scenariosList');
+        if (!container) {
+            console.error('Scenarios list container not found');
+            return;
+        }
+        
         container.innerHTML = '';
         
         if (this.scenarios.length === 0) {
@@ -759,15 +1225,15 @@ class CarbonCalculator {
         
         // Update UI
         Object.keys(scenario.values).forEach(leverId => {
-            const slider = document.querySelector(`#${leverId}`);
+            const slider = document.querySelector(`[data-lever="${leverId}"]`);
             if (slider) {
                 slider.value = scenario.values[leverId];
-                this.updateLeverDisplay(leverId, scenario.values[leverId]);
+                this.updateLever(leverId, scenario.values[leverId]);
             }
         });
         
         this.updateCalculations();
-        this.hideModal('load-scenario-modal');
+        this.hideModal('loadScenarioModal');
         this.showToast(`Scenario "${scenario.name}" loaded successfully!`, 'success');
     }
     
