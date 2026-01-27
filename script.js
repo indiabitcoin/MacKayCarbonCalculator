@@ -13,29 +13,33 @@ class CarbonCalculator {
         this.collaborationMode = false;
         this.aiInsights = [];
         this.userPreferences = this.loadUserPreferences();
-        
+
         // Initialize lever values to level 1
         this.initializeLeverValues();
         this.initializeEventListeners();
         this.initializeChart();
         this.updateCalculations();
-        
+
         // Initialize enhanced animations
         this.enhanceTabSwitching();
         this.initializeParticleSystem();
         this.initializeAdvancedInteractions();
-        
+
         // Add initial staggered animation to levers (reduced on mobile)
+        // Add initial staggered animation to levers
         setTimeout(() => {
             const levers = document.querySelectorAll('.lever');
             if (window.innerWidth > 768) {
-                this.addStaggeredAnimation(levers, 'bounceIn');
+                // Using simple fade in instead of bounce
+                levers.forEach((lever, index) => {
+                    lever.style.animation = `fadeIn 0.5s ease-out ${index * 0.05}s both`;
+                });
             }
         }, 500);
-        
+
         // Initialize responsive features
         this.initializeResponsiveFeatures();
-        
+
         // Initialize new features
         this.initializeFeatures();
         this.initializeModals();
@@ -53,20 +57,13 @@ class CarbonCalculator {
         // Initial entrance animations
         this.applyInitialAnimations();
     }
-    
+
     // Enhanced Particle System
+    // Simplified Particle System (Disabled for professional look)
     initializeParticleSystem() {
-        const container = document.getElementById('particlesContainer');
-        if (!container) return;
-        
-        // Subtle background particles
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                this.createBackgroundParticle(container);
-            }
-        }, 2000);
+        // Particle system disabled for cleaner UI
     }
-    
+
     createBackgroundParticle(container) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -74,141 +71,83 @@ class CarbonCalculator {
         particle.style.top = Math.random() * 100 + '%';
         particle.style.width = (Math.random() * 4 + 2) + 'px';
         particle.style.height = particle.style.width;
-        
+
         container.appendChild(particle);
-        
+
         setTimeout(() => particle.remove(), 2000);
     }
-    
+
     // Enhanced Slider Interactions with Particles
+    // Streamlined Interactions
     initializeAdvancedInteractions() {
         document.querySelectorAll('.lever-slider').forEach(slider => {
             slider.addEventListener('input', (e) => {
-                this.createSliderParticles(e.target);
+                // Removed particle creation used previously
                 this.addSliderGlow(e.target);
             });
-            
+
             slider.addEventListener('mousedown', (e) => {
                 e.target.style.cursor = 'grabbing';
             });
-            
+
             slider.addEventListener('mouseup', (e) => {
                 e.target.style.cursor = 'grab';
-                this.createSuccessRipple(e.target);
             });
         });
-        
-        // Enhanced tab interactions
+
+        // Standard tab interactions
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                this.createTabSwitchEffect(e.target);
-            });
-        });
-        
-        // Enhanced feature button interactions
-        document.querySelectorAll('.feature-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.createButtonRipple(e);
+                // Removed particle burst
             });
         });
     }
-    
+
     createSliderParticles(slider) {
-        const lever = slider.closest('.lever');
-        const rect = slider.getBoundingClientRect();
-        const container = document.getElementById('particlesContainer');
-        
-        for (let i = 0; i < 5; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = rect.left + (rect.width * (slider.value / slider.max)) + 'px';
-            particle.style.top = rect.top + 'px';
-            particle.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
-            
-            container.appendChild(particle);
-            
-            setTimeout(() => particle.remove(), 2000);
-        }
+        // Disabled
     }
-    
+
     addSliderGlow(slider) {
+        // Subtle focus indication instead of heavy glow
         const lever = slider.closest('.lever');
-        lever.style.boxShadow = '0 12px 32px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)';
-        
+        lever.style.borderColor = 'var(--accent-primary)';
+
         setTimeout(() => {
-            lever.style.boxShadow = '';
+            lever.style.borderColor = '';
         }, 300);
     }
-    
+
     createSuccessRipple(element) {
-        const lever = element.closest('.lever');
-        lever.style.animation = 'pulse 0.6s ease-out';
-        
-        setTimeout(() => {
-            lever.style.animation = '';
-        }, 600);
+        // Disabled ripple
     }
-    
+
     createTabSwitchEffect(tab) {
-        // Add particle burst
-        const rect = tab.getBoundingClientRect();
-        const container = document.getElementById('particlesContainer');
-        
-        for (let i = 0; i < 8; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = rect.left + rect.width / 2 + 'px';
-            particle.style.top = rect.top + rect.height / 2 + 'px';
-            
-            const angle = (Math.PI * 2 * i) / 8;
-            const velocity = 50;
-            particle.style.setProperty('--tx', Math.cos(angle) * velocity + 'px');
-            particle.style.setProperty('--ty', Math.sin(angle) * velocity + 'px');
-            
-            container.appendChild(particle);
-            
-            setTimeout(() => particle.remove(), 1000);
-        }
+        // Disabled particle burst
     }
-    
+
     createButtonRipple(e) {
-        const button = e.currentTarget;
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        
-        const rect = button.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        
-        button.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
+        // Standard CSS active state is sufficient
     }
-    
+
     // Advanced Features: Real-time Comparison Visualization
     updateComparisonVisualization() {
         const currentEmissions = this.calculateTotalEmissions();
         const baseline = this.baselineEmissions;
         const target = baseline * 0.05; // Net zero target (95% reduction)
-        
+
         // Create or update comparison panel
         let comparisonPanel = document.querySelector('.progress-comparison');
         if (!comparisonPanel) {
             comparisonPanel = this.createComparisonPanel();
         }
-        
+
         // Update comparison bars with animation
         this.animateComparisonBar('baseline-bar', 100, `${baseline.toFixed(0)} MtCO₂e`);
         this.animateComparisonBar('current-bar', (currentEmissions / baseline) * 100, `${currentEmissions.toFixed(0)} MtCO₂e`);
         this.animateComparisonBar('target-bar', (target / baseline) * 100, `${target.toFixed(0)} MtCO₂e`);
         this.animateComparisonBar('global-avg-bar', 30, '~120 MtCO₂e');
     }
-    
+
     createComparisonPanel() {
         const impactTab = document.getElementById('impact-tab');
         if (!impactTab) {
@@ -220,52 +159,52 @@ class CarbonCalculator {
             resultsPanel.appendChild(panel);
             return panel;
         }
-        
+
         const panel = document.createElement('div');
         panel.className = 'progress-comparison';
         panel.innerHTML = this.getComparisonHTML();
         impactTab.appendChild(panel);
         return panel;
     }
-    
+
     getComparisonHTML() {
         return `
             <h4>📊 Comparison with Targets</h4>
             <div class="comparison-bar">
                 <span class="comparison-label">1990 Baseline</span>
                 <div class="comparison-track">
-                    <div class="comparison-fill" id="baseline-bar" style="width: 0%"></div>
+                    <div class="comparison-fill" id="baseline-bar" style="width: 0%; background: var(--text-secondary)"></div>
                 </div>
                 <span class="comparison-value" id="baseline-value">0</span>
             </div>
             <div class="comparison-bar">
                 <span class="comparison-label">Your Scenario</span>
                 <div class="comparison-track">
-                    <div class="comparison-fill" id="current-bar" style="width: 0%; background: linear-gradient(90deg, #11998e, #38ef7d)"></div>
+                    <div class="comparison-fill" id="current-bar" style="width: 0%; background: var(--accent-primary)"></div>
                 </div>
                 <span class="comparison-value" id="current-value">0</span>
             </div>
             <div class="comparison-bar">
                 <span class="comparison-label">2050 Target</span>
                 <div class="comparison-track">
-                    <div class="comparison-fill" id="target-bar" style="width: 0%; background: linear-gradient(90deg, #2ed573, #20bf6b)"></div>
+                    <div class="comparison-fill" id="target-bar" style="width: 0%; background: var(--accent-secondary)"></div>
                 </div>
                 <span class="comparison-value" id="target-value">0</span>
             </div>
             <div class="comparison-bar">
                 <span class="comparison-label">Global Average</span>
                 <div class="comparison-track">
-                    <div class="comparison-fill" id="global-avg-bar" style="width: 0%; background: linear-gradient(90deg, #ffa502, #feca57)"></div>
+                    <div class="comparison-fill" id="global-avg-bar" style="width: 0%; background: var(--accent-warning)"></div>
                 </div>
                 <span class="comparison-value" id="global-avg-value">0</span>
             </div>
         `;
     }
-    
+
     animateComparisonBar(barId, percentage, value) {
         const bar = document.getElementById(barId);
         const valueElement = document.getElementById(barId.replace('-bar', '-value'));
-        
+
         if (bar && valueElement) {
             setTimeout(() => {
                 bar.style.width = percentage + '%';
@@ -273,7 +212,7 @@ class CarbonCalculator {
             }, 100);
         }
     }
-    
+
     // Achievement Badge System
     initializeAchievements() {
         const badges = [
@@ -284,15 +223,15 @@ class CarbonCalculator {
             { id: 'net-zero', icon: '🎯', title: 'Net Zero', condition: () => this.calculateReduction() > 95 },
             { id: 'max-effort', icon: '💯', title: 'Max Effort', condition: () => Object.values(this.leverValues).every(v => v === 4) }
         ];
-        
+
         let achievementsPanel = document.querySelector('.achievements-panel');
         if (!achievementsPanel) {
             achievementsPanel = this.createAchievementsPanel(badges);
         }
-        
+
         this.updateAchievements(badges);
     }
-    
+
     createAchievementsPanel(badges) {
         const impactTab = document.getElementById('impact-tab');
         const panel = document.createElement('div');
@@ -308,7 +247,7 @@ class CarbonCalculator {
                 `).join('')}
             </div>
         `;
-        
+
         if (impactTab) {
             impactTab.appendChild(panel);
         } else {
@@ -317,7 +256,7 @@ class CarbonCalculator {
         }
         return panel;
     }
-    
+
     updateAchievements(badges) {
         badges.forEach(badge => {
             const element = document.getElementById(`badge-${badge.id}`);
@@ -330,7 +269,7 @@ class CarbonCalculator {
             }
         });
     }
-    
+
     showAchievementNotification(badge) {
         const notification = document.createElement('div');
         notification.className = 'achievement-notification';
@@ -344,31 +283,31 @@ class CarbonCalculator {
             </div>
         `;
         document.body.appendChild(notification);
-        
+
         setTimeout(() => notification.classList.add('show'), 100);
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => notification.remove(), 500);
         }, 3000);
     }
-    
+
     calculateReduction() {
         const current = this.calculateTotalEmissions();
         const baseline = this.baselineEmissions;
         return ((baseline - current) / baseline) * 100;
     }
-    
+
     // Live Impact Visualization
     createLiveImpactViz() {
         const impactTab = document.getElementById('impact-tab');
         const currentEmissions = this.calculateTotalEmissions();
         const reduction = this.calculateReduction();
-        
+
         // Calculate equivalent impacts
         const treesEquivalent = Math.floor(reduction * 50); // Rough estimate
         const carsOffRoad = Math.floor(reduction * 10);
         const homesEnergy = Math.floor(reduction * 5);
-        
+
         let vizPanel = document.querySelector('.live-impact-viz');
         if (!vizPanel) {
             vizPanel = document.createElement('div');
@@ -380,7 +319,7 @@ class CarbonCalculator {
                 resultsPanel.appendChild(vizPanel);
             }
         }
-        
+
         vizPanel.innerHTML = `
             <h4>🌍 Your Impact Equals...</h4>
             <div class="impact-items">
@@ -448,33 +387,33 @@ class CarbonCalculator {
         // Lever slider changes
         document.querySelectorAll('.lever-slider').forEach(slider => {
             const lever = slider.closest('.lever');
-            
+
             slider.addEventListener('input', (e) => {
                 this.updateLever(e.target.dataset.lever, parseInt(e.target.value));
-                
+
                 // Update progress ring
                 this.updateProgressRing(lever, parseInt(e.target.value));
-                
+
                 // Create ripple effect
                 this.createRippleEffect(e.target, e);
-                
-                // Generate particles
-                this.createParticles(lever);
 
-                // Brief glow pulse
-                lever.classList.add('pulse-glow');
-                setTimeout(() => lever.classList.remove('pulse-glow'), 300);
+                // Generate particles - Disabled
+                // this.createParticles(lever);
+
+                // Brief glow pulse - Disabled
+                // lever.classList.add('pulse-glow');
+                // setTimeout(() => lever.classList.remove('pulse-glow'), 300);
             });
-            
-            // Enhanced lever interaction with advanced animations
-            this.enhanceLeverInteraction(lever, slider);
-            
+
+            // Interaction without advanced animations
+            // this.enhanceLeverInteraction(lever, slider);
+
             // Add hover effects
             slider.addEventListener('mouseenter', (e) => {
                 const lever = e.target.closest('.lever');
                 lever.classList.add('active');
             });
-            
+
             slider.addEventListener('mouseleave', (e) => {
                 const lever = e.target.closest('.lever');
                 lever.classList.remove('active');
@@ -539,14 +478,14 @@ class CarbonCalculator {
                 }, 300);
             }
         });
-        
+
         // Show new sector with staggered animation
         setTimeout(() => {
             const sectorElement = document.getElementById(sectorId);
             if (sectorElement) {
                 sectorElement.classList.add('active');
                 sectorElement.style.animation = 'fadeInUp 0.4s ease-out';
-                
+
                 // Add staggered animation to levers
                 const levers = sectorElement.querySelectorAll('.lever');
                 levers.forEach((lever, index) => {
@@ -560,7 +499,7 @@ class CarbonCalculator {
 
     updateLever(leverId, value) {
         this.leverValues[leverId] = value;
-        
+
         // Add visual feedback
         const leverElement = document.querySelector(`[data-lever="${leverId}"]`).closest('.lever');
         leverElement.classList.add('updated');
@@ -586,7 +525,7 @@ class CarbonCalculator {
     calculateTransportEmissions() {
         // Transport baseline: ~180 MtCO2e
         const baseline = 180;
-        
+
         // Calculate reduction based on lever settings
         const electricCarsReduction = (this.leverValues['electric-cars'] - 1) * 15; // Up to 45% reduction
         const publicTransportReduction = (this.leverValues['public-transport'] - 1) * 8; // Up to 24% reduction
@@ -594,53 +533,53 @@ class CarbonCalculator {
         const aviationReduction = (this.leverValues['aviation'] - 1) * 10; // Up to 30% reduction
         const freightReduction = (this.leverValues['freight'] - 1) * 7; // Up to 21% reduction
 
-        const totalReduction = electricCarsReduction + publicTransportReduction + 
-                              activeTravelReduction + aviationReduction + freightReduction;
-        
+        const totalReduction = electricCarsReduction + publicTransportReduction +
+            activeTravelReduction + aviationReduction + freightReduction;
+
         return Math.max(baseline * (1 - totalReduction / 100), 20); // Minimum 20 MtCO2e
     }
 
     calculateBuildingsEmissions() {
         // Buildings baseline: ~120 MtCO2e
         const baseline = 120;
-        
+
         const tempReduction = (this.leverValues['building-temp'] - 1) * 5; // Up to 15% reduction
         const insulationReduction = (this.leverValues['insulation'] - 1) * 12; // Up to 36% reduction
         const heatPumpReduction = (this.leverValues['heat-pumps'] - 1) * 15; // Up to 45% reduction
         const districtHeatReduction = (this.leverValues['district-heat'] - 1) * 8; // Up to 24% reduction
         const appliancesReduction = (this.leverValues['appliances'] - 1) * 6; // Up to 18% reduction
 
-        const totalReduction = tempReduction + insulationReduction + heatPumpReduction + 
-                              districtHeatReduction + appliancesReduction;
-        
+        const totalReduction = tempReduction + insulationReduction + heatPumpReduction +
+            districtHeatReduction + appliancesReduction;
+
         return Math.max(baseline * (1 - totalReduction / 100), 15); // Minimum 15 MtCO2e
     }
 
     calculateIndustryEmissions() {
         // Industry baseline: ~160 MtCO2e
         const baseline = 160;
-        
+
         const efficiencyReduction = (this.leverValues['industrial-efficiency'] - 1) * 8; // Up to 24% reduction
         const steelReduction = (this.leverValues['steel'] - 1) * 12; // Up to 36% reduction
         const cementReduction = (this.leverValues['cement'] - 1) * 10; // Up to 30% reduction
         const chemicalsReduction = (this.leverValues['chemicals'] - 1) * 9; // Up to 27% reduction
 
         const totalReduction = efficiencyReduction + steelReduction + cementReduction + chemicalsReduction;
-        
+
         return Math.max(baseline * (1 - totalReduction / 100), 25); // Minimum 25 MtCO2e
     }
 
     calculateElectricityEmissions() {
         // Electricity baseline: ~150 MtCO2e
         const baseline = 150;
-        
+
         const windReduction = (this.leverValues['wind'] - 1) * 20; // Up to 60% reduction
         const solarReduction = (this.leverValues['solar'] - 1) * 15; // Up to 45% reduction
         const nuclearReduction = (this.leverValues['nuclear'] - 1) * 18; // Up to 54% reduction
         const storageReduction = (this.leverValues['storage'] - 1) * 5; // Up to 15% reduction
 
         const totalReduction = windReduction + solarReduction + nuclearReduction + storageReduction;
-        
+
         return Math.max(baseline * (1 - totalReduction / 100), 5); // Minimum 5 MtCO2e
     }
 
@@ -656,27 +595,27 @@ class CarbonCalculator {
     calculateLandUseEmissions() {
         // Land use baseline: ~50 MtCO2e
         const baseline = 50;
-        
+
         const afforestationReduction = (this.leverValues['afforestation'] - 1) * 15; // Up to 45 MtCO2e removal
         const bioenergyReduction = (this.leverValues['bioenergy'] - 1) * 8; // Up to 24% reduction
         const agricultureReduction = (this.leverValues['agriculture'] - 1) * 6; // Up to 18% reduction
 
         const totalReduction = bioenergyReduction + agricultureReduction;
         const forestRemoval = afforestationReduction;
-        
+
         return Math.max(baseline * (1 - totalReduction / 100) - forestRemoval, -20); // Can go negative
     }
 
     updateCalculations() {
         const sectorEmissions = this.calculateSectorEmissions();
         const totalEmissions = Object.values(sectorEmissions).reduce((sum, val) => sum + val, 0);
-        
+
         // Calculate reduction percentage from 1990 baseline
         const reductionPercent = Math.round(((this.baselineEmissions - totalEmissions) / this.baselineEmissions) * 100);
-        
+
         // Animate CO2e meter and values
         this.animateEmissionsUpdate(totalEmissions, reductionPercent);
-        
+
         // Check net zero status
         const netZeroElement = document.getElementById('netZeroStatus');
         const netZeroMetric = netZeroElement.closest('.metric');
@@ -687,20 +626,20 @@ class CarbonCalculator {
             netZeroElement.textContent = 'Not Achieved';
             netZeroMetric.classList.remove('achieved');
         }
-        
+
         // Update sector breakdown
         this.updateSectorBreakdown(sectorEmissions);
-        
+
         // Update chart
         this.updateChart(sectorEmissions, totalEmissions);
-        
+
         // NEW ADVANCED FEATURES
         // Update comparison visualization
         this.updateComparisonVisualization();
-        
+
         // Update achievements
         this.initializeAchievements();
-        
+
         // Update live impact visualization
         this.createLiveImpactViz();
     }
@@ -749,22 +688,22 @@ class CarbonCalculator {
     animateValue(element, startValue, endValue, formatter) {
         const duration = 800;
         const startTime = performance.now();
-        
+
         const animate = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            
+
             // Easing function for smooth animation
             const easeOutCubic = 1 - Math.pow(1 - progress, 3);
             const currentValue = Math.round(startValue + (endValue - startValue) * easeOutCubic);
-            
+
             element.textContent = formatter(currentValue);
-            
+
             if (progress < 1) {
                 requestAnimationFrame(animate);
             }
         };
-        
+
         requestAnimationFrame(animate);
     }
 
@@ -802,7 +741,7 @@ class CarbonCalculator {
         if (percentage && meter) {
             percentage.style.transition = 'all 0.8s ease';
             meter.style.transition = 'box-shadow 0.8s ease';
-            
+
             if (reductionPercent >= 100) {
                 percentage.style.color = '#28a745';
                 percentage.style.textShadow = '0 0 10px rgba(40, 167, 69, 0.5)';
@@ -824,25 +763,25 @@ class CarbonCalculator {
     updateProgressRing(lever, value) {
         const ring = lever.querySelector('.progress-ring-circle');
         if (!ring) return;
-        
+
         const circumference = 2 * Math.PI * 15; // radius = 15
         const progress = (value / 4) * 100; // Convert to percentage
         const offset = circumference - (progress / 100) * circumference;
-        
+
         ring.style.strokeDashoffset = offset;
-        
+
         // Change color based on ambition level
         const colors = ['#dc3545', '#fd7e14', '#ffc107', '#28a745'];
         ring.style.stroke = colors[value - 1];
     }
-    
+
     createRippleEffect(element, event) {
         const rect = element.getBoundingClientRect();
         const ripple = document.createElement('div');
         const size = Math.max(rect.width, rect.height);
         const x = event.clientX - rect.left - size / 2;
         const y = event.clientY - rect.top - size / 2;
-        
+
         ripple.style.cssText = `
             position: absolute;
             width: ${size}px;
@@ -854,68 +793,68 @@ class CarbonCalculator {
             pointer-events: none;
             animation: ripple 0.6s ease-out;
         `;
-        
+
         element.style.position = 'relative';
         element.appendChild(ripple);
-        
+
         setTimeout(() => ripple.remove(), 600);
     }
-    
+
     createParticles(container) {
         const particleCount = 5;
         const rect = container.getBoundingClientRect();
-        
+
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
-            
+
             const x = Math.random() * rect.width;
             const y = rect.height;
-            
+
             particle.style.cssText = `
                 left: ${x}px;
                 top: ${y}px;
                 animation-delay: ${Math.random() * 0.5}s;
             `;
-            
+
             container.style.position = 'relative';
             container.appendChild(particle);
-            
+
             setTimeout(() => particle.remove(), 3000);
         }
     }
-    
+
     addStaggeredAnimation(elements, animationClass) {
         elements.forEach((element, index) => {
             element.classList.add(animationClass);
             element.classList.add(`animate-stagger-${Math.min(index + 1, 6)}`);
-            
+
             setTimeout(() => {
                 element.classList.remove(animationClass);
                 element.classList.remove(`animate-stagger-${Math.min(index + 1, 6)}`);
             }, 1000 + (index * 100));
         });
     }
-    
+
     showSuccessAnimation(element) {
         element.classList.add('success-animation');
         setTimeout(() => element.classList.remove('success-animation'), 600);
     }
-    
+
     showErrorAnimation(element) {
         element.classList.add('error-animation');
         setTimeout(() => element.classList.remove('error-animation'), 500);
     }
-    
+
     enhanceTabSwitching() {
         document.querySelectorAll('.tab-btn').forEach(tab => {
             tab.addEventListener('click', (e) => {
                 // Remove active class from all tabs
                 document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-                
+
                 // Add active class to clicked tab
                 e.target.classList.add('active');
-                
+
                 // Add entrance animation to sector panel (only on larger screens)
                 if (window.innerWidth > 768) {
                     const targetPanel = document.querySelector(`[data-sector="${e.target.dataset.sector}"]`);
@@ -927,23 +866,23 @@ class CarbonCalculator {
             });
         });
     }
-    
+
     initializeResponsiveFeatures() {
         // Detect if device supports touch
         this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        
+
         // Add touch-specific event listeners
         if (this.isTouchDevice) {
             this.addTouchInteractions();
         }
-        
+
         // Handle orientation changes
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
                 this.handleOrientationChange();
             }, 100);
         });
-        
+
         // Handle window resize for responsive updates
         let resizeTimeout;
         window.addEventListener('resize', () => {
@@ -952,11 +891,11 @@ class CarbonCalculator {
                 this.handleResize();
             }, 250);
         });
-        
+
         // Optimize animations based on device capabilities
         this.optimizeForDevice();
     }
-    
+
     initializeFeatures() {
         // Feature toolbar buttons - check if elements exist first
         const saveBtn = document.getElementById('saveScenarioBtn');
@@ -965,7 +904,7 @@ class CarbonCalculator {
                 this.showModal('saveScenarioModal');
             });
         }
-        
+
         const loadBtn = document.getElementById('loadScenarioBtn');
         if (loadBtn) {
             loadBtn.addEventListener('click', () => {
@@ -973,7 +912,7 @@ class CarbonCalculator {
                 this.showModal('loadScenarioModal');
             });
         }
-        
+
         const compareBtn = document.getElementById('compareBtn');
         if (compareBtn) {
             compareBtn.addEventListener('click', () => {
@@ -981,21 +920,21 @@ class CarbonCalculator {
                 setTimeout(() => this.showAnalyticsTab('comparison'), 100);
             });
         }
-        
+
         const exportBtn = document.getElementById('exportBtn');
         if (exportBtn) {
             exportBtn.addEventListener('click', () => {
                 this.showModal('exportModal');
             });
         }
-        
+
         const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
                 this.shareScenario();
             });
         }
-        
+
         const helpBtn = document.getElementById('helpBtn');
         if (helpBtn) {
             helpBtn.addEventListener('click', () => {
@@ -1003,7 +942,7 @@ class CarbonCalculator {
             });
         }
     }
-    
+
     initializeModals() {
         // Close modal when clicking outside
         document.querySelectorAll('.modal').forEach(modal => {
@@ -1013,7 +952,7 @@ class CarbonCalculator {
                 }
             });
         });
-        
+
         // Close buttons
         document.querySelectorAll('.close').forEach(closeBtn => {
             closeBtn.addEventListener('click', (e) => {
@@ -1028,7 +967,7 @@ class CarbonCalculator {
                 }
             });
         });
-        
+
         // Cancel buttons with data-modal attribute
         document.querySelectorAll('[data-modal]').forEach(btn => {
             if (btn.classList.contains('btn-secondary') || btn.classList.contains('btn')) {
@@ -1040,7 +979,7 @@ class CarbonCalculator {
                 });
             }
         });
-        
+
         // Help tabs
         document.querySelectorAll('.help-tab').forEach(tab => {
             tab.addEventListener('click', (e) => {
@@ -1050,7 +989,7 @@ class CarbonCalculator {
                 }
             });
         });
-        
+
         // Save scenario button
         const confirmSaveBtn = document.getElementById('confirmSaveScenario');
         if (confirmSaveBtn) {
@@ -1059,7 +998,7 @@ class CarbonCalculator {
                 this.hideModal('saveScenarioModal');
             });
         }
-        
+
         // Export confirm button
         const confirmExportBtn = document.getElementById('confirmExport');
         if (confirmExportBtn) {
@@ -1068,7 +1007,7 @@ class CarbonCalculator {
                 this.hideModal('exportModal');
             });
         }
-        
+
         // Clear all scenarios button
         const clearAllBtn = document.getElementById('clearAllScenarios');
         if (clearAllBtn) {
@@ -1082,7 +1021,7 @@ class CarbonCalculator {
             });
         }
     }
-    
+
     initializeAnalytics() {
         // Analytics tabs
         document.querySelectorAll('.analytics-tab').forEach(tab => {
@@ -1090,11 +1029,11 @@ class CarbonCalculator {
                 this.showAnalyticsTab(e.target.dataset.tab);
             });
         });
-        
+
         // Initialize analytics data
         this.updateAnalytics();
     }
-    
+
     initializeScenarioManagement() {
         this.scenarios = JSON.parse(localStorage.getItem('carbonCalculatorScenarios') || '[]');
         this.currentScenario = {
@@ -1104,7 +1043,7 @@ class CarbonCalculator {
             timestamp: new Date().toISOString()
         };
     }
-    
+
     showModal(modalId) {
         this.showModalWithAnimation(modalId);
     }
@@ -1112,23 +1051,23 @@ class CarbonCalculator {
     hideModal(modalId) {
         this.hideModalWithAnimation(modalId);
     }
-    
+
     hideModalWithAnimation(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        
+
         const modalContent = modal.querySelector('.modal-content');
         if (modalContent) {
             modalContent.style.animation = 'modalSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
         }
-        
+
         setTimeout(() => {
             modal.classList.remove('show');
             modal.style.display = 'none';
             document.body.style.overflow = '';
         }, 300);
     }
-    
+
     showHelpSection(sectionId) {
         // Update tab states
         document.querySelectorAll('.help-tab').forEach(tab => {
@@ -1138,7 +1077,7 @@ class CarbonCalculator {
         if (activeTab) {
             activeTab.classList.add('active');
         }
-        
+
         // Update section visibility
         document.querySelectorAll('.help-section').forEach(section => {
             section.classList.remove('active');
@@ -1148,7 +1087,7 @@ class CarbonCalculator {
             sectionElement.classList.add('active');
         }
     }
-    
+
     showAnalyticsTab(tabId) {
         // Update tab states
         document.querySelectorAll('.analytics-tab').forEach(tab => {
@@ -1158,30 +1097,30 @@ class CarbonCalculator {
         if (activeTab) {
             activeTab.classList.add('active');
         }
-        
+
         // Update section visibility
         document.querySelectorAll('.analytics-section').forEach(section => {
             section.classList.remove('active');
         });
         const analyticsElement = document.getElementById(`${tabId}-section`);
-            if (analyticsElement) {
-                analyticsElement.classList.add('active');
-            }
-        
+        if (analyticsElement) {
+            analyticsElement.classList.add('active');
+        }
+
         // Update analytics data for the specific tab
         this.updateAnalyticsTab(tabId);
     }
-    
+
     saveScenario() {
         const nameInput = document.getElementById('scenarioName');
         const descInput = document.getElementById('scenarioDescription');
         const defaultCheckbox = document.getElementById('setAsDefault');
-        
+
         if (!nameInput || !nameInput.value.trim()) {
             this.showToast('Please enter a scenario name', 'error');
             return;
         }
-        
+
         const scenario = {
             id: Date.now().toString(),
             name: nameInput.value.trim(),
@@ -1191,32 +1130,32 @@ class CarbonCalculator {
             emissions: this.calculateTotalEmissions(),
             isDefault: defaultCheckbox ? defaultCheckbox.checked : false
         };
-        
+
         this.scenarios.push(scenario);
         localStorage.setItem('carbonCalculatorScenarios', JSON.stringify(this.scenarios));
-        
+
         this.showToast('Scenario saved successfully!', 'success');
-        
+
         // Clear form
         if (nameInput) nameInput.value = '';
         if (descInput) descInput.value = '';
         if (defaultCheckbox) defaultCheckbox.checked = false;
     }
-    
+
     loadSavedScenarios() {
         const container = document.getElementById('scenariosList');
         if (!container) {
             console.error('Scenarios list container not found');
             return;
         }
-        
+
         container.innerHTML = '';
-        
+
         if (this.scenarios.length === 0) {
             container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">No saved scenarios found.</p>';
             return;
         }
-        
+
         this.scenarios.forEach(scenario => {
             const scenarioElement = document.createElement('div');
             scenarioElement.className = 'scenario-item';
@@ -1234,14 +1173,14 @@ class CarbonCalculator {
             container.appendChild(scenarioElement);
         });
     }
-    
+
     loadScenario(scenarioId) {
         const scenario = this.scenarios.find(s => s.id === scenarioId);
         if (!scenario) return;
-        
+
         // Update lever values
         this.leverValues = { ...scenario.values };
-        
+
         // Update UI
         Object.keys(scenario.values).forEach(leverId => {
             const slider = document.querySelector(`[data-lever="${leverId}"]`);
@@ -1250,12 +1189,12 @@ class CarbonCalculator {
                 this.updateLever(leverId, scenario.values[leverId]);
             }
         });
-        
+
         this.updateCalculations();
         this.hideModal('loadScenarioModal');
         this.showToast(`Scenario "${scenario.name}" loaded successfully!`, 'success');
     }
-    
+
     deleteScenario(scenarioId) {
         if (confirm('Are you sure you want to delete this scenario?')) {
             this.scenarios = this.scenarios.filter(s => s.id !== scenarioId);
@@ -1264,17 +1203,17 @@ class CarbonCalculator {
             this.showToast('Scenario deleted successfully!', 'success');
         }
     }
-    
+
     shareScenario() {
         const url = new URL(window.location.href);
         const params = new URLSearchParams();
-        
+
         Object.keys(this.leverValues).forEach(key => {
             params.set(key, this.leverValues[key]);
         });
-        
+
         url.search = params.toString();
-        
+
         if (navigator.share) {
             navigator.share({
                 title: 'MacKay Carbon Calculator Scenario',
@@ -1287,12 +1226,12 @@ class CarbonCalculator {
             });
         }
     }
-    
+
     exportData() {
         const form = document.getElementById('export-form');
         const formData = new FormData(form);
         const format = formData.get('export-format');
-        
+
         const data = {
             scenario: {
                 name: this.currentScenario.name,
@@ -1305,23 +1244,23 @@ class CarbonCalculator {
                 reductionFrom1990: this.calculateReductionFrom1990()
             }
         };
-        
+
         if (formData.get('include-charts')) {
             data.chartData = this.getChartData();
         }
-        
+
         if (formData.get('include-analytics')) {
             data.analytics = this.getAnalyticsData();
         }
-        
+
         this.downloadData(data, format);
         this.hideModal('export-modal');
         this.showToast(`Data exported as ${format.toUpperCase()}!`, 'success');
     }
-    
+
     downloadData(data, format) {
         let content, filename, mimeType;
-        
+
         switch (format) {
             case 'json':
                 content = JSON.stringify(data, null, 2);
@@ -1337,7 +1276,7 @@ class CarbonCalculator {
                 this.generatePDF(data);
                 return;
         }
-        
+
         const blob = new Blob([content], { type: mimeType });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -1346,7 +1285,7 @@ class CarbonCalculator {
         a.click();
         URL.revokeObjectURL(url);
     }
-    
+
     convertToCSV(data) {
         const rows = [];
         rows.push(['Metric', 'Value']);
@@ -1354,25 +1293,25 @@ class CarbonCalculator {
         rows.push(['Reduction from 1990 (%)', data.results.reductionFrom1990]);
         rows.push(['']);
         rows.push(['Lever', 'Value']);
-        
+
         Object.keys(data.scenario.values).forEach(key => {
             rows.push([key, data.scenario.values[key]]);
         });
-        
+
         return rows.map(row => row.join(',')).join('\n');
     }
-    
+
     generatePDF(data) {
         // This would require a PDF library like jsPDF
         this.showToast('PDF export feature coming soon!', 'info');
     }
-    
+
     updateAnalytics() {
         this.updateKeyMetrics();
         this.updateTrendsChart();
         this.updateInsights();
     }
-    
+
     updateAnalyticsTab(tabId) {
         switch (tabId) {
             case 'overview':
@@ -1389,33 +1328,33 @@ class CarbonCalculator {
                 break;
         }
     }
-    
+
     updateKeyMetrics() {
         const totalEmissions = this.calculateTotalEmissions();
         const reductionFrom1990 = this.calculateReductionFrom1990();
         const renewableShare = this.calculateRenewableShare();
         const efficiencyScore = this.calculateEfficiencyScore();
-        
+
         const targetProgressEl = document.querySelector('[data-metric="target-progress"] .metric-value');
         if (targetProgressEl) {
             targetProgressEl.textContent = `${Math.round(reductionFrom1990)}%`;
         }
-        
+
         const efficiencyEl = document.querySelector('[data-metric="efficiency"] .metric-value');
         if (efficiencyEl) {
             efficiencyEl.textContent = `${Math.round(efficiencyScore)}%`;
         }
-        
+
         const renewableEl = document.querySelector('[data-metric="renewable"] .metric-value');
         if (renewableEl) {
             renewableEl.textContent = `${Math.round(renewableShare)}%`;
         }
     }
-    
+
     updateInsights() {
         const insights = this.generateInsights();
         const container = document.querySelector('.insights-container');
-        
+
         if (container) {
             container.innerHTML = insights.map(insight => `
                 <div class="insight-card">
@@ -1428,12 +1367,12 @@ class CarbonCalculator {
             `).join('');
         }
     }
-    
+
     generateInsights() {
         const insights = [];
         const totalEmissions = this.calculateTotalEmissions();
         const reductionFrom1990 = this.calculateReductionFrom1990();
-        
+
         if (reductionFrom1990 < 50) {
             insights.push({
                 icon: '⚡',
@@ -1441,7 +1380,7 @@ class CarbonCalculator {
                 description: 'Consider increasing renewable energy adoption to achieve deeper emissions reductions.'
             });
         }
-        
+
         if (this.leverValues['building-insulation'] < 3) {
             insights.push({
                 icon: '🏠',
@@ -1449,7 +1388,7 @@ class CarbonCalculator {
                 description: 'Better building insulation could significantly reduce heating and cooling emissions.'
             });
         }
-        
+
         if (this.leverValues['electric-cars'] < 3) {
             insights.push({
                 icon: '🚗',
@@ -1457,10 +1396,10 @@ class CarbonCalculator {
                 description: 'Faster adoption of electric vehicles would help reduce transport emissions.'
             });
         }
-        
+
         return insights;
     }
-    
+
     calculateRenewableShare() {
         // Simplified calculation based on relevant levers
         const renewableLevers = ['wind-onshore', 'wind-offshore', 'solar-pv', 'hydro'];
@@ -1469,7 +1408,7 @@ class CarbonCalculator {
         }, 0);
         return (total / renewableLevers.length) * 25; // Scale to percentage
     }
-    
+
     calculateEfficiencyScore() {
         // Simplified efficiency calculation
         const efficiencyLevers = ['building-insulation', 'heat-pumps', 'freight-efficiency'];
@@ -1478,23 +1417,83 @@ class CarbonCalculator {
         }, 0);
         return (total / efficiencyLevers.length) * 25; // Scale to percentage
     }
-    
+
     calculateBaselineEmissions() {
         // Calculate 1990 baseline emissions from sector data
         return 700; // This should be calculated from actual 1990 UK emissions data
     }
-    
+
+    calculateSectorEmissions() {
+        // Base emissions (MtCO2e) roughly based on UK data
+        const baseEmissions = {
+            transport: 120,
+            buildings: 90,
+            industry: 70,
+            electricity: 60,
+            agriculture: 50,
+            landUse: 10,
+            waste: 20
+        };
+
+        // Calculate reductions based on levers
+        // Scale 1-4 to 0-1 multiplier (1 = 100% impact, 4 = 25% emissions / 75% reduction)
+        const getReductionFactor = (val) => 1 - ((val - 1) * 0.25);
+
+        // Transport levers
+        const transportFactor = (
+            getReductionFactor(this.leverValues['transport-demand'] || 1) *
+            getReductionFactor(this.leverValues['electric-cars'] || 1) *
+            getReductionFactor(this.leverValues['freight-efficiency'] || 1)
+        );
+
+        // Buildings levers
+        const buildingsFactor = (
+            getReductionFactor(this.leverValues['building-insulation'] || 1) *
+            getReductionFactor(this.leverValues['heat-pumps'] || 1) *
+            getReductionFactor(this.leverValues['building-temp'] || 1)
+        );
+
+        // Electricity levers (grid decarbonization affects other sectors too, but simplified here)
+        const electricityFactor = (
+            getReductionFactor(this.leverValues['wind-offshore'] || 1) *
+            getReductionFactor(this.leverValues['solar-pv'] || 1) *
+            getReductionFactor(this.leverValues['nuclear'] || 1) *
+            getReductionFactor(this.leverValues['ccs-power'] || 1)
+        );
+
+        // Industry levers
+        const industryFactor = (
+            getReductionFactor(this.leverValues['industry-efficiency'] || 1) *
+            getReductionFactor(this.leverValues['ccs-industry'] || 1)
+        );
+
+        // Land use & Bioenergy
+        const landUseFactor = (
+            getReductionFactor(this.leverValues['forestry'] || 1) *
+            getReductionFactor(this.leverValues['bioenergy'] || 1)
+        );
+
+        return {
+            transport: baseEmissions.transport * transportFactor,
+            buildings: baseEmissions.buildings * buildingsFactor,
+            industry: baseEmissions.industry * industryFactor,
+            electricity: baseEmissions.electricity * electricityFactor,
+            landUse: baseEmissions.landUse * landUseFactor + baseEmissions.agriculture * landUseFactor,
+            waste: baseEmissions.waste * 0.8 // Assume constant improvement
+        };
+    }
+
     calculateTotalEmissions() {
         // Calculate total emissions based on sector calculations
         const sectorEmissions = this.calculateSectorEmissions();
         return Object.values(sectorEmissions).reduce((sum, val) => sum + val, 0);
     }
-    
+
     calculateReductionFrom1990() {
         const currentEmissions = this.calculateTotalEmissions();
         return ((this.baselineEmissions - currentEmissions) / this.baselineEmissions) * 100;
     }
-    
+
     calculateSectorBreakdown() {
         // Simplified sector breakdown
         const totalEmissions = this.calculateTotalEmissions();
@@ -1506,7 +1505,7 @@ class CarbonCalculator {
             agriculture: totalEmissions * 0.1
         };
     }
-    
+
     getChartData() {
         // Return current chart data if available
         return {
@@ -1514,7 +1513,7 @@ class CarbonCalculator {
             sectorBreakdown: this.calculateSectorBreakdown()
         };
     }
-    
+
     getAnalyticsData() {
         // Return analytics data
         return {
@@ -1524,45 +1523,160 @@ class CarbonCalculator {
             efficiencyScore: this.calculateEfficiencyScore()
         };
     }
-    
+
     updateTrendsChart() {
-        // Update trends chart with current data
-        // Implementation would depend on chart library integration
+        const trendsCtx = document.getElementById('trendsChart')?.getContext('2d');
+        if (!trendsCtx) return;
+
+        // Destroy existing chart if it exists to prevent memory leaks/glitches
+        if (this.trendsChartInstance) {
+            this.trendsChartInstance.destroy();
+        }
+
+        const currentEmissions = this.calculateTotalEmissions();
+        const years = [2020, 2025, 2030, 2035, 2040, 2045, 2050];
+        // Generate a smooth curve from 2020 (approx 450) to 2050 target
+        const generateTrend = (start, end) => {
+            return years.map((year, i) => {
+                const progress = i / (years.length - 1);
+                // Ease-out function for realistic curve
+                const factor = 1 - Math.pow(1 - progress, 3);
+                return Math.round(start - (start - end) * factor);
+            });
+        };
+
+        const dataPoints = generateTrend(450, currentEmissions);
+
+        this.trendsChartInstance = new Chart(trendsCtx, {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Projected Emissions (MtCO₂e)',
+                    data: dataPoints,
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Transition Pathway 2020-2050'
+                    },
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'MtCO₂e'
+                        }
+                    }
+                }
+            }
+        });
     }
-    
+
     updateComparison() {
-        // Update comparison view with scenario data
-        // Implementation would depend on comparison feature requirements
+        const comparisonCtx = document.getElementById('comparisonChart')?.getContext('2d');
+        if (!comparisonCtx) return;
+
+        if (this.comparisonChartInstance) {
+            this.comparisonChartInstance.destroy();
+        }
+
+        const currentEmissions = this.calculateSectorEmissions();
+
+        // Define baseline scenario (Level 1 everywhere)
+        const baselineEmissions = {
+            transport: 120,
+            buildings: 90,
+            industry: 70,
+            electricity: 60,
+            landUse: 60, // ag + land use
+            waste: 20
+        };
+
+        const labels = Object.keys(currentEmissions).map(k => k.charAt(0).toUpperCase() + k.slice(1));
+        const currentData = Object.values(currentEmissions);
+        const baselineData = Object.values(baselineEmissions);
+
+        this.comparisonChartInstance = new Chart(comparisonCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Current Scenario',
+                        data: currentData,
+                        backgroundColor: '#2ecc71',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Baseline (No Action)',
+                        data: baselineData,
+                        backgroundColor: '#95a5a6',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sector Comparison vs Baseline'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'MtCO₂e' },
+                        stacked: false
+                    },
+                    x: {
+                        stacked: false
+                    }
+                }
+            }
+        });
     }
-    
+
     showToast(message, type = 'info') {
         const toast = document.getElementById('toast');
         if (!toast) {
             console.log(`Toast: ${message}`);
             return;
         }
-        
+
         const toastMessage = toast.querySelector('.toast-message');
         const toastIcon = toast.querySelector('.toast-icon');
-        
+
         if (toastMessage) {
             toastMessage.textContent = message;
         }
-        
+
         const icons = {
             success: '✅',
             error: '❌',
             warning: '⚠️',
             info: 'ℹ️'
         };
-        
+
         if (toastIcon) {
             toastIcon.textContent = icons[type] || icons.info;
         }
-        
+
         // Set type class
         toast.className = `toast ${type} show`;
-        
+
         // Auto hide after 3 seconds
         setTimeout(() => {
             toast.classList.add('hide');
@@ -1570,7 +1684,7 @@ class CarbonCalculator {
                 toast.classList.remove('show', 'hide');
             }, 300);
         }, 3000);
-        
+
         // Close button
         const closeBtn = toast.querySelector('.toast-close');
         if (closeBtn) {
@@ -1626,9 +1740,9 @@ class CarbonCalculator {
                 animation: particleFloat ${Math.random() * 2 + 2}s linear forwards;
                 transform: translate(-50%, -50%);
             `;
-            
+
             this.particleContainer.appendChild(particle);
-            
+
             setTimeout(() => {
                 if (particle.parentNode) {
                     particle.parentNode.removeChild(particle);
@@ -1639,7 +1753,7 @@ class CarbonCalculator {
 
     initializeRippleEffects() {
         const rippleElements = document.querySelectorAll('.tab-btn, .feature-btn, .btn');
-        
+
         rippleElements.forEach(element => {
             element.addEventListener('click', (e) => {
                 this.createAdvancedRippleEffect(e, element);
@@ -1652,7 +1766,7 @@ class CarbonCalculator {
         const size = Math.max(rect.width, rect.height);
         const x = event.clientX - rect.left - size / 2;
         const y = event.clientY - rect.top - size / 2;
-        
+
         const ripple = document.createElement('div');
         ripple.style.cssText = `
             position: absolute;
@@ -1666,11 +1780,11 @@ class CarbonCalculator {
             animation: ripple 0.6s linear;
             pointer-events: none;
         `;
-        
+
         element.style.position = 'relative';
         element.style.overflow = 'hidden';
         element.appendChild(ripple);
-        
+
         setTimeout(() => {
             if (ripple.parentNode) {
                 ripple.parentNode.removeChild(ripple);
@@ -1684,14 +1798,14 @@ class CarbonCalculator {
 
     showLoadingAnimation(element) {
         if (!element) return;
-        
+
         element.classList.add('loading');
         this.loadingStates.add(element);
     }
 
     hideLoadingAnimation(element) {
         if (!element) return;
-        
+
         element.classList.remove('loading');
         this.loadingStates.delete(element);
     }
@@ -1721,16 +1835,16 @@ class CarbonCalculator {
         const increment = target / steps;
         let current = 0;
         let step = 0;
-        
+
         const timer = setInterval(() => {
             current += increment;
             step++;
-            
+
             if (step >= steps) {
                 current = target;
                 clearInterval(timer);
             }
-            
+
             const suffix = element.textContent.replace(/[\d.-]/g, '');
             element.textContent = Math.round(current * 10) / 10 + suffix;
         }, duration / steps);
@@ -1738,7 +1852,7 @@ class CarbonCalculator {
 
     initializeEnergyFlowAnimations() {
         const energyElements = document.querySelectorAll('.progress-ring, .lever');
-        
+
         energyElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
                 this.addEnergyFlow(element);
@@ -1748,7 +1862,7 @@ class CarbonCalculator {
 
     addEnergyFlow(element) {
         if (element.querySelector('.energy-flow-line')) return;
-        
+
         const flowLine = document.createElement('div');
         flowLine.className = 'energy-flow-line';
         flowLine.style.cssText = `
@@ -1762,10 +1876,10 @@ class CarbonCalculator {
             pointer-events: none;
             z-index: 1;
         `;
-        
+
         element.style.position = 'relative';
         element.appendChild(flowLine);
-        
+
         setTimeout(() => {
             if (flowLine.parentNode) {
                 flowLine.parentNode.removeChild(flowLine);
@@ -1775,7 +1889,7 @@ class CarbonCalculator {
 
     initializeStaggerAnimations() {
         const staggerContainers = document.querySelectorAll('.levers-container, .key-metrics, .insights-grid');
-        
+
         staggerContainers.forEach(container => {
             container.classList.add('stagger-animation');
         });
@@ -1786,22 +1900,22 @@ class CarbonCalculator {
         slider.addEventListener('input', (e) => {
             // Add active animation
             lever.classList.add('active');
-            
+
             // Create particles on significant changes
             const rect = slider.getBoundingClientRect();
             const x = rect.left + (rect.width * (e.target.value / e.target.max));
             const y = rect.top + rect.height / 2;
-            
+
             if (Math.random() > 0.7) { // 30% chance for particles
                 this.createAdvancedParticles(x, y, 3, this.getParticleColor(e.target.value));
             }
-            
+
             // Remove active class after animation
             setTimeout(() => {
                 lever.classList.remove('active');
             }, 600);
         });
-        
+
         slider.addEventListener('change', (e) => {
             // Create celebration particles for high values
             if (e.target.value > e.target.max * 0.8) {
@@ -1823,7 +1937,7 @@ class CarbonCalculator {
     createCelebrationEffect(x, y, intensity = 1) {
         const particleCount = Math.floor(15 * intensity);
         const colors = ['#2ecc71', '#3498db', '#f39c12', '#e74c3c', '#9b59b6'];
-        
+
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.className = 'celebration-particle';
@@ -1840,18 +1954,18 @@ class CarbonCalculator {
                 animation: celebrationBurst 1.5s ease-out forwards;
                 transform-origin: center;
             `;
-            
+
             // Random direction and distance
             const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
             const distance = 50 + Math.random() * 100;
             const endX = x + Math.cos(angle) * distance;
             const endY = y + Math.sin(angle) * distance - Math.random() * 50;
-            
+
             particle.style.setProperty('--end-x', `${endX}px`);
             particle.style.setProperty('--end-y', `${endY}px`);
-            
+
             document.body.appendChild(particle);
-            
+
             setTimeout(() => {
                 if (particle.parentNode) {
                     particle.parentNode.removeChild(particle);
@@ -1863,59 +1977,59 @@ class CarbonCalculator {
     // Enhanced lever interaction with smooth animations
     enhanceLeverAnimations() {
         const levers = document.querySelectorAll('.lever');
-        
+
         levers.forEach(lever => {
             const slider = lever.querySelector('input[type="range"]');
             const leverHandle = lever.querySelector('.lever-handle');
             const progressRing = lever.querySelector('.progress-ring');
-            
+
             if (!slider) return;
-            
+
             let lastValue = slider.value;
-            
+
             // Enhanced input animation
             slider.addEventListener('input', (e) => {
                 const currentValue = parseInt(e.target.value);
                 const valueDiff = Math.abs(currentValue - lastValue);
-                
+
                 // Add smooth lever animation
                 lever.style.transform = 'scale(1.02)';
                 lever.style.transition = 'transform 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
-                
+
                 // Create ripple effect at slider position
                 const rect = slider.getBoundingClientRect();
                 const progress = (currentValue / slider.max);
                 const x = rect.left + (rect.width * progress);
                 const y = rect.top + rect.height / 2;
-                
+
                 this.createAdvancedRippleEffect({
                     clientX: x,
                     clientY: y
                 }, slider);
-                
+
                 // Create particles for significant changes
                 if (valueDiff >= 1) {
                     const intensity = Math.min(valueDiff / 2, 3);
                     this.createAdvancedParticles(x, y, Math.floor(3 * intensity), this.getParticleColor(currentValue));
                 }
-                
+
                 // Celebration effect for maximum values
                 if (currentValue === parseInt(slider.max)) {
                     this.createCelebrationEffect(x, y, 1.5);
                 }
-                
+
                 lastValue = currentValue;
-                
+
                 // Reset lever scale
                 setTimeout(() => {
                     lever.style.transform = 'scale(1)';
                 }, 200);
             });
-            
+
             // Enhanced change animation
             slider.addEventListener('change', (e) => {
                 const value = parseInt(e.target.value);
-                
+
                 // Add success animation for high values
                 if (value > slider.max * 0.8) {
                     lever.classList.add('high-impact');
@@ -1923,20 +2037,20 @@ class CarbonCalculator {
                         lever.classList.remove('high-impact');
                     }, 1000);
                 }
-                
+
                 // Update progress ring with animation
                 if (progressRing) {
                     this.updateProgressRing(lever, value);
                 }
             });
-            
+
             // Add hover effects for desktop
             if (!('ontouchstart' in window)) {
                 lever.addEventListener('mouseenter', () => {
                     lever.style.transform = 'translateY(-2px)';
                     lever.style.transition = 'transform 0.3s ease';
                 });
-                
+
                 lever.addEventListener('mouseleave', () => {
                     lever.style.transform = 'translateY(0)';
                 });
@@ -1948,27 +2062,27 @@ class CarbonCalculator {
     showModalWithAnimation(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        
+
         modal.style.display = 'flex';
         modal.classList.add('show');
-        
+
         const modalContent = modal.querySelector('.modal-content');
         if (modalContent) {
             modalContent.style.animation = 'modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
         }
-        
+
         document.body.style.overflow = 'hidden';
     }
 
     hideModalWithAnimation(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        
+
         const modalContent = modal.querySelector('.modal-content');
         if (modalContent) {
             modalContent.style.animation = 'modalSlideOut 0.3s ease-in';
         }
-        
+
         setTimeout(() => {
             modal.style.display = 'none';
             modal.classList.remove('show');
@@ -1982,7 +2096,7 @@ class CarbonCalculator {
         const targetTab = document.getElementById(tabId);
         const allButtons = document.querySelectorAll('.tab-btn');
         const activeButton = document.querySelector(`[onclick*="${tabId}"]`);
-        
+
         // Hide all tabs with fade out
         allTabs.forEach(tab => {
             if (tab.style.display !== 'none') {
@@ -1992,17 +2106,17 @@ class CarbonCalculator {
                 }, 200);
             }
         });
-        
+
         // Remove active class from all buttons
         allButtons.forEach(btn => btn.classList.remove('active'));
-        
+
         // Show target tab with fade in
         setTimeout(() => {
             if (targetTab) {
                 targetTab.style.display = 'block';
                 targetTab.style.animation = 'fadeInUp 0.4s ease-out';
             }
-            
+
             if (activeButton) {
                 activeButton.classList.add('active');
             }
@@ -2013,30 +2127,30 @@ class CarbonCalculator {
     monitorAnimationPerformance() {
         let frameCount = 0;
         let lastTime = performance.now();
-        
+
         const checkPerformance = (currentTime) => {
             frameCount++;
-            
+
             if (currentTime - lastTime >= 1000) {
                 const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
-                
+
                 // Reduce animations if performance is poor
                 if (fps < 30) {
                     document.body.classList.add('reduced-animations');
                 } else if (fps > 50) {
                     document.body.classList.remove('reduced-animations');
                 }
-                
+
                 frameCount = 0;
                 lastTime = currentTime;
             }
-            
+
             requestAnimationFrame(checkPerformance);
         };
-        
+
         requestAnimationFrame(checkPerformance);
     }
-    
+
     addTouchInteractions() {
         // Add touch feedback for sliders
         document.querySelectorAll('input[type="range"]').forEach(slider => {
@@ -2044,7 +2158,7 @@ class CarbonCalculator {
                 const lever = e.target.closest('.lever');
                 lever.classList.add('touching');
             }, { passive: true });
-            
+
             slider.addEventListener('touchend', (e) => {
                 const lever = e.target.closest('.lever');
                 setTimeout(() => {
@@ -2052,13 +2166,13 @@ class CarbonCalculator {
                 }, 150);
             }, { passive: true });
         });
-        
+
         // Add touch feedback for tabs
         document.querySelectorAll('.tab-btn').forEach(tab => {
             tab.addEventListener('touchstart', () => {
                 tab.classList.add('touching');
             });
-            
+
             tab.addEventListener('touchend', () => {
                 setTimeout(() => {
                     tab.classList.remove('touching');
@@ -2066,11 +2180,11 @@ class CarbonCalculator {
             });
         });
     }
-    
+
     handleOrientationChange() {
         // Recalculate layout after orientation change
         this.updateCalculations();
-        
+
         // Adjust CO2e meter size for landscape mode
         const meter = document.querySelector('.co2e-meter');
         if (meter && window.innerWidth <= 768) {
@@ -2083,7 +2197,7 @@ class CarbonCalculator {
             }
         }
     }
-    
+
     handleResize() {
         // Update chart and meter sizes
         const meter = document.querySelector('.co2e-meter');
@@ -2099,23 +2213,23 @@ class CarbonCalculator {
                 meter.style.height = '180px';
             }
         }
-        
+
         // Recalculate emissions display
         this.updateCalculations();
     }
-    
+
     optimizeForDevice() {
         // Reduce animations on low-end devices
-        const isLowEndDevice = navigator.hardwareConcurrency <= 2 || 
-                              navigator.deviceMemory <= 2 || 
-                              window.innerWidth <= 480;
-        
+        const isLowEndDevice = navigator.hardwareConcurrency <= 2 ||
+            navigator.deviceMemory <= 2 ||
+            window.innerWidth <= 480;
+
         if (isLowEndDevice) {
             document.body.classList.add('reduced-motion');
-            
+
             // Disable particle effects
-            this.createParticles = () => {};
-            
+            this.createParticles = () => { };
+
             // Simplify animations
             const style = document.createElement('style');
             style.textContent = `
@@ -2132,7 +2246,7 @@ class CarbonCalculator {
             `;
             document.head.appendChild(style);
         }
-        
+
         // Prefers reduced motion
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             document.body.classList.add('reduced-motion');
@@ -2141,10 +2255,10 @@ class CarbonCalculator {
 
     updateSectorBreakdown(sectorEmissions) {
         const maxEmissions = Math.max(...Object.values(sectorEmissions).filter(val => val > 0));
-        
+
         const sectorMapping = {
             'transport': 'Transport',
-            'buildings': 'Buildings', 
+            'buildings': 'Buildings',
             'industry': 'Industry',
             'electricity': 'Electricity',
             'land-use': 'Agriculture'
@@ -2154,18 +2268,18 @@ class CarbonCalculator {
         Object.entries(sectorMapping).forEach(([key, name], index) => {
             const emissions = sectorEmissions[key] || 0;
             const percentage = maxEmissions > 0 ? (Math.max(emissions, 0) / maxEmissions) * 100 : 0;
-            
+
             const sectorBar = document.querySelector(`.bar[data-sector="${key}"]`);
             const valueSpan = sectorBar.parentElement.querySelector('.bar-value');
-            
+
             if (sectorBar && valueSpan) {
                 // Animate bar width change with stagger
                 setTimeout(() => {
                     sectorBar.style.width = `${percentage}%`;
-                    
+
                     // Add to array for staggered animation
                     sectorBars.push(sectorBar.closest('.sector-bar'));
-                    
+
                     // Show success animation for significant reductions
                     if (percentage < 50) {
                         this.showSuccessAnimation(sectorBar.closest('.sector-bar'));
@@ -2174,7 +2288,7 @@ class CarbonCalculator {
                 valueSpan.textContent = `${Math.round(emissions)} MtCO₂e`;
             }
         });
-        
+
         // Apply staggered animation to all sector bars
         setTimeout(() => {
             this.addStaggeredAnimation(sectorBars, 'slideInFromLeft');
@@ -2185,7 +2299,7 @@ class CarbonCalculator {
         const chartElement = document.getElementById('emissionsChart');
         if (!chartElement) return;
         const ctx = chartElement.getContext('2d');
-        
+
         this.emissionsChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -2253,7 +2367,7 @@ class CarbonCalculator {
     updateChart(sectorEmissions, totalEmissions2050) {
         // Generate pathway based on current lever settings
         const pathway = this.generateEmissionsPathway(totalEmissions2050);
-        
+
         this.emissionsChart.data.datasets[0].data = pathway;
         this.emissionsChart.update('none');
     }
@@ -2263,13 +2377,13 @@ class CarbonCalculator {
         const years = [1990, 2000, 2010, 2020, 2030, 2040, 2050];
         const baseline1990 = 700;
         const current2020 = 520;
-        
+
         // Calculate intermediate points based on ambition levels
         const avgAmbition = Object.values(this.leverValues).reduce((sum, val) => sum + val, 0) / Object.keys(this.leverValues).length;
-        
+
         // More ambitious settings lead to steeper reductions after 2020
         const reductionRate = 0.5 + (avgAmbition - 1) * 0.3; // 0.5 to 1.4
-        
+
         const pathway = [
             baseline1990, // 1990
             650, // 2000
@@ -2279,7 +2393,7 @@ class CarbonCalculator {
             current2020 - (current2020 - finalEmissions) * 0.7 * reductionRate, // 2040
             finalEmissions // 2050
         ];
-        
+
         return pathway.map(val => Math.round(val));
     }
 
@@ -2297,7 +2411,7 @@ class CarbonCalculator {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             this.setTheme(newTheme);
-            
+
             // Add ripple effect
             this.createRippleEffect(themeToggle, event);
         });
@@ -2306,14 +2420,14 @@ class CarbonCalculator {
     setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
-        
+
         // Update theme toggle button text and icons
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             const sunIcon = themeToggle.querySelector('.sun-icon');
             const moonIcon = themeToggle.querySelector('.moon-icon');
             const themeText = themeToggle.querySelector('.theme-text');
-            
+
             if (theme === 'dark') {
                 if (sunIcon) sunIcon.style.opacity = '0';
                 if (moonIcon) {
@@ -2330,7 +2444,7 @@ class CarbonCalculator {
                 if (themeText) themeText.textContent = 'Dark';
             }
         }
-        
+
         // Show toast notification
         this.showToast(`Switched to ${theme} mode`, 'info');
     }
@@ -2347,10 +2461,10 @@ class CarbonCalculator {
         this.collaborationSocket = null;
         this.collaborators = new Map();
         this.collaborationId = this.generateCollaborationId();
-        
+
         // Initialize WebSocket for real-time collaboration
         this.initializeWebSocket();
-        
+
         // Add collaboration UI
         this.addCollaborationUI();
     }
@@ -2359,7 +2473,7 @@ class CarbonCalculator {
         // Simulate WebSocket connection for demo purposes
         // In production, this would connect to a real WebSocket server
         console.log('Initializing collaboration features...');
-        
+
         // Simulate real-time updates
         setInterval(() => {
             if (this.collaborationMode) {
@@ -2382,7 +2496,7 @@ class CarbonCalculator {
             <span>Collaborate</span>
         `;
         collaborationBtn.title = 'Start Real-time Collaboration';
-        
+
         collaborationBtn.addEventListener('click', () => {
             this.toggleCollaboration();
         });
@@ -2393,7 +2507,7 @@ class CarbonCalculator {
     toggleCollaboration() {
         this.collaborationMode = !this.collaborationMode;
         const btn = document.getElementById('collaborationBtn');
-        
+
         if (this.collaborationMode) {
             btn.classList.add('active');
             btn.innerHTML = `
@@ -2422,10 +2536,10 @@ class CarbonCalculator {
         const url = new URL(window.location.href);
         url.searchParams.set('collaborate', this.collaborationId);
         window.history.replaceState({}, '', url);
-        
+
         // Add collaboration indicator
         this.addCollaborationIndicator();
-        
+
         // Start sharing lever changes
         this.shareLeverChanges();
     }
@@ -2435,7 +2549,7 @@ class CarbonCalculator {
         const url = new URL(window.location.href);
         url.searchParams.delete('collaborate');
         window.history.replaceState({}, '', url);
-        
+
         // Remove collaboration indicator
         this.removeCollaborationIndicator();
     }
@@ -2448,7 +2562,7 @@ class CarbonCalculator {
             <div class="indicator-dot"></div>
             <span>Live Collaboration Active</span>
         `;
-        
+
         document.body.appendChild(indicator);
     }
 
@@ -2467,7 +2581,7 @@ class CarbonCalculator {
             timestamp: Date.now(),
             userId: this.userPreferences.userId || 'anonymous'
         };
-        
+
         // In a real implementation, this would be sent via WebSocket
         console.log('Sharing lever changes:', changeData);
     }
@@ -2480,7 +2594,7 @@ class CarbonCalculator {
             timestamp: Date.now(),
             userId: 'collaborator-' + Math.floor(Math.random() * 1000)
         };
-        
+
         this.handleCollaborationUpdate(mockUpdate);
     }
 
@@ -2503,16 +2617,16 @@ class CarbonCalculator {
                 <button class="notification-close">&times;</button>
             </div>
         `;
-        
+
         document.body.appendChild(notification);
-        
+
         // Auto-remove after 5 seconds
         setTimeout(() => {
             if (notification.parentNode) {
                 notification.remove();
             }
         }, 5000);
-        
+
         // Close button
         const closeBtn = notification.querySelector('.notification-close');
         closeBtn.addEventListener('click', () => {
@@ -2536,10 +2650,10 @@ class CarbonCalculator {
     initializeAIInsights() {
         this.aiInsights = [];
         this.insightUpdateInterval = null;
-        
+
         // Start AI insights generation
         this.startAIInsights();
-        
+
         // Add AI insights UI
         this.addAIInsightsUI();
     }
@@ -2547,7 +2661,7 @@ class CarbonCalculator {
     startAIInsights() {
         // Generate initial insights
         this.generateAIInsights();
-        
+
         // Update insights periodically
         this.insightUpdateInterval = setInterval(() => {
             this.generateAIInsights();
@@ -2558,7 +2672,7 @@ class CarbonCalculator {
         const insights = [];
         const totalEmissions = this.calculateTotalEmissions();
         const reductionPercent = this.calculateReductionFrom1990();
-        
+
         // Analyze current scenario and generate insights
         if (reductionPercent < 50) {
             insights.push({
@@ -2569,7 +2683,7 @@ class CarbonCalculator {
                 action: 'increase_renewables'
             });
         }
-        
+
         if (this.leverValues['electric-cars'] < 3) {
             insights.push({
                 type: 'recommendation',
@@ -2579,7 +2693,7 @@ class CarbonCalculator {
                 action: 'increase_electric_cars'
             });
         }
-        
+
         if (this.leverValues['wind'] < 3 || this.leverValues['solar'] < 3) {
             insights.push({
                 type: 'opportunity',
@@ -2589,7 +2703,7 @@ class CarbonCalculator {
                 action: 'increase_renewables'
             });
         }
-        
+
         if (totalEmissions <= 0) {
             insights.push({
                 type: 'success',
@@ -2599,13 +2713,13 @@ class CarbonCalculator {
                 action: 'share_scenario'
             });
         }
-        
+
         // Add cost-benefit analysis
         const costAnalysis = this.analyzeCostBenefit();
         if (costAnalysis) {
             insights.push(costAnalysis);
         }
-        
+
         this.aiInsights = insights;
         this.updateAIInsightsUI();
     }
@@ -2613,11 +2727,11 @@ class CarbonCalculator {
     analyzeCostBenefit() {
         const totalEmissions = this.calculateTotalEmissions();
         const reductionPercent = this.calculateReductionFrom1990();
-        
+
         // Simple cost-benefit analysis
         const estimatedCost = this.estimateImplementationCost();
         const estimatedSavings = this.estimateCarbonSavings();
-        
+
         if (estimatedSavings > estimatedCost * 2) {
             return {
                 type: 'opportunity',
@@ -2627,30 +2741,30 @@ class CarbonCalculator {
                 action: 'view_cost_analysis'
             };
         }
-        
+
         return null;
     }
 
     estimateImplementationCost() {
         // Simplified cost estimation based on lever settings
         let totalCost = 0;
-        
+
         Object.entries(this.leverValues).forEach(([lever, value]) => {
             const baseCost = this.getLeverBaseCost(lever);
             totalCost += baseCost * value;
         });
-        
+
         return totalCost;
     }
 
     estimateCarbonSavings() {
         const reductionPercent = this.calculateReductionFrom1990();
         const baselineEmissions = this.baselineEmissions;
-        
+
         // Estimate savings based on carbon price (£50/tonne CO2e)
         const carbonPrice = 50;
         const emissionsReduced = (reductionPercent / 100) * baselineEmissions;
-        
+
         return emissionsReduced * carbonPrice;
     }
 
@@ -2665,14 +2779,14 @@ class CarbonCalculator {
             'ccs': 6000,
             'direct-air-capture': 10000
         };
-        
+
         return costMap[lever] || 1000;
     }
 
     addAIInsightsUI() {
         const resultsPanel = document.querySelector('.results-panel');
         if (!resultsPanel) return;
-        
+
         const insightsSection = document.createElement('div');
         insightsSection.className = 'ai-insights-section';
         insightsSection.innerHTML = `
@@ -2681,19 +2795,19 @@ class CarbonCalculator {
                 <div class="loading-insights">Analyzing your scenario...</div>
             </div>
         `;
-        
+
         resultsPanel.appendChild(insightsSection);
     }
 
     updateAIInsightsUI() {
         const container = document.getElementById('aiInsightsContainer');
         if (!container) return;
-        
+
         if (this.aiInsights.length === 0) {
             container.innerHTML = '<div class="no-insights">No insights available at this time.</div>';
             return;
         }
-        
+
         const insightsHTML = this.aiInsights.map(insight => `
             <div class="ai-insight-card ${insight.type} ${insight.priority}">
                 <div class="insight-header">
@@ -2709,9 +2823,9 @@ class CarbonCalculator {
                 </div>
             </div>
         `).join('');
-        
+
         container.innerHTML = insightsHTML;
-        
+
         // Add event listeners to action buttons
         container.querySelectorAll('.insight-action-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -2760,28 +2874,28 @@ class CarbonCalculator {
     autoAdjustRenewables() {
         const windSlider = document.querySelector('[data-lever="wind"]');
         const solarSlider = document.querySelector('[data-lever="solar"]');
-        
+
         if (windSlider && windSlider.value < 4) {
             windSlider.value = 4;
             windSlider.dispatchEvent(new Event('input'));
         }
-        
+
         if (solarSlider && solarSlider.value < 4) {
             solarSlider.value = 4;
             solarSlider.dispatchEvent(new Event('input'));
         }
-        
+
         this.showToast('Renewable energy levels increased automatically!', 'success');
     }
 
     autoAdjustElectricCars() {
         const electricCarsSlider = document.querySelector('[data-lever="electric-cars"]');
-        
+
         if (electricCarsSlider && electricCarsSlider.value < 4) {
             electricCarsSlider.value = 4;
             electricCarsSlider.dispatchEvent(new Event('input'));
         }
-        
+
         this.showToast('Electric vehicle adoption increased automatically!', 'success');
     }
 
@@ -2789,9 +2903,9 @@ class CarbonCalculator {
         const cost = this.estimateImplementationCost();
         const savings = this.estimateCarbonSavings();
         const roi = ((savings - cost) / cost * 100).toFixed(1);
-        
+
         this.showModal('costAnalysisModal');
-        
+
         // Update cost analysis modal content
         const modal = document.getElementById('costAnalysisModal');
         if (modal) {
@@ -2834,57 +2948,135 @@ class CarbonCalculator {
             <h4>Energy Flow Visualization</h4>
             <canvas id="sankeyCanvas" width="600" height="400"></canvas>
         `;
-        
+
         const resultsPanel = document.querySelector('.results-panel');
         if (resultsPanel) {
             resultsPanel.appendChild(sankeyContainer);
         }
-        
+
         this.updateSankeyDiagram();
     }
 
     updateSankeyDiagram() {
         const canvas = document.getElementById('sankeyCanvas');
         if (!canvas) return;
-        
+
+        // Handle High DPI displays
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+
+        // Logical dimensions
+        const width = rect.width;
+        const height = rect.height;
+
+        // Set display size (css pixels)
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+
+        // Set actual size in memory (scaled to account for extra pixel density)
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+
         const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Simplified Sankey diagram
-        this.drawSankeyDiagram(ctx, canvas.width, canvas.height);
+
+        // Normalize coordinate system to use css pixels.
+        ctx.scale(dpr, dpr);
+
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw with logical dimensions
+        this.drawSankeyDiagram(ctx, width, height);
     }
 
     drawSankeyDiagram(ctx, width, height) {
         // Draw energy flow from sources to sectors
         const flows = this.calculateEnergyFlows();
-        
-        ctx.strokeStyle = '#3498db';
-        ctx.lineWidth = 2;
-        
+        const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+
+        const textColor = isDarkMode ? '#ecf0f1' : '#2c3e50';
+        ctx.font = '500 12px Inter, sans-serif';
+        ctx.fillStyle = textColor;
+
+        // Calculate dynamic spacing
+        const usableHeight = height - 40;
+        const itemSpacing = Math.min(80, usableHeight / (flows.length || 1));
+        const startY = 30 + (usableHeight - (flows.length * itemSpacing)) / 2;
+
+        const sourceX = 150;
+        const targetX = width - 160;
+
         flows.forEach((flow, index) => {
-            const x1 = 50 + (index * 100);
-            const y1 = 50;
-            const x2 = width - 50;
-            const y2 = 100 + (index * 50);
-            
+            const y1 = startY + (index * itemSpacing);
+            const y2 = startY + (index * itemSpacing);
+
+            // Define colors
+            const baseColor = isDarkMode ? '#3498db' : '#2980b9'; // Blue
+
+            // Draw connection line
             ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
+            ctx.moveTo(sourceX + 10, y1);
+            ctx.bezierCurveTo(
+                sourceX + 150, y1,
+                targetX - 100, y2,
+                targetX - 5, y2
+            );
+
+            // Gradient stroke
+            const gradient = ctx.createLinearGradient(sourceX, y1, targetX, y2);
+            gradient.addColorStop(0, hexToRgba(baseColor, 0.6));
+            gradient.addColorStop(1, hexToRgba(isDarkMode ? '#2ecc71' : '#27ae60', 0.6));
+
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 5;
             ctx.stroke();
-            
-            // Add flow label
-            ctx.fillStyle = '#2c3e50';
-            ctx.font = '12px Arial';
-            ctx.fillText(`${flow.source} → ${flow.target}`, x1, y1 - 10);
+
+            // Source Label
+            ctx.textAlign = 'right';
+            ctx.fillStyle = textColor;
+            ctx.fillText(`${flow.source} (${Math.round(flow.value || 0)})`, sourceX - 10, y1 + 4);
+
+            // Target Label
+            ctx.textAlign = 'left';
+            ctx.fillText(`→ ${flow.target}`, targetX + 15, y2 + 4);
+
+            // Source Node Dot
+            ctx.beginPath();
+            ctx.arc(sourceX, y1, 6, 0, Math.PI * 2);
+            ctx.fillStyle = baseColor;
+            ctx.fill();
+
+            // Target Node Dot
+            ctx.beginPath();
+            ctx.arc(targetX, y2, 6, 0, Math.PI * 2);
+            ctx.fillStyle = isDarkMode ? '#2ecc71' : '#27ae60';
+            ctx.fill();
         });
+
+        // Helper to add alpha to hex
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
     }
 
     calculateEnergyFlows() {
+        // Use correct lever IDs
+        const wind = (this.leverValues['wind-onshore'] || 1) + (this.leverValues['wind-offshore'] || 1);
+        const solar = this.leverValues['solar-pv'] || 1;
+        const nuclear = this.leverValues['nuclear'] || 1;
+        const bio = this.leverValues['bioenergy'] || 1;
+
+        const elec = this.leverValues['electric-cars'] || 1;
+        const heat = this.leverValues['heat-pumps'] || 1;
+
         return [
-            { source: 'Renewables', target: 'Electricity', value: this.leverValues['wind'] + this.leverValues['solar'] },
-            { source: 'Nuclear', target: 'Electricity', value: this.leverValues['nuclear'] },
-            { source: 'Electricity', target: 'Transport', value: this.leverValues['electric-cars'] },
-            { source: 'Electricity', target: 'Buildings', value: this.leverValues['heat-pumps'] }
+            { source: 'Renewables', target: 'Electricity', value: wind + solar },
+            { source: 'Nuclear', target: 'Electricity', value: nuclear },
+            { source: 'Bioenergy', target: 'Electricity', value: bio },
+            { source: 'Electricity', target: 'Transport', value: elec },
+            { source: 'Electricity', target: 'Buildings', value: heat }
         ];
     }
 
@@ -2897,24 +3089,24 @@ class CarbonCalculator {
             <h4>Sector Performance Heatmap</h4>
             <div id="heatmapGrid"></div>
         `;
-        
+
         const resultsPanel = document.querySelector('.results-panel');
         if (resultsPanel) {
             resultsPanel.appendChild(heatmapContainer);
         }
-        
+
         this.updateHeatmap();
     }
 
     updateHeatmap() {
         const grid = document.getElementById('heatmapGrid');
         if (!grid) return;
-        
+
         const sectors = ['Transport', 'Buildings', 'Industry', 'Electricity', 'Land Use'];
         const metrics = ['Efficiency', 'Reduction', 'Feasibility', 'Cost'];
-        
+
         let gridHTML = '<div class="heatmap-header"></div>';
-        
+
         // Create header row
         gridHTML += '<div class="heatmap-row header">';
         gridHTML += '<div class="heatmap-cell header">Sector</div>';
@@ -2922,23 +3114,23 @@ class CarbonCalculator {
             gridHTML += `<div class="heatmap-cell header">${metric}</div>`;
         });
         gridHTML += '</div>';
-        
+
         // Create data rows
         sectors.forEach(sector => {
             gridHTML += '<div class="heatmap-row">';
             gridHTML += `<div class="heatmap-cell sector">${sector}</div>`;
-            
+
             metrics.forEach(metric => {
                 const value = this.calculateHeatmapValue(sector, metric);
                 const intensity = Math.min(value / 100, 1);
                 const color = this.getHeatmapColor(intensity);
-                
+
                 gridHTML += `<div class="heatmap-cell" style="background-color: ${color}">${value}%</div>`;
             });
-            
+
             gridHTML += '</div>';
         });
-        
+
         grid.innerHTML = gridHTML;
     }
 
@@ -2951,7 +3143,7 @@ class CarbonCalculator {
             'Electricity': { 'Efficiency': 90, 'Reduction': 85, 'Feasibility': 95, 'Cost': 75 },
             'Land Use': { 'Efficiency': 70, 'Reduction': 40, 'Feasibility': 85, 'Cost': 50 }
         };
-        
+
         return baseValues[sector]?.[metric] || 50;
     }
 
@@ -2992,7 +3184,7 @@ class CarbonCalculator {
         const focusableElements = document.querySelectorAll(
             'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
-        
+
         if (e.shiftKey) {
             // Shift+Tab - move backwards
             if (document.activeElement === focusableElements[0]) {
@@ -3028,16 +3220,16 @@ class CarbonCalculator {
         document.querySelectorAll('.lever-slider').forEach(slider => {
             const lever = slider.closest('.lever');
             const label = lever.querySelector('label');
-            
+
             slider.setAttribute('aria-label', `${label.textContent} level selector`);
             slider.setAttribute('aria-describedby', `${slider.id}-description`);
-            
+
             // Add description element
             const description = document.createElement('div');
             description.id = `${slider.id}-description`;
             description.className = 'sr-only';
             description.textContent = `Adjust ${label.textContent} from level 1 (minimum) to level 4 (maximum)`;
-            
+
             lever.appendChild(description);
         });
     }
@@ -3052,17 +3244,17 @@ class CarbonCalculator {
             </svg>
             <span>High Contrast</span>
         `;
-        
+
         highContrastBtn.addEventListener('click', () => {
             document.body.classList.toggle('high-contrast');
             this.showToast(
-                document.body.classList.contains('high-contrast') 
-                    ? 'High contrast mode enabled' 
-                    : 'High contrast mode disabled', 
+                document.body.classList.contains('high-contrast')
+                    ? 'High contrast mode enabled'
+                    : 'High contrast mode disabled',
                 'info'
             );
         });
-        
+
         const toolbar = document.querySelector('.features-toolbar');
         if (toolbar) {
             toolbar.appendChild(highContrastBtn);
@@ -3076,13 +3268,13 @@ class CarbonCalculator {
             <button class="font-size-btn" id="decreaseFont" aria-label="Decrease font size">A-</button>
             <button class="font-size-btn" id="increaseFont" aria-label="Increase font size">A+</button>
         `;
-        
+
         document.querySelector('header').appendChild(fontSizeContainer);
-        
+
         document.getElementById('decreaseFont').addEventListener('click', () => {
             this.changeFontSize(-1);
         });
-        
+
         document.getElementById('increaseFont').addEventListener('click', () => {
             this.changeFontSize(1);
         });
@@ -3091,10 +3283,10 @@ class CarbonCalculator {
     changeFontSize(delta) {
         const currentSize = parseInt(getComputedStyle(document.body).fontSize);
         const newSize = Math.max(12, Math.min(24, currentSize + delta));
-        
+
         document.body.style.fontSize = `${newSize}px`;
         localStorage.setItem('fontSize', newSize);
-        
+
         this.showToast(`Font size ${delta > 0 ? 'increased' : 'decreased'}`, 'info');
     }
 
@@ -3106,7 +3298,7 @@ class CarbonCalculator {
             loadTime: 0,
             interactionTime: 0
         };
-        
+
         this.startPerformanceMonitoring();
         this.addPerformanceUI();
     }
@@ -3115,36 +3307,36 @@ class CarbonCalculator {
         // Monitor FPS
         let frameCount = 0;
         let lastTime = performance.now();
-        
+
         const measureFPS = (currentTime) => {
             frameCount++;
-            
+
             if (currentTime - lastTime >= 1000) {
                 this.performanceMetrics.fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
                 frameCount = 0;
                 lastTime = currentTime;
                 this.updatePerformanceUI();
             }
-            
+
             requestAnimationFrame(measureFPS);
         };
-        
+
         requestAnimationFrame(measureFPS);
-        
+
         // Monitor memory usage (if available)
         if ('memory' in performance) {
             setInterval(() => {
                 this.performanceMetrics.memoryUsage = performance.memory.usedJSHeapSize / 1024 / 1024; // MB
             }, 5000);
         }
-        
+
         // Monitor interaction time
         this.measureInteractionTime();
     }
 
     measureInteractionTime() {
         let startTime = performance.now();
-        
+
         document.addEventListener('click', () => {
             const endTime = performance.now();
             this.performanceMetrics.interactionTime = endTime - startTime;
@@ -3166,7 +3358,7 @@ class CarbonCalculator {
                 <span class="metric-value" id="memoryValue">--</span>
             </div>
         `;
-        
+
         // Only show in development mode
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             document.body.appendChild(performancePanel);
@@ -3176,12 +3368,12 @@ class CarbonCalculator {
     updatePerformanceUI() {
         const fpsElement = document.getElementById('fpsValue');
         const memoryElement = document.getElementById('memoryValue');
-        
+
         if (fpsElement) {
             fpsElement.textContent = this.performanceMetrics.fps;
             fpsElement.className = `metric-value ${this.performanceMetrics.fps < 30 ? 'warning' : ''}`;
         }
-        
+
         if (memoryElement) {
             memoryElement.textContent = `${this.performanceMetrics.memoryUsage.toFixed(1)} MB`;
         }
@@ -3209,10 +3401,10 @@ class CarbonCalculator {
     // Enhanced Error Handling
     handleError(error, context = 'general') {
         console.error(`Error in ${context}:`, error);
-        
+
         // Show user-friendly error message
         this.showToast(`An error occurred: ${error.message}`, 'error');
-        
+
         // Log to analytics (if available)
         if (window.gtag) {
             window.gtag('event', 'error', {
@@ -3226,16 +3418,16 @@ class CarbonCalculator {
     initializeMobileOptimizations() {
         this.isMobile = window.innerWidth <= 768;
         this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        
+
         // Add mobile-specific event listeners
         this.addMobileEventListeners();
-        
+
         // Initialize mobile-specific features
         this.initializeMobileFeatures();
-        
+
         // Handle orientation changes
         this.handleOrientationChange();
-        
+
         // Handle viewport changes
         this.handleViewportChanges();
     }
@@ -3246,16 +3438,16 @@ class CarbonCalculator {
             slider.addEventListener('touchstart', (e) => {
                 this.handleTouchStart(e, slider);
             }, { passive: false });
-            
+
             slider.addEventListener('touchmove', (e) => {
                 this.handleTouchMove(e, slider);
             }, { passive: false });
-            
+
             slider.addEventListener('touchend', (e) => {
                 this.handleTouchEnd(e, slider);
             }, { passive: false });
         });
-        
+
         // Mobile-friendly tab switching
         document.querySelectorAll('.tab-btn').forEach(tab => {
             tab.addEventListener('touchstart', (e) => {
@@ -3263,7 +3455,7 @@ class CarbonCalculator {
                 this.switchSector(tab.dataset.sector);
             });
         });
-        
+
         // Mobile modal handling
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('touchstart', (e) => {
@@ -3272,7 +3464,7 @@ class CarbonCalculator {
                 }
             });
         });
-        
+
         // Swipe gestures for mobile
         this.initializeSwipeGestures();
     }
@@ -3283,10 +3475,10 @@ class CarbonCalculator {
         const rect = slider.getBoundingClientRect();
         const percentage = (touch.clientX - rect.left) / rect.width;
         const value = Math.round(percentage * (slider.max - slider.min) + slider.min);
-        
+
         slider.value = Math.max(slider.min, Math.min(slider.max, value));
         this.updateLever(slider.dataset.lever, parseInt(slider.value));
-        
+
         // Add visual feedback
         slider.classList.add('touching');
     }
@@ -3297,7 +3489,7 @@ class CarbonCalculator {
         const rect = slider.getBoundingClientRect();
         const percentage = (touch.clientX - rect.left) / rect.width;
         const value = Math.round(percentage * (slider.max - slider.min) + slider.min);
-        
+
         slider.value = Math.max(slider.min, Math.min(slider.max, value));
         this.updateLever(slider.dataset.lever, parseInt(slider.value));
     }
@@ -3311,30 +3503,30 @@ class CarbonCalculator {
         let startX = 0;
         let startY = 0;
         let isSwiping = false;
-        
+
         document.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
             isSwiping = false;
         });
-        
+
         document.addEventListener('touchmove', (e) => {
             if (!startX || !startY) return;
-            
+
             const deltaX = e.touches[0].clientX - startX;
             const deltaY = e.touches[0].clientY - startY;
-            
+
             if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
                 isSwiping = true;
                 e.preventDefault();
             }
         });
-        
+
         document.addEventListener('touchend', (e) => {
             if (!isSwiping) return;
-            
+
             const deltaX = e.changedTouches[0].clientX - startX;
-            
+
             if (Math.abs(deltaX) > 100) {
                 // Swipe detected - could be used for navigation
                 if (deltaX > 0) {
@@ -3345,7 +3537,7 @@ class CarbonCalculator {
                     this.handleSwipeLeft();
                 }
             }
-            
+
             startX = 0;
             startY = 0;
             isSwiping = false;
@@ -3385,12 +3577,12 @@ class CarbonCalculator {
             <div class="nav-dot" data-sector="co2-removal"></div>
             <div class="nav-dot" data-sector="land-use"></div>
         `;
-        
+
         const controlsPanel = document.querySelector('.controls-panel');
         if (controlsPanel) {
             controlsPanel.appendChild(mobileNav);
         }
-        
+
         // Add event listeners for navigation dots
         mobileNav.querySelectorAll('.nav-dot').forEach(dot => {
             dot.addEventListener('click', () => {
@@ -3423,23 +3615,23 @@ class CarbonCalculator {
                 Share
             </button>
         `;
-        
+
         const resultsPanel = document.querySelector('.results-panel');
         if (resultsPanel) {
             resultsPanel.appendChild(quickActions);
         }
-        
+
         // Add event listeners for quick actions
         document.getElementById('resetAllBtn')?.addEventListener('click', () => {
             this.resetAllLevers();
             this.showToast('All levers reset to minimum', 'info');
         });
-        
+
         document.getElementById('maxAllBtn')?.addEventListener('click', () => {
             this.setAllLeversToMax();
             this.showToast('All levers set to maximum', 'info');
         });
-        
+
         document.getElementById('shareMobileBtn')?.addEventListener('click', () => {
             this.shareScenario();
         });
@@ -3464,10 +3656,10 @@ class CarbonCalculator {
         if (this.isMobile) {
             document.body.classList.add('mobile-optimized');
         }
-        
+
         // Adjust chart sizes for mobile
         this.adjustChartsForMobile();
-        
+
         // Optimize images and icons for mobile
         this.optimizeImagesForMobile();
     }
@@ -3528,12 +3720,12 @@ class CarbonCalculator {
     showModalWithMobileOptimization(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        
+
         if (this.isMobile) {
             // Mobile-specific modal behavior
             modal.style.display = 'flex';
             modal.classList.add('show', 'mobile-modal');
-            
+
             // Prevent body scroll on mobile
             document.body.style.overflow = 'hidden';
             document.body.style.position = 'fixed';
@@ -3546,7 +3738,7 @@ class CarbonCalculator {
     hideModalWithMobileOptimization(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        
+
         if (this.isMobile) {
             modal.classList.remove('show', 'mobile-modal');
             setTimeout(() => {
@@ -3569,7 +3761,7 @@ class CarbonCalculator {
                 text: 'Check out my carbon reduction scenario',
                 url: window.location.href
             };
-            
+
             navigator.share(shareData).then(() => {
                 this.showToast('Scenario shared successfully!', 'success');
             }).catch((error) => {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -17,62 +18,74 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2.0.1">
 </head>
+
 <body>
     <!-- Particles Container for Visual Effects -->
     <div class="particles-container" id="particlesContainer"></div>
-    
+
     <div class="container">
         <header>
             <h1 class="neon-glow">MacKay Carbon Calculator</h1>
-            <p style="font-size: 1.3rem; font-weight: 500; margin-bottom: 15px;">🌍 Explore pathways to UK net zero emissions by 2050 🌱</p>
-            <p style="font-size: 0.95rem; opacity: 0.85; max-width: 600px; margin: 0 auto;">Interactive climate action simulator with real-time feedback</p>
-            
+            <p style="font-size: 1.3rem; font-weight: 500; margin-bottom: 15px;">🌍 Explore pathways to UK net zero
+                emissions by 2050 🌱</p>
+            <p style="font-size: 0.95rem; opacity: 0.85; max-width: 600px; margin: 0 auto;">Interactive climate action
+                simulator with real-time feedback</p>
+
             <!-- Enhanced Features Toolbar -->
             <div class="features-toolbar">
                 <button class="feature-btn" id="saveScenarioBtn" title="Save Current Scenario">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                        <path
+                            d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
                     </svg>
                     Save Scenario
                 </button>
                 <button class="feature-btn" id="loadScenarioBtn" title="Load Saved Scenario">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        <path
+                            d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                     </svg>
                     Load Scenario
                 </button>
                 <button class="feature-btn" id="compareBtn" title="Compare Scenarios">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M9,5V9H21V7.5L16,12L21,16.5V15H9V19H7V5H9M5,19A2,2 0 0,1 3,17V7A2,2 0 0,1 5,5A2,2 0 0,1 7,7V17A2,2 0 0,1 5,19Z"/>
+                        <path
+                            d="M9,5V9H21V7.5L16,12L21,16.5V15H9V19H7V5H9M5,19A2,2 0 0,1 3,17V7A2,2 0 0,1 5,5A2,2 0 0,1 7,7V17A2,2 0 0,1 5,19Z" />
                     </svg>
                     Compare
                 </button>
                 <button class="feature-btn" id="exportBtn" title="Export Data">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        <path
+                            d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                     </svg>
                     Export
                 </button>
                 <button class="feature-btn" id="shareBtn" title="Share Scenario">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z"/>
+                        <path
+                            d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z" />
                     </svg>
                     Share
                 </button>
                 <button class="feature-btn" id="helpBtn" title="Help & Tutorial">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"/>
+                        <path
+                            d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" />
                     </svg>
                     Help
                 </button>
                 <button class="feature-btn theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
                     <svg class="theme-icon sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z"/>
+                        <path
+                            d="M12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z" />
                     </svg>
-                    <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                        <path d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,17.41C9.37,20.43 14,20.54 17.33,17.97Z"/>
+                    <svg class="theme-icon moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                        style="display: none;">
+                        <path
+                            d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.4 6.35,17.41C9.37,20.43 14,20.54 17.33,17.97Z" />
                     </svg>
                     <span class="theme-text">Dark</span>
                 </button>
@@ -98,31 +111,37 @@
                             <div class="lever">
                                 <label>Electric Cars & Vans</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="electric-cars">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="electric-cars">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current adoption rates | Level 4: 100% electric by 2050</div>
+                                <div class="lever-description">Level 1: Current adoption rates | Level 4: 100% electric
+                                    by 2050</div>
                                 <div class="progress-ring">
                                     <svg width="40" height="40">
-                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
+                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15"
+                                            stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
                                     </svg>
                                 </div>
                             </div>
-                            
+
                             <div class="lever">
                                 <label>Public Transport</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="public-transport">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="public-transport">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current usage | Level 4: Major modal shift to public transport</div>
+                                <div class="lever-description">Level 1: Current usage | Level 4: Major modal shift to
+                                    public transport</div>
                                 <div class="progress-ring">
                                     <svg width="40" height="40">
-                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
+                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15"
+                                            stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
                                     </svg>
                                 </div>
                             </div>
@@ -130,15 +149,18 @@
                             <div class="lever">
                                 <label>Active Travel (Walking/Cycling)</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="active-travel">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="active-travel">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current levels | Level 4: Significant increase in walking/cycling</div>
+                                <div class="lever-description">Level 1: Current levels | Level 4: Significant increase
+                                    in walking/cycling</div>
                                 <div class="progress-ring">
                                     <svg width="40" height="40">
-                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15" stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
+                                        <circle class="progress-ring-circle" cx="20" cy="20" r="15"
+                                            stroke-dasharray="94.2" stroke-dashoffset="94.2"></circle>
                                     </svg>
                                 </div>
                             </div>
@@ -146,23 +168,27 @@
                             <div class="lever">
                                 <label>Aviation Demand</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="aviation">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="aviation">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Continued growth | Level 4: Reduced demand + sustainable fuels</div>
+                                <div class="lever-description">Level 1: Continued growth | Level 4: Reduced demand +
+                                    sustainable fuels</div>
                             </div>
 
                             <div class="lever">
                                 <label>Freight Efficiency</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="freight">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="freight">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum efficiency + electrification</div>
+                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum efficiency
+                                    + electrification</div>
                             </div>
                         </div>
                     </div>
@@ -174,56 +200,66 @@
                             <div class="lever">
                                 <label>Building Temperature</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="building-temp">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="building-temp">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current heating patterns | Level 4: Reduced indoor temperatures</div>
+                                <div class="lever-description">Level 1: Current heating patterns | Level 4: Reduced
+                                    indoor temperatures</div>
                             </div>
 
                             <div class="lever">
                                 <label>Building Insulation</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="insulation">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="insulation">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current standards | Level 4: All buildings highly insulated</div>
+                                <div class="lever-description">Level 1: Current standards | Level 4: All buildings
+                                    highly insulated</div>
                             </div>
 
                             <div class="lever">
                                 <label>Heat Pump Share</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="heat-pumps">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="heat-pumps">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Limited adoption | Level 4: Heat pumps in most buildings</div>
+                                <div class="lever-description">Level 1: Limited adoption | Level 4: Heat pumps in most
+                                    buildings</div>
                             </div>
 
                             <div class="lever">
                                 <label>District Heat Share</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="district-heat">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="district-heat">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current levels | Level 4: Widespread district heating networks</div>
+                                <div class="lever-description">Level 1: Current levels | Level 4: Widespread district
+                                    heating networks</div>
                             </div>
 
                             <div class="lever">
                                 <label>Lighting & Appliances</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="appliances">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="appliances">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum efficiency appliances</div>
+                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum efficiency
+                                    appliances</div>
                             </div>
                         </div>
                     </div>
@@ -235,45 +271,53 @@
                             <div class="lever">
                                 <label>Industrial Energy Efficiency</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="industrial-efficiency">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="industrial-efficiency">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum feasible efficiency</div>
+                                <div class="lever-description">Level 1: Current efficiency | Level 4: Maximum feasible
+                                    efficiency</div>
                             </div>
 
                             <div class="lever">
                                 <label>Steel Production</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="steel">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="steel">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current methods | Level 4: Hydrogen-based steel production</div>
+                                <div class="lever-description">Level 1: Current methods | Level 4: Hydrogen-based steel
+                                    production</div>
                             </div>
 
                             <div class="lever">
                                 <label>Cement Production</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="cement">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="cement">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current processes | Level 4: Alternative cement + CCS</div>
+                                <div class="lever-description">Level 1: Current processes | Level 4: Alternative cement
+                                    + CCS</div>
                             </div>
 
                             <div class="lever">
                                 <label>Chemical Industry</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="chemicals">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="chemicals">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current processes | Level 4: Electrification + green hydrogen</div>
+                                <div class="lever-description">Level 1: Current processes | Level 4: Electrification +
+                                    green hydrogen</div>
                             </div>
                         </div>
                     </div>
@@ -285,45 +329,53 @@
                             <div class="lever">
                                 <label>Wind Power</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="wind">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="wind">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current capacity | Level 4: Maximum feasible wind deployment</div>
+                                <div class="lever-description">Level 1: Current capacity | Level 4: Maximum feasible
+                                    wind deployment</div>
                             </div>
 
                             <div class="lever">
                                 <label>Solar Power</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="solar">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="solar">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current capacity | Level 4: Maximum feasible solar deployment</div>
+                                <div class="lever-description">Level 1: Current capacity | Level 4: Maximum feasible
+                                    solar deployment</div>
                             </div>
 
                             <div class="lever">
                                 <label>Nuclear Power</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="nuclear">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="nuclear">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Phase out | Level 4: New nuclear build programme</div>
+                                <div class="lever-description">Level 1: Phase out | Level 4: New nuclear build programme
+                                </div>
                             </div>
 
                             <div class="lever">
                                 <label>Energy Storage</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="storage">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="storage">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Limited storage | Level 4: Large-scale storage deployment</div>
+                                <div class="lever-description">Level 1: Limited storage | Level 4: Large-scale storage
+                                    deployment</div>
                             </div>
                         </div>
                     </div>
@@ -335,12 +387,14 @@
                             <div class="lever">
                                 <label>Direct Air Capture</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="direct-air-capture">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="direct-air-capture">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: No deployment | Level 4: Large-scale DAC deployment</div>
+                                <div class="lever-description">Level 1: No deployment | Level 4: Large-scale DAC
+                                    deployment</div>
                             </div>
 
                             <div class="lever">
@@ -351,18 +405,21 @@
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Limited CCS | Level 4: Widespread industrial CCS</div>
+                                <div class="lever-description">Level 1: Limited CCS | Level 4: Widespread industrial CCS
+                                </div>
                             </div>
 
                             <div class="lever">
                                 <label>Methane Reduction</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="methane">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="methane">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current levels | Level 4: Maximum methane reduction</div>
+                                <div class="lever-description">Level 1: Current levels | Level 4: Maximum methane
+                                    reduction</div>
                             </div>
                         </div>
                     </div>
@@ -374,34 +431,40 @@
                             <div class="lever">
                                 <label>Afforestation</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="afforestation">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="afforestation">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current rates | Level 4: Maximum feasible tree planting</div>
+                                <div class="lever-description">Level 1: Current rates | Level 4: Maximum feasible tree
+                                    planting</div>
                             </div>
 
                             <div class="lever">
                                 <label>Bioenergy Crops</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="bioenergy">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="bioenergy">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Limited bioenergy | Level 4: Large-scale sustainable bioenergy</div>
+                                <div class="lever-description">Level 1: Limited bioenergy | Level 4: Large-scale
+                                    sustainable bioenergy</div>
                             </div>
 
                             <div class="lever">
                                 <label>Agriculture Efficiency</label>
                                 <div class="ambition-levels">
-                                    <input type="range" min="1" max="4" value="1" class="lever-slider" data-lever="agriculture">
+                                    <input type="range" min="1" max="4" value="1" class="lever-slider"
+                                        data-lever="agriculture">
                                     <div class="level-labels">
                                         <span>1</span><span>2</span><span>3</span><span>4</span>
                                     </div>
                                 </div>
-                                <div class="lever-description">Level 1: Current practices | Level 4: Precision agriculture + reduced emissions</div>
+                                <div class="lever-description">Level 1: Current practices | Level 4: Precision
+                                    agriculture + reduced emissions</div>
                             </div>
                         </div>
                     </div>
@@ -421,13 +484,13 @@
                 <div class="results-tab-content active" id="overview-tab">
                     <div class="emissions-display">
                         <h3>UK Emissions Pathway</h3>
-                        
+
                         <!-- CO2e Meter -->
                         <div class="emissions-value">
                             <span class="emissions-percentage" id="emissionsPercentage">--</span>
                             <div class="emissions-label">Reduction from 1990 levels by 2050</div>
                         </div>
-                        
+
                         <div class="co2e-meter">
                             <div class="meter-needle" id="meterNeedle"></div>
                             <div class="meter-center"></div>
@@ -437,411 +500,470 @@
                                 <span>Net Zero</span>
                             </div>
                         </div>
-                        
+
                         <div class="emissions-chart">
                             <canvas id="emissionsChart" width="400" height="300"></canvas>
                         </div>
                         <div class="emissions-summary">
-                        <div class="metric">
-                            <span class="label">2050 Emissions:</span>
-                            <span class="value" id="emissions2050">-- MtCO₂e</span>
-                        </div>
-                        <div class="metric">
-                            <span class="label">Reduction from 1990:</span>
-                            <span class="value" id="reductionPercent">--%</span>
-                        </div>
-                        <div class="metric net-zero">
-                            <span class="label">Net Zero Target:</span>
-                            <span class="value" id="netZeroStatus">Not Achieved</span>
-                        </div>
-                        <div class="metric">
-                            <span class="label">Carbon Budget:</span>
-                            <span class="value" id="carbonBudget">Within Limits</span>
-                        </div>
-                        <div class="metric">
-                            <span class="label">Feasibility Score:</span>
-                            <span class="value" id="feasibilityScore">--%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Impact Tab -->
-                <div class="results-tab-content" id="impact-tab">
-                    <!-- Comparison, Achievements, and Impact viz will be added here by JavaScript -->
-                </div>
-
-                <!-- Insights Tab -->
-                <div class="results-tab-content" id="insights-tab">
-                    <div class="insights-container">
-                        <div class="insight-card">
-                            <div class="insight-icon">💡</div>
-                            <div class="insight-content">
-                                <h4>Key Recommendation</h4>
-                                <p id="keyRecommendation">Focus on transport electrification for maximum impact</p>
+                            <div class="metric">
+                                <span class="label">2050 Emissions:</span>
+                                <span class="value" id="emissions2050">-- MtCO₂e</span>
                             </div>
-                        </div>
-                        <div class="insight-card">
-                            <div class="insight-icon">⚠️</div>
-                            <div class="insight-content">
-                                <h4>Challenge Alert</h4>
-                                <p id="challengeAlert">Current aviation targets may be difficult to achieve</p>
+                            <div class="metric">
+                                <span class="label">Reduction from 1990:</span>
+                                <span class="value" id="reductionPercent">--%</span>
                             </div>
-                        </div>
-                        <div class="insight-card">
-                            <div class="insight-icon">🚀</div>
-                            <div class="insight-content">
-                                <h4>Quick Win</h4>
-                                <p id="quickWin">Increase building insulation for immediate gains</p>
+                            <div class="metric net-zero">
+                                <span class="label">Net Zero Target:</span>
+                                <span class="value" id="netZeroStatus">Not Achieved</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Carbon Budget:</span>
+                                <span class="value" id="carbonBudget">Within Limits</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Feasibility Score:</span>
+                                <span class="value" id="feasibilityScore">--%</span>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Analytics Tab -->
-                <div class="results-tab-content" id="analytics-tab">
-                    <!-- Enhanced Analytics Panel -->
-                    <div class="analytics-panel">
-                        <div class="analytics-tabs">
-                            <button class="analytics-tab active" data-tab="overview">Overview</button>
-                            <button class="analytics-tab" data-tab="trends">Trends</button>
-                            <button class="analytics-tab" data-tab="comparison">Compare</button>
-                            <button class="analytics-tab" data-tab="insights">Insights</button>
+                    <!-- Impact Tab -->
+                    <div class="results-tab-content" id="impact-tab">
+                        <!-- Comparison, Achievements, and Impact viz will be added here by JavaScript -->
+                    </div>
+
+                    <!-- Insights Tab -->
+                    <div class="results-tab-content" id="insights-tab">
+                        <div class="insights-container">
+                            <div class="insight-card">
+                                <div class="insight-icon">💡</div>
+                                <div class="insight-content">
+                                    <h4>Key Recommendation</h4>
+                                    <p id="keyRecommendation">Focus on transport electrification for maximum impact</p>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-icon">⚠️</div>
+                                <div class="insight-content">
+                                    <h4>Challenge Alert</h4>
+                                    <p id="challengeAlert">Current aviation targets may be difficult to achieve</p>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-icon">🚀</div>
+                                <div class="insight-content">
+                                    <h4>Quick Win</h4>
+                                    <p id="quickWin">Increase building insulation for immediate gains</p>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="analytics-content">
-                            <div class="analytics-section active" id="overview-section">
-                                <div class="key-metrics">
-                                    <div class="metric-card">
-                                        <div class="metric-icon">🎯</div>
-                                        <div class="metric-info">
-                                            <span class="metric-title">Target Progress</span>
-                                            <span class="metric-value" id="targetProgress">65%</span>
-                                        </div>
-                                    </div>
-                                    <div class="metric-card">
-                                        <div class="metric-icon">⚡</div>
-                                        <div class="metric-info">
-                                            <span class="metric-title">Energy Efficiency</span>
-                                            <span class="metric-value" id="energyEfficiency">Good</span>
-                                        </div>
-                                    </div>
-                                    <div class="metric-card">
-                                        <div class="metric-icon">🌱</div>
-                                        <div class="metric-info">
-                                            <span class="metric-title">Renewable Share</span>
-                                            <span class="metric-value" id="renewableShare">78%</span>
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+
+                    <!-- Analytics Tab -->
+                    <div class="results-tab-content" id="analytics-tab">
+                        <!-- Enhanced Analytics Panel -->
+                        <div class="analytics-panel">
+                            <div class="analytics-tabs">
+                                <button class="analytics-tab active" data-tab="overview">Overview</button>
+                                <button class="analytics-tab" data-tab="trends">Trends</button>
+                                <button class="analytics-tab" data-tab="comparison">Compare</button>
+                                <button class="analytics-tab" data-tab="insights">Insights</button>
                             </div>
-                            
-                            <div class="analytics-section" id="trends-section">
-                                <canvas id="trendsChart" width="400" height="200"></canvas>
-                            </div>
-                            
-                            <div class="analytics-section" id="comparison-section">
-                                <div class="comparison-container">
-                                    <div class="scenario-selector">
-                                        <select id="compareScenario1">
-                                            <option value="current">Current Scenario</option>
-                                        </select>
-                                        <span class="vs-label">vs</span>
-                                        <select id="compareScenario2">
-                                            <option value="baseline">Baseline (No Action)</option>
-                                            <option value="government">Government Plan</option>
-                                            <option value="ambitious">Ambitious Scenario</option>
-                                        </select>
-                                    </div>
-                                    <canvas id="comparisonChart" width="400" height="200"></canvas>
-                                </div>
-                            </div>
-                            
-                            <div class="analytics-section" id="insights-section">
-                                <div class="insights-container">
-                                    <div class="insight-card">
-                                        <div class="insight-icon">💡</div>
-                                        <div class="insight-content">
-                                            <h4>Key Recommendation</h4>
-                                            <p>Adjust your levers to discover insights</p>
+
+                            <div class="analytics-content">
+                                <div class="analytics-section active" id="overview-section">
+                                    <div class="key-metrics">
+                                        <div class="metric-card">
+                                            <div class="metric-icon">🎯</div>
+                                            <div class="metric-info">
+                                                <span class="metric-title">Target Progress</span>
+                                                <span class="metric-value" id="targetProgress">65%</span>
+                                            </div>
+                                        </div>
+                                        <div class="metric-card">
+                                            <div class="metric-icon">⚡</div>
+                                            <div class="metric-info">
+                                                <span class="metric-title">Energy Efficiency</span>
+                                                <span class="metric-value" id="energyEfficiency">Good</span>
+                                            </div>
+                                        </div>
+                                        <div class="metric-card">
+                                            <div class="metric-icon">🌱</div>
+                                            <div class="metric-info">
+                                                <span class="metric-title">Renewable Share</span>
+                                                <span class="metric-value" id="renewableShare">78%</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="sector-breakdown">
-                        <h4>2050 Emissions by Sector</h4>
-                        <div class="sector-bars">
-                            <div class="sector-bar">
-                                <span class="sector-name">Transport</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 0%" data-sector="transport"></div>
-                                    <span class="bar-value">-- MtCO₂e</span>
+                                <div class="analytics-section" id="trends-section">
+                                    <canvas id="trendsChart" width="400" height="200"></canvas>
                                 </div>
-                            </div>
-                            <div class="sector-bar">
-                                <span class="sector-name">Buildings</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 0%" data-sector="buildings"></div>
-                                    <span class="bar-value">-- MtCO₂e</span>
+
+                                <div class="analytics-section" id="comparison-section">
+                                    <div class="comparison-container">
+                                        <div class="scenario-selector">
+                                            <select id="compareScenario1">
+                                                <option value="current">Current Scenario</option>
+                                            </select>
+                                            <span class="vs-label">vs</span>
+                                            <select id="compareScenario2">
+                                                <option value="baseline">Baseline (No Action)</option>
+                                                <option value="government">Government Plan</option>
+                                                <option value="ambitious">Ambitious Scenario</option>
+                                            </select>
+                                        </div>
+                                        <canvas id="comparisonChart" width="400" height="200"></canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="sector-bar">
-                                <span class="sector-name">Industry</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 0%" data-sector="industry"></div>
-                                    <span class="bar-value">-- MtCO₂e</span>
-                                </div>
-                            </div>
-                            <div class="sector-bar">
-                                <span class="sector-name">Electricity</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 0%" data-sector="electricity"></div>
-                                    <span class="bar-value">-- MtCO₂e</span>
-                                </div>
-                            </div>
-                            <div class="sector-bar">
-                                <span class="sector-name">Agriculture</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 0%" data-sector="land-use"></div>
-                                    <span class="bar-value">-- MtCO₂e</span>
+
+                                <div class="analytics-section" id="insights-section">
+                                    <div class="insights-container">
+                                        <div class="insight-card">
+                                            <div class="insight-icon">💡</div>
+                                            <div class="insight-content">
+                                                <h4>Key Recommendation</h4>
+                                                <p>Adjust your levers to discover insights</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-        <footer>
-            <p>Based on the UK Government's MacKay Carbon Calculator | Explore pathways to net zero by 2050</p>
-        </footer>
-    </div>
-
-    <!-- Modal Dialogs -->
-    <!-- Save Scenario Modal -->
-    <div id="saveScenarioModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Save Scenario</h3>
-                <span class="close" data-modal="saveScenarioModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="scenarioName">Scenario Name:</label>
-                    <input type="text" id="scenarioName" placeholder="Enter scenario name...">
-                </div>
-                <div class="form-group">
-                    <label for="scenarioDescription">Description (optional):</label>
-                    <textarea id="scenarioDescription" placeholder="Describe your scenario..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="setAsDefault"> Set as default scenario
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-modal="saveScenarioModal">Cancel</button>
-                <button class="btn btn-primary" id="confirmSaveScenario">Save Scenario</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Load Scenario Modal -->
-    <div id="loadScenarioModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Load Scenario</h3>
-                <span class="close" data-modal="loadScenarioModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="scenarios-list" id="scenariosList">
-                    <!-- Scenarios will be populated here -->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-modal="loadScenarioModal">Cancel</button>
-                <button class="btn btn-danger" id="clearAllScenarios">Clear All</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Help Modal -->
-    <div id="helpModal" class="modal">
-        <div class="modal-content large">
-            <div class="modal-header">
-                <h3>Help & Tutorial</h3>
-                <span class="close" data-modal="helpModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="help-tabs">
-                    <button class="help-tab active" data-help="getting-started">Getting Started</button>
-                    <button class="help-tab" data-help="sectors">Sectors Guide</button>
-                    <button class="help-tab" data-help="features">Features</button>
-                    <button class="help-tab" data-help="methodology">Methodology</button>
-                </div>
-                
-                <div class="help-content">
-                    <div class="help-section active" id="getting-started">
-                        <h4>Getting Started</h4>
-                        <p>Welcome to the MacKay Carbon Calculator! This tool helps you explore different pathways to achieve UK net zero emissions by 2050.</p>
-                        <ul>
-                            <li><strong>Adjust Levers:</strong> Use the sliders to set ambition levels for different sectors</li>
-                            <li><strong>View Results:</strong> See real-time updates to emissions projections</li>
-                            <li><strong>Save Scenarios:</strong> Save your configurations for later comparison</li>
-                            <li><strong>Compare Options:</strong> Use the analytics panel to compare different approaches</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="help-section" id="sectors">
-                        <h4>Sectors Guide</h4>
-                        <div class="sector-help">
-                            <h5>🚗 Transport</h5>
-                            <p>Covers road transport, aviation, shipping, and freight. Key levers include electric vehicle adoption and modal shift.</p>
-                            
-                            <h5>🏠 Buildings</h5>
-                            <p>Residential and commercial building energy use. Focus on insulation, heat pumps, and temperature settings.</p>
-                            
-                            <h5>🏭 Industry</h5>
-                            <p>Manufacturing and industrial processes. Includes efficiency improvements and fuel switching.</p>
-                            
-                            <h5>⚡ Electricity</h5>
-                            <p>Power generation mix. Covers renewable energy deployment and storage solutions.</p>
-                            
-                            <h5>🌱 CO₂ Removal</h5>
-                            <p>Carbon capture and removal technologies including direct air capture and CCS.</p>
-                            
-                            <h5>🌾 Land Use</h5>
-                            <p>Agriculture, forestry, and land management practices affecting carbon storage.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="help-section" id="features">
-                        <h4>Advanced Features</h4>
-                        <ul>
-                            <li><strong>Scenario Management:</strong> Save, load, and organize different policy scenarios</li>
-                            <li><strong>Analytics Dashboard:</strong> View trends, comparisons, and insights</li>
-                            <li><strong>Data Export:</strong> Export results to CSV or JSON format</li>
-                            <li><strong>Sharing:</strong> Generate shareable links for your scenarios</li>
-                            <li><strong>Performance Metrics:</strong> Track feasibility and implementation challenges</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="help-section" id="methodology">
-                        <h4>Methodology</h4>
-                        <p>This calculator is based on the UK Government's MacKay Carbon Calculator methodology, developed by the late Professor David MacKay.</p>
-                        <p>The model uses simplified but scientifically grounded assumptions about:</p>
-                        <ul>
-                            <li>Technology deployment rates and costs</li>
-                            <li>Behavioral change potential</li>
-                            <li>Resource constraints and trade-offs</li>
-                            <li>Policy implementation timelines</li>
-                        </ul>
-                        <p>Results should be interpreted as indicative pathways rather than precise predictions.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-modal="helpModal">Got it!</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Export Modal -->
-    <div id="exportModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Export Data</h3>
-                <span class="close" data-modal="exportModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="export-options">
-                    <div class="export-option">
-                        <input type="radio" id="exportCSV" name="exportFormat" value="csv" checked>
-                        <label for="exportCSV">
-                            <strong>CSV Format</strong>
-                            <span>Spreadsheet-compatible format for analysis</span>
-                        </label>
-                    </div>
-                    <div class="export-option">
-                        <input type="radio" id="exportJSON" name="exportFormat" value="json">
-                        <label for="exportJSON">
-                            <strong>JSON Format</strong>
-                            <span>Machine-readable format for developers</span>
-                        </label>
-                    </div>
-                    <div class="export-option">
-                        <input type="radio" id="exportPDF" name="exportFormat" value="pdf">
-                        <label for="exportPDF">
-                            <strong>PDF Report</strong>
-                            <span>Formatted report with charts and analysis</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="export-content">
-                    <label>
-                        <input type="checkbox" id="includeCharts" checked> Include charts and visualizations
-                    </label>
-                    <label>
-                        <input type="checkbox" id="includeMetadata" checked> Include scenario metadata
-                    </label>
-                    <label>
-                        <input type="checkbox" id="includeTimestamp" checked> Include timestamp
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-modal="exportModal">Cancel</button>
-                <button class="btn btn-primary" id="confirmExport">Export Data</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cost Analysis Modal -->
-    <div id="costAnalysisModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Cost-Benefit Analysis</h3>
-                <span class="close" data-modal="costAnalysisModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="cost-analysis">
-                    <p>Detailed cost-benefit analysis of your current scenario configuration.</p>
-                    <div class="cost-metrics">
-                        <div class="cost-metric">
-                            <span class="metric-label">Implementation Cost:</span>
-                            <span class="metric-value">--</span>
-                        </div>
-                        <div class="cost-metric">
-                            <span class="metric-label">Carbon Savings:</span>
-                            <span class="metric-value">--</span>
-                        </div>
-                        <div class="cost-metric">
-                            <span class="metric-label">Return on Investment:</span>
-                            <span class="metric-value">--</span>
+                        <div class="sector-breakdown">
+                            <h4>2050 Emissions by Sector</h4>
+                            <div class="sector-bars">
+                                <div class="sector-bar">
+                                    <span class="sector-name">Transport</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 0%" data-sector="transport"></div>
+                                        <span class="bar-value">-- MtCO₂e</span>
+                                    </div>
+                                </div>
+                                <div class="sector-bar">
+                                    <span class="sector-name">Buildings</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 0%" data-sector="buildings"></div>
+                                        <span class="bar-value">-- MtCO₂e</span>
+                                    </div>
+                                </div>
+                                <div class="sector-bar">
+                                    <span class="sector-name">Industry</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 0%" data-sector="industry"></div>
+                                        <span class="bar-value">-- MtCO₂e</span>
+                                    </div>
+                                </div>
+                                <div class="sector-bar">
+                                    <span class="sector-name">Electricity</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 0%" data-sector="electricity"></div>
+                                        <span class="bar-value">-- MtCO₂e</span>
+                                    </div>
+                                </div>
+                                <div class="sector-bar">
+                                    <span class="sector-name">Agriculture</span>
+                                    <div class="bar-container">
+                                        <div class="bar" style="width: 0%" data-sector="land-use"></div>
+                                        <span class="bar-value">-- MtCO₂e</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-modal="costAnalysisModal">Close</button>
-                <button class="btn btn-primary" id="exportCostAnalysis">Export Analysis</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="toast">
-        <div class="toast-content">
-            <span class="toast-icon"></span>
-            <span class="toast-message"></span>
-        </div>
-        <button class="toast-close">&times;</button>
-    </div>
+                <footer>
+                    <p>Based on the UK Government's MacKay Carbon Calculator | Explore pathways to net zero by 2050</p>
+                </footer>
+            </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+            <!-- Modal Dialogs -->
+            <!-- Save Scenario Modal -->
+            <div id="saveScenarioModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Save Scenario</h3>
+                        <span class="close" data-modal="saveScenarioModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="scenarioName">Scenario Name:</label>
+                            <input type="text" id="scenarioName" placeholder="Enter scenario name...">
+                        </div>
+                        <div class="form-group">
+                            <label for="scenarioDescription">Description (optional):</label>
+                            <textarea id="scenarioDescription" placeholder="Describe your scenario..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="setAsDefault"> Set as default scenario
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-modal="saveScenarioModal">Cancel</button>
+                        <button class="btn btn-primary" id="confirmSaveScenario">Save Scenario</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load Scenario Modal -->
+            <div id="loadScenarioModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Load Scenario</h3>
+                        <span class="close" data-modal="loadScenarioModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="scenarios-list" id="scenariosList">
+                            <!-- Scenarios will be populated here -->
+                            <div class="empty-state">No saved scenarios found.</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-modal="loadScenarioModal">Cancel</button>
+                        <button class="btn btn-danger" id="clearAllScenarios">Clear All</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Data Modal -->
+            <div id="exportModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Export Data</h3>
+                        <span class="close" data-modal="exportModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Export Format:</label>
+                            <div class="export-options">
+                                <label class="export-option">
+                                    <input type="radio" name="exportFormat" value="csv" checked>
+                                    <span class="option-content">
+                                        <span class="option-title">CSV Format</span>
+                                        <span class="option-desc">Spreadsheet-compatible format for analysis</span>
+                                    </span>
+                                </label>
+                                <label class="export-option">
+                                    <input type="radio" name="exportFormat" value="json">
+                                    <span class="option-content">
+                                        <span class="option-title">JSON Format</span>
+                                        <span class="option-desc">Machine-readable format for developers</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Include:</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" checked> Charts and visualizations</label>
+                                <label><input type="checkbox" checked> Scenario metadata</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-modal="exportModal">Cancel</button>
+                        <button class="btn btn-primary" id="confirmExport">Export Data</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Modal -->
+            <div id="helpModal" class="modal">
+                <div class="modal-content large">
+                    <div class="modal-header">
+                        <h3>Help & Tutorial</h3>
+                        <span class="close" data-modal="helpModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="help-tabs">
+                            <button class="help-tab active" data-help="getting-started">Getting Started</button>
+                            <button class="help-tab" data-help="sectors">Sectors Guide</button>
+                            <button class="help-tab" data-help="features">Features</button>
+                            <button class="help-tab" data-help="methodology">Methodology</button>
+                        </div>
+
+                        <div class="help-content">
+                            <div class="help-section active" id="getting-started">
+                                <h4>Getting Started</h4>
+                                <p>Welcome to the MacKay Carbon Calculator! This tool helps you explore different
+                                    pathways to achieve UK net zero emissions by 2050.</p>
+                                <ul>
+                                    <li><strong>Adjust Levers:</strong> Use the sliders to set ambition levels for
+                                        different sectors</li>
+                                    <li><strong>View Results:</strong> See real-time updates to emissions projections
+                                    </li>
+                                    <li><strong>Save Scenarios:</strong> Save your configurations for later comparison
+                                    </li>
+                                    <li><strong>Compare Options:</strong> Use the analytics panel to compare different
+                                        approaches</li>
+                                </ul>
+                            </div>
+
+                            <div class="help-section" id="sectors">
+                                <h4>Sectors Guide</h4>
+                                <div class="sector-help">
+                                    <h5>🚗 Transport</h5>
+                                    <p>Covers road transport, aviation, shipping, and freight. Key levers include
+                                        electric vehicle adoption and modal shift.</p>
+
+                                    <h5>🏠 Buildings</h5>
+                                    <p>Residential and commercial building energy use. Focus on insulation, heat pumps,
+                                        and temperature settings.</p>
+
+                                    <h5>🏭 Industry</h5>
+                                    <p>Manufacturing and industrial processes. Includes efficiency improvements and fuel
+                                        switching.</p>
+
+                                    <h5>⚡ Electricity</h5>
+                                    <p>Power generation mix. Covers renewable energy deployment and storage solutions.
+                                    </p>
+
+                                    <h5>🌱 CO₂ Removal</h5>
+                                    <p>Carbon capture and removal technologies including direct air capture and CCS.</p>
+
+                                    <h5>🌾 Land Use</h5>
+                                    <p>Agriculture, forestry, and land management practices affecting carbon storage.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="help-section" id="features">
+                                <h4>Advanced Features</h4>
+                                <ul>
+                                    <li><strong>Scenario Management:</strong> Save, load, and organize different policy
+                                        scenarios</li>
+                                    <li><strong>Analytics Dashboard:</strong> View trends, comparisons, and insights
+                                    </li>
+                                    <li><strong>Data Export:</strong> Export results to CSV or JSON format</li>
+                                    <li><strong>Sharing:</strong> Generate shareable links for your scenarios</li>
+                                    <li><strong>Performance Metrics:</strong> Track feasibility and implementation
+                                        challenges</li>
+                                </ul>
+                            </div>
+
+                            <div class="help-section" id="methodology">
+                                <h4>Methodology</h4>
+                                <p>This calculator is based on the UK Government's MacKay Carbon Calculator methodology,
+                                    developed by the late Professor David MacKay.</p>
+                                <p>The model uses simplified but scientifically grounded assumptions about:</p>
+                                <ul>
+                                    <li>Technology deployment rates and costs</li>
+                                    <li>Behavioral change potential</li>
+                                    <li>Resource constraints and trade-offs</li>
+                                    <li>Policy implementation timelines</li>
+                                </ul>
+                                <p>Results should be interpreted as indicative pathways rather than precise predictions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-modal="helpModal">Got it!</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Modal -->
+            <div id="exportModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Export Data</h3>
+                        <span class="close" data-modal="exportModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="export-options">
+                            <div class="export-option">
+                                <input type="radio" id="exportCSV" name="exportFormat" value="csv" checked>
+                                <label for="exportCSV">
+                                    <strong>CSV Format</strong>
+                                    <span>Spreadsheet-compatible format for analysis</span>
+                                </label>
+                            </div>
+                            <div class="export-option">
+                                <input type="radio" id="exportJSON" name="exportFormat" value="json">
+                                <label for="exportJSON">
+                                    <strong>JSON Format</strong>
+                                    <span>Machine-readable format for developers</span>
+                                </label>
+                            </div>
+                            <div class="export-option">
+                                <input type="radio" id="exportPDF" name="exportFormat" value="pdf">
+                                <label for="exportPDF">
+                                    <strong>PDF Report</strong>
+                                    <span>Formatted report with charts and analysis</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="export-content">
+                            <label>
+                                <input type="checkbox" id="includeCharts" checked> Include charts and visualizations
+                            </label>
+                            <label>
+                                <input type="checkbox" id="includeMetadata" checked> Include scenario metadata
+                            </label>
+                            <label>
+                                <input type="checkbox" id="includeTimestamp" checked> Include timestamp
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-modal="exportModal">Cancel</button>
+                        <button class="btn btn-primary" id="confirmExport">Export Data</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Analysis Modal -->
+            <div id="costAnalysisModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Cost-Benefit Analysis</h3>
+                        <span class="close" data-modal="costAnalysisModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="cost-analysis">
+                            <p>Detailed cost-benefit analysis of your current scenario configuration.</p>
+                            <div class="cost-metrics">
+                                <div class="cost-metric">
+                                    <span class="metric-label">Implementation Cost:</span>
+                                    <span class="metric-value">--</span>
+                                </div>
+                                <div class="cost-metric">
+                                    <span class="metric-label">Carbon Savings:</span>
+                                    <span class="metric-value">--</span>
+                                </div>
+                                <div class="cost-metric">
+                                    <span class="metric-label">Return on Investment:</span>
+                                    <span class="metric-value">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-modal="costAnalysisModal">Close</button>
+                        <button class="btn btn-primary" id="exportCostAnalysis">Export Analysis</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Toast -->
+            <div id="toast" class="toast">
+                <div class="toast-content">
+                    <span class="toast-icon"></span>
+                    <span class="toast-message"></span>
+                </div>
+                <button class="toast-close">&times;</button>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="script.js?v=2.0.1"></script>
 </body>
+
 </html>
